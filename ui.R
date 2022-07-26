@@ -11,11 +11,7 @@ fluidPage(
     
     sidebarPanel(
       width = 3,
-      
-      selectInput("city", "City:",
-                  c("Bucuresti" = "bucuresti",
-                    "Berlin" = "berlin",
-                    "Roma" = "roma"))
+      selectInput("city", "City:", choices)
     ),
     mainPanel( 
       width = 9,
