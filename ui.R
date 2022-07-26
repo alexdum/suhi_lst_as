@@ -17,7 +17,6 @@ fluidPage(
                     "Berlin" = "berlin",
                     "Roma" = "roma"))
       
-      
     ),
     mainPanel( 
       width = 9,
