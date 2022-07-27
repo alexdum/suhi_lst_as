@@ -1,4 +1,54 @@
-label,choice
-Bucuresti,bucuresti
-Berlin,berlin
-Roma,roma
+label,choice,country
+Bucuresti,bucuresti,Romania
+Berlin,berlin,Germany
+Roma,roma,Italy
+Tirane,tirane,Albania
+Yerevan,yerevan,Armenia
+Wien,wien,Austria
+Baku,baku,Azerbaijan
+Minsk,minsk,Belarus
+Bruxelles,bruxelles,Belgium
+Sarajevo,sarajevo,Bosnia and Herzegovina
+Sofia,sofia,Bulgaria
+Zagreb,zagreb,Croatia
+Nicosia,nicosia,Cyprus
+Praha,praha,Czech Republic
+Tallinn,tallinn,Estonia
+Helsinki,helsinki,Finland
+Paris,paris,France
+Tbilisi,tbilisi,Georgia
+Budapest,budapest,Hungary
+Reykjavik,reykjavik,Iceland
+Dublin,dublin,Ireland
+Jerusalem,jerusalem,Israel
+Amman,amman,Jordan
+Nur Sultan,nur_sultan,Kazakhstan
+Riga,Riga,Latvia
+Beirut,beirut,Lebanon
+Vaduz,vaduz,Liechtenstein
+Vilnius,vilnius,Lithuania
+Luxembourg,luxembourg,Luxembourg
+Valletta,valletta,Malta
+Chisinau,chisinau,Moldova
+Monaco Ville,monaco_ville,Monaco
+Podgorica,podgorica,Montenegro
+Amsterdam,amsterdam,Netherlands
+Skopje,skopje,North Macedonia
+Oslo,oslo,Norway
+Warszawa,warszawa,Poland
+Lisboa,lisboa,Portugal
+Moscow,moscow,Russia
+Citta di San Marino,citta_di_san_marino,San Marino
+Belgrade,belgrade,Serbia
+Bratislava,bratislava,Slovakia
+Ljubljana,ljubljana,Slovenia
+Madrid,madrid,Spain
+Stockholm,stockholm,Sweden
+Bern,bern,Switzerland
+Ankara,ankara,Turkey
+London,london,United Kingdom
+Kyiv,kyiv,Ukranie
+Vatican,vatican,Holy See
+Copenhagen,copenhagen,Denmark
+Athens,athens,Greece
+Damascus,damascus,Syria
