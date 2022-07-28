@@ -20,7 +20,7 @@ server <- shinyServer(function(input, output, session) {
         title = list(text = "Days") # Large bolded titles
       ) %>%
       hc_yAxis(
-        title = list(text = "LST AS [°C]") # Large bolded titles
+        title = list(text = "SUHI [°C]") # Large bolded titles
       ) %>% 
       hc_navigator(
         enabled = TRUE, baseSeries = 1
