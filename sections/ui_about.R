@@ -1,4 +1,4 @@
-ui_about <- tabPanel("About",icon = icon("info-circle"), value = "#about", id = "#about",
+ui_about <- tabPanel("About",icon = icon("info"), value = "#about", id = "#about",
                      
                     
       fluidRow( h4("About"),

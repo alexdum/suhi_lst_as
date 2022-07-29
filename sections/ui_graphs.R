@@ -5,7 +5,7 @@ library(tidyr)
 library(dplyr)
 
 ui_graphs <- tabPanel(
-  "Graphs and maps",value = "#maps", id = "#maps",icon = icon("chart-line"),
+  "Graphs",value = "#maps", id = "#maps",icon = icon("chart-line"),
   #tags$br(""),
   tabsetPanel( 
     id = "tab_suhi",
