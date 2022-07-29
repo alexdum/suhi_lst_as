@@ -5,6 +5,7 @@ library(tidyr)
 library(dplyr)
 library(shinyjs)
 
+source("utils/graphs_funs.R")
 
 cities <- list.files("www/data/tabs/suhi", pattern = "^suhi", full.names = T) %>%
           strsplit(., "suhi_|_v02.csv") %>% do.call(rbind, .) %>% as_tibble() 
