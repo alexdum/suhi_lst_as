@@ -7,7 +7,7 @@ library(shinyjs)
 
 
 cities <- list.files("www/data/tabs/suhi", pattern = "^suhi", full.names = T) %>%
-          strsplit(., "_|\\.") %>% do.call(rbind, .) %>% as_tibble() 
+          strsplit(., "suhi_|_v02.csv") %>% do.call(rbind, .) %>% as_tibble() 
 
 
 # listă orașe din tabel selectInput care au date cities
