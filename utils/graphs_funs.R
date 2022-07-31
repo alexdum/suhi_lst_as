@@ -1,8 +1,7 @@
 hc_plot <- function(input, yaxis, filename_save, cols) {
   
-  hh <- hchart(
-    input, "line",
-    hcaes(x = date, y = uhi, group = area) ,
+  hh <- hchart(input, "line",
+    hcaes(date, values, group = area) ,
     color = cols
   ) %>%
     hc_xAxis(
