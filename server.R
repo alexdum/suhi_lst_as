@@ -19,7 +19,7 @@ server <- shinyServer(function(input, output, session) {
   
   output$lst <- renderHighchart({
     
-    lst <- read.csv(paste0("www/data/tabs/suhi/stats_bucuresti_v02.csv")) %>%
+    lst <- read.csv(paste0("www/data/tabs/suhi/stats_",input$city,"_v02.csv")) %>%
       mutate(date = as.Date(date))
     lst.longf <- lst %>% dplyr::select(date,  min.urb,     min.rur, max.urb,  max.rur) %>%
       pivot_longer(!date, names_to = "area", values_to = "values") 
