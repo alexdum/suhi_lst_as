@@ -24,7 +24,7 @@ server <- shinyServer(function(input, output, session) {
     lst <- read.csv(paste0("www/data/tabs/suhi/stats_",input$city,"_v02.csv")) %>%
       mutate(date = as.Date(date))
     
-    datas <- left_join(uhi,lst, by = c("date"))
+    datas <- left_join(uhi,lst, by =c("date", "time.uhi.min", "time.uhi.max", "uhi.med"))
     
     list(datas = datas)
   })
