@@ -29,7 +29,7 @@ server <- shinyServer(function(input, output, session) {
       
       yaxis = "LST [°C]",
       filename_save = paste0(input$city, "_lst"), 
-      cols =  c( "#9ecae1", "#a50f15","#4292c6", "#ef3b2c")
+      cols =  c( "#a50f15","#ef3b2c","#4292c6","#9ecae1")
     )
     
   })
