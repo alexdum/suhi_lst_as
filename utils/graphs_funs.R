@@ -1,26 +1,15 @@
-hc_plot <- function(input, yaxis, filename_save, cols) {
+hc_plot <- function(input, xaxis_series, filename_save, cols, names) {
   
-  hh <- hchart(input, "line",
-    hcaes(date, values, group = area) ,
-    color = cols
-  ) %>%
-    hc_xAxis(
-      title = list(text = "Days") # Large bolded titles
-    ) %>%
-    hc_yAxis(yaxis,
-      title = list(text = yaxis) # Large bolded titles
-    ) %>% 
-    hc_navigator(
-      enabled = TRUE, baseSeries = 1
-    ) %>% 
-    hc_rangeSelector(
-      enabled = TRUE,
-      selected = 3
-    )  %>% 
+  hh <-  
+    highchart(type = "stock")  |>
+    hc_xAxis(type = "date") |>
+    hc_add_series(input,type = "line", hcaes_string("date", xaxis_series[1]), color = cols[1], name = names[1]) |>
+    hc_add_series(input,type = "line", hcaes_string("date", xaxis_series[2]), color = cols[2], name = names[2]) |>
+    hc_legend(enabled = T) |>
     hc_exporting(
       enabled = TRUE, # always enabled
-      filename =  filename_save
-    )
+      filename =  filename_save)
+  
   
   return(hh)
 }
