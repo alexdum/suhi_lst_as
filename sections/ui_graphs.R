@@ -20,7 +20,8 @@ ui_graphs <- tabPanel(
         fluid = T,
         sidebarPanel(
           width = 3,
-          selectInput("city", "City:", choices)
+          selectInput("city", "City:", choices),
+          downloadButton('downloadData', 'Download')
         ),
         mainPanel( 
           width = 9,
