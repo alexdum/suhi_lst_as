@@ -3,7 +3,8 @@
 .RData
 .Ruserdata
 misc/*
-!www/data/tabs/suhi/*.csv
+!www/data/tabs/suhi/
+www/data/tabs/suhi/*
 ../../../../.DS_Store
 ../../../.DS_Store
 ../../.DS_Store
