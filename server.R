@@ -3,6 +3,24 @@
 server <- shinyServer(function(input, output, session) {
   
   
+text.cust <- reactive({
+
+ city <- select_input_cities$label[select_input_cities$choice == input$city]
+  
+  list(city = city)
+
+  })
+
+  output$text_uhi <- renderText({
+    paste("Minimum and maximum Surface Urban Heat Island - ", text.cust()$city)
+  })
+  
+  output$text_lst <- renderText({
+    paste("Urban and RuralLand Surface Temperature - ", text.cust()$city)
+  })
+  
+
+  
   
   output$suhi <- renderHighchart({
     
