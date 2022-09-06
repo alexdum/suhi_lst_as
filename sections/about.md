@@ -7,8 +7,7 @@ output:
     smart: no
 ---
 
-Built in <a href="https://www.r-project.org/", target="_blank"> R </a> using 
-<a href="https://shiny.rstudio.com/", target="_blank">
+Built in <a href="https://shiny.rstudio.com/", target="_blank">
 Shiny </a>, this dashboard aims to provide accurate and relevant facts
 and statistics about SUHI for large cities located in WMO Region 6. 
 
