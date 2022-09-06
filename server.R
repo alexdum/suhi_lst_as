@@ -16,7 +16,7 @@ text.cust <- reactive({
   })
   
   output$text_lst <- renderText({
-    paste("Urban and RuralLand Surface Temperature - ", text.cust()$city)
+    paste("Urban and Rural Land Surface Temperature - ", text.cust()$city)
   })
   
 
