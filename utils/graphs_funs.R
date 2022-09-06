@@ -1,4 +1,4 @@
-hc_plot <- function(input, xaxis_series, filename_save, cols, names) {
+hc_plot <- function(input, xaxis_series, filename_save, cols, names, ytitle) {
   
   hh <-  
     highchart(type = "stock")  |>
@@ -8,7 +8,14 @@ hc_plot <- function(input, xaxis_series, filename_save, cols, names) {
     hc_legend(enabled = T) |>
     hc_exporting(
       enabled = TRUE, # always enabled
-      filename =  filename_save)
+      filename =  filename_save) |>
+    hc_yAxis(title = list(text = ytitle),
+             opposite = TRUE,
+             minorTickInterval = "auto",
+             minorGridLineDashStyle = "LongDashDotDot",
+             showFirstLabel = FALSE,
+             showLastLabel = FALSE
+    )
   
   
   return(hh)
