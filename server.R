@@ -24,7 +24,7 @@ server <- shinyServer(function(input, output, session) {
     
     hc_plot(
       input = uhi, xaxis_series = c("uhi.max", "uhi.min"), filename_save = paste0(input$city, "_suhi"),
-      cols =  c("#800026","#fd8d3c" ), names = c("SUHI Max", "SUHI Min")
+      cols =  c("#800026","#fd8d3c" ), names = c("SUHI Max", "SUHI Min"), ytitle = "SUHI [°C]"
     )
   })
   
@@ -34,7 +34,7 @@ server <- shinyServer(function(input, output, session) {
       mutate(date = as.Date(date))
     hc_plot(
       input = lst, xaxis_series = c("med.urb", "med.rur"), filename_save = paste0(input$city, "_lst"),
-      cols =  c("#ef3b2c","#9ecae1"), names = c("Urban", "Rural")
+      cols =  c("#ef3b2c","#9ecae1"), names = c("Urban", "Rural"), ytitle = "LST [°C]"
     )
 
   })
