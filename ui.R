@@ -1,5 +1,6 @@
 
 source("sections/ui_graphs.R", local = T)
+source("sections/ui_maps.R", local = T)
 source("sections/ui_about.R", local = T)
 # Define UI for application that draws a histogram
 
@@ -37,6 +38,7 @@ ui <- shinyUI(
                 "SUHI explorer", selected = "#about", collapsible = T, fluid = T, id = "tabs", position =  "fixed-top",
                 
                 ui_graphs,
+                ui_maps,
                 ui_about,
               )
     )
