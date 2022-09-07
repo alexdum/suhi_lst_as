@@ -5,7 +5,7 @@ library(tidyr)
 library(dplyr)
 
 ui_graphs <- tabPanel(
-  "Graphs",value = "#maps", id = "#maps",icon = icon("chart-line"),
+  "Graphs",value = "#graphs", id = "#graphs",icon = icon("chart-line"),
   #tags$br(""),
   tabsetPanel( 
     id = "tab_suhi",
@@ -13,14 +13,14 @@ ui_graphs <- tabPanel(
       value = "suhi",
       title = "SUHI",
       tags$h6(" "),
-      tags$h5("Surface urban heat island (SUHI) and Land Surface Temperature (LST) as detected form LST AS SEVIRI product"),
+      tags$h5("Surface urban heat island (SUHI) and Land Surface Temperature (LST) as detected from LST AS SEVIRI product"),
       #tags$h6(" "),
       tags$br(""),
       sidebarLayout(
         fluid = T,
         sidebarPanel(
           width = 3,
-          selectInput("city", "City:", choices),
+          selectInput("city", "City:", choices, selected = choices[sample(1:length(choices), 1)]),
           downloadButton('downloadData', 'Download')
         ),
         mainPanel( 
