@@ -9,6 +9,8 @@ library(sf)
 library(leaflet)
 library(htmltools)
 
+#https://shiny.rstudio.com/gallery/superzip-example.htmlhttps://shiny.rstudio.com/gallery/superzip-example.html
+
 source("utils/graphs_funs.R")
 
 cities <- list.files("www/data/tabs/suhi", pattern = "^suhi", full.names = T) %>%
