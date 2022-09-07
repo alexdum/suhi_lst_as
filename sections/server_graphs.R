@@ -12,8 +12,8 @@ output$text_lst <- renderText({
 })
 
 datas <- reactive({
-  uhi <- fread(paste0("www/data/tabs/suhi/suhi_",input$city,"_v02.csv"))[,c("date", "uhi.min", "uhi.max")]
-  lst <- fread(paste0("www/data/tabs/suhi/stats_",input$city,"_v02.csv"))[,c("date", "med.urb", "med.rur")]
+  uhi <- dt.suhi[id %in% input$city]
+  lst <- dt.lst[id %in% input$city]
   datas <- merge(uhi, lst, by.x.y = "date")
   
   list(datas = datas)
