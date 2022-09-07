@@ -51,6 +51,9 @@ server <- shinyServer(function(input, output, session) {
   )
   
   source(file = "sections/server_map.R", local = T)
+  # run code before accesing section
+  outputOptions(output, "lst", suspendWhenHidden = FALSE)
+  outputOptions(output, "suhi", suspendWhenHidden = FALSE)
   
 })
 
