@@ -16,8 +16,6 @@ server <- shinyServer(function(input, output, session) {
     paste("Urban and Rural Land Surface Temperature - ", text.cust()$city)
   })
   
-  
-  
   datas <- reactive({
     uhi <- fread(paste0("www/data/tabs/suhi/suhi_",input$city,"_v02.csv"))[,c("date", "uhi.min", "uhi.max")]
     lst <- fread(paste0("www/data/tabs/suhi/stats_",input$city,"_v02.csv"))[,c("date", "med.urb", "med.rur")]
@@ -27,7 +25,6 @@ server <- shinyServer(function(input, output, session) {
   })
   # grafice
   output$suhi <- renderHighchart({
-    
     
     hc_plot(
       input = datas()$datas, xaxis_series = c("uhi.max", "uhi.min"), filename_save = paste0(input$city, "_suhi"),
@@ -43,9 +40,6 @@ server <- shinyServer(function(input, output, session) {
     
   })
   
-  
-  
-  
   output$downloadData <- downloadHandler(
     
     filename = function() {
@@ -56,4 +50,8 @@ server <- shinyServer(function(input, output, session) {
     }
   )
   
+  source(file = "sections/server_map.R", local = T)
+  
 })
+
+
