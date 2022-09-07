@@ -13,9 +13,6 @@ library(htmltools)
 
 source("utils/graphs_funs.R")
 
-cities <- list.files("www/data/tabs/suhi", pattern = "^suhi", full.names = T) %>%
-          strsplit(., "suhi_|_v02.csv") %>% do.call(rbind, .) %>% as_tibble() 
-
 
 # listă orașe din tabel selectInput care au date cities
 select_input_cities <- read.csv("www/data/tabs/select_input_cities.csv") %>%
@@ -24,7 +21,9 @@ select_input_cities <- read.csv("www/data/tabs/select_input_cities.csv") %>%
   left_join(cities, by = c("choice" = "V2"))
 
 choices <- setNames(select_input_cities$choice,paste0(select_input_cities$label, " (", select_input_cities$country,")"))
-cities_map <- st_read("www/data/shp/cities_one_file.shp")
+cities_map <- st_read("www/data/shp/cities_one_file.shp") %>% 
+  mutate(city =  strsplit(name, "-") %>% do.call(rbind, .) %>% as_tibble() %>% select(V2) %>% unlist())%>%
+  filter(city %in% select_input_cities$choice)
 
 # read all uhi files
 files.suhi <- list.files("www/data/tabs/suhi/", "^suhi", full.names = T)
