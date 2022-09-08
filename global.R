@@ -14,7 +14,12 @@ library(htmltools)
 source("utils/graphs_funs.R")
 
 
+
+
 # listă orașe din tabel selectInput care au date cities
+cities <- list.files("www/data/tabs/suhi", pattern = "^suhi", full.names = T) %>%
+  strsplit(., "suhi_|_v02.csv") %>% do.call(rbind, .) %>% as_tibble() 
+
 select_input_cities <- read.csv("www/data/tabs/select_input_cities.csv") %>%
   arrange(label) %>% 
   filter(!label %in% c("Vaduz","Reykjavik", "Nur Sultan", "Amman", "Monaco", "Beirut", "Baku","Citta di San Marino", "Vatican","Jerusalem" )) %>% 
