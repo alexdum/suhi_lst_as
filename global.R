@@ -14,9 +14,6 @@ library(RColorBrewer)
 
 source("utils/graphs_funs.R")
 
-
-
-
 # listă orașe din tabel selectInput care au date cities
 cities <- list.files("www/data/tabs/suhi", pattern = "^suhi", full.names = T) %>%
   strsplit(., "suhi_|_v02.csv") %>% do.call(rbind, .) %>% as_tibble() 
