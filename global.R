@@ -22,7 +22,7 @@ cities <- list.files("www/data/tabs/suhi", pattern = "^suhi", full.names = T) %>
 
 select_input_cities <- read.csv("www/data/tabs/select_input_cities.csv") %>%
   arrange(label) %>% 
-  filter(!label %in% c("Vaduz","Reykjavik", "Nur Sultan", "Amman", "Monaco", "Beirut", "Baku","Citta di San Marino", "Vatican","Jerusalem" )) %>% 
+  filter(!label %in% c("Vaduz","Reykjavik", "Nur Sultan", "Amman", "Monaco", "Beirut", "Baku","Citta di San Marino", "Vatican","Jerusalem", "Valletta", "Monaco Ville" )) %>% 
   left_join(cities, by = c("choice" = "V2"))
 
 choices <- setNames(select_input_cities$choice,paste0(select_input_cities$label, " (", select_input_cities$country,")"))
