@@ -8,17 +8,9 @@ filteredData <- eventReactive(
   }
 )
 
-colorpal <- reactive({
-  colorNumeric("RdYlBu", seq(-3,3, 0.1))
-})
-
 
 # harta leaflet -----------------------------------------------------------
 output$map <- renderLeaflet ({
-  
-  
-  
-  
   leaflet(data = cities_map,
           options = leafletOptions(
             minZoom = 3, maxZoom = 12
@@ -26,7 +18,7 @@ output$map <- renderLeaflet ({
   ) %>%
     leaflet.extras::addBootstrapDependency() %>%
     setView(25, 46, zoom = 3) %>%
-    setMaxBounds(-13.5, 30, 57, 75) %>% 
+    setMaxBounds(-13.5, 30, 57, 65) %>% 
     addMapPane(name = "pol", zIndex = 410) %>%
     addMapPane(name = "maplabels", zIndex = 420) %>%
     addProviderTiles(
@@ -52,20 +44,36 @@ output$map <- renderLeaflet ({
 
 
 observe({
-  pal <- colorpal()
   
-  print(head(filteredData()))
-  cities.filt <- cities_map |> left_join(filteredData(), by = c("city" = "id"))
+  vals <- seq(floor(min(filteredData()$uhi.min)),ceiling(max(filteredData()$uhi.min)), 0.1)
+  pal_rev <- colorNumeric(
+    "RdYlBu",
+    vals,
+    reverse = F)
+  pal <- colorNumeric(
+    "RdYlBu",
+    vals,
+    reverse = T)
+  print(summary(filteredData()$uhi.min))
+  cities.filt <- cities_map |> right_join(filteredData(), by = c("city" = "id"))
   
-  leafletProxy("map", data = cities.filt) %>%
+  proxy <- leafletProxy("map", data = cities.filt) %>%
     clearShapes() %>%
     addPolygons(
       label = ~htmlEscape(uhi.min),
       group = "City borders",
       fillColor = ~pal(uhi.min),
       color = ~pal(uhi.min),
-      fillOpacity = 1
+      fillOpacity = 1,
+      opacity = 1
       
-    ) 
+    ) %>% 
+    clearControls() %>%
+    addLegend(
+      position = "bottomright",
+      pal = pal_rev, values = vals,
+      opacity = 1,
+      labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
+    )
   
 })
