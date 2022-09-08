@@ -8,6 +8,7 @@ library(data.table)
 library(sf)
 library(leaflet)
 library(htmltools)
+library(RColorBrewer)
 
 #https://shiny.rstudio.com/gallery/superzip-example.htmlhttps://shiny.rstudio.com/gallery/superzip-example.html
 
