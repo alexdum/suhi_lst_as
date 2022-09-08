@@ -1,13 +1,29 @@
+
+filteredData <- eventReactive(
+  list(isolate(input$tab_maps), input$days_suhi), {
+    dt.suhi.filt <- dt.suhi[date == input$days_suhi]
+    dt.lst.filt <- dt.lst[date == input$days_suhi]
+    merge(dt.suhi.filt,  dt.lst.filt, by.x.y = "id")
+    
+  }
+)
+
+colorpal <- reactive({
+  colorNumeric("RdYlBu", seq(-3,3, 0.1))
+})
+
+
 # harta leaflet -----------------------------------------------------------
 output$map <- renderLeaflet ({
-  leaflet(cities_map,
+  
+  
+  
+  
+  leaflet(data = cities_map,
           options = leafletOptions(
             minZoom = 3, maxZoom = 12
           ) 
   ) %>%
-    addPolygons(
-      label = ~htmlEscape(name),
-      group = "City borders") %>%
     leaflet.extras::addBootstrapDependency() %>%
     setView(25, 46, zoom = 3) %>%
     setMaxBounds(-13.5, 30, 57, 75) %>% 
@@ -29,30 +45,27 @@ output$map <- renderLeaflet ({
       "CartoDB.PositronOnlyLabels",
       options = pathOptions(pane = "maplabels"),
       group = "Labels"
+    )
+  
+})
+
+
+
+observe({
+  pal <- colorpal()
+  
+  print(head(filteredData()))
+  cities.filt <- cities_map |> left_join(filteredData(), by = c("city" = "id"))
+  
+  leafletProxy("map", data = cities.filt) %>%
+    clearShapes() %>%
+    addPolygons(
+      label = ~htmlEscape(uhi.min),
+      group = "City borders",
+      fillColor = ~pal(uhi.min),
+      color = ~pal(uhi.min),
+      fillOpacity = 1
+      
     ) 
-  # leaflet.extras2::addEasyprint(
-  #   options =
-  #     leaflet.extras2::easyprintOptions(
-  #       title = 'Print map',
-  #       position = 'topleft',
-  #       exportOnly = T,
-  #       sizeModes = c('A4Landscape', 'A4 Landscape')
-  #     )
-  # )
-  #%>%
-  #leaflet.extras::addResetMapButton() %>%
-  # leaflet.extras::addSearchFeatures(
-  #   targetGroups  = 'region',
-  #   options = leaflet.extras::searchFeaturesOptions(
-  #     zoom=10, 
-  #     openPopup=FALSE,
-  #     propertyName = "name",
-  #     hideMarkerOnCollapse = TRUE,
-  #     firstTipSubmit = TRUE
-  #     # textErr = "Locația nu a fost găsită", 
-  #     # textCancel = "Anulare",
-  #     # textPlaceholder = "Căutare..."
-  #   )
-  # )
   
 })
