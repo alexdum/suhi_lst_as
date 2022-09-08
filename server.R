@@ -9,6 +9,7 @@ server <- shinyServer(function(input, output, session) {
   # run code before accesing section
   outputOptions(output, "lst", suspendWhenHidden = FALSE)
   outputOptions(output, "suhi", suspendWhenHidden = FALSE)
+  outputOptions(output, "map", suspendWhenHidden = FALSE)
   
 })
 
