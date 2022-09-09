@@ -11,7 +11,7 @@ ui_maps <- tabPanel(
     id = "tab_maps",
     tabPanel(
       value = "suhi_maps",
-      title = "SUHI Map",
+      title = "SUHI & LST",
       tags$h6(" "),
       tags$h5("Cities for which Surface Urban Heat Island (SUHI) and Land Surface Temperature (LST) has been calculated from LST AS SEVIRI product"),
       #tags$h6(" "),
