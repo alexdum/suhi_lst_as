@@ -1,0 +1,5 @@
+﻿parameter,choice
+SUHI Min,uhi.min 
+SUHI Max,uhi.max
+Urban LST mean,med.urb
+Rural LST mean,med.rur
