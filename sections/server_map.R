@@ -48,7 +48,7 @@ params <- reactive({
   param <- input$parameter
   param.label <- names(choices_map[choices_map==param])
   print(param.label)
-  param_data <- filteredData() %>% select(id, param) %>%
+  param_data <- filteredData() %>% dplyr::select(id, param) %>%
     left_join(select_input_cities[,c("label", "choice")], by = c("id" = "choice"))
   names(param_data)[2] <- "values"
   # label pentru hover
@@ -101,6 +101,6 @@ output$downloadDataMap <- downloadHandler(
     paste0('data_map-', gsub(" " , "_",params()$param.label),"_",input$days_suhi, '.csv')
   },
   content = function(con) {
-    write.csv(params()$param_data %>% select("id", "values"), con)
+    write.csv(params()$param_data %>% dplyr::select("id", "values"), con)
   }
 )
