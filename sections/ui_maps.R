@@ -27,7 +27,7 @@ ui_maps <- tabPanel(
           ),
           dateInput(
             'days_suhi',
-            label = 'Select day',
+            label = 'Day:',
             min = min(dt.lst$date) |> as.Date(),
             max = max(dt.lst$date) |> as.Date(),
             value = max(dt.lst$date) |> as.Date()
