@@ -13,11 +13,11 @@ filteredData <- eventReactive(
 output$map <- renderLeaflet ({
   leaflet(data = cities_map,
           options = leafletOptions(
-            minZoom = 3, maxZoom = 12
+            minZoom = 4, maxZoom = 12
           ) 
   ) %>%
     leaflet.extras::addBootstrapDependency() %>%
-    setView(25, 46, zoom = 4) %>%
+    setView(25, 46, zoom = 3) %>%
     setMaxBounds(-13.5, 30, 57, 65) %>% 
     addMapPane(name = "pol", zIndex = 410) %>%
     addMapPane(name = "maplabels", zIndex = 420) %>%
@@ -93,7 +93,7 @@ observe({
     clearControls() %>%
     addLegend(
       title =  gsub("mean", "", params()$param.label),
-      position = "bottomleft",
+      position = "bottomright",
       pal = pal_rev, values = vals,
       opacity = 1,
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
