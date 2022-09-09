@@ -17,7 +17,7 @@ output$map <- renderLeaflet ({
           ) 
   ) %>%
     leaflet.extras::addBootstrapDependency() %>%
-    setView(25, 46, zoom = 3) %>%
+    setView(25, 46, zoom = 4) %>%
     setMaxBounds(-13.5, 30, 57, 65) %>% 
     addMapPane(name = "pol", zIndex = 410) %>%
     addMapPane(name = "maplabels", zIndex = 420) %>%
