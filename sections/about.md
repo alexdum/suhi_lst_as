@@ -3,32 +3,29 @@ editor_options:
   markdown: 
     wrap: 72
 output: 
-  html_document: 
-    smart: no
+  html_document
 ---
 
-Built in \<a href="<https://shiny.rstudio.com/>", target="\_blank"\>
-Shiny </a>, this dashboard aims to provide accurate and relevant facts
-and statistics about SUHI for large cities located in WMO Region 6.
+Built in [Shiny](https://shiny.rstudio.com/), this dashboard aims to
+provide accurate and relevant facts and statistics about SUHI for large
+cities located in WMO Region 6.
 
-The application is based on
-<a href="https://landsaf.ipma.pt/en/products/land-surface-temperature/mlstas/" target="_blank">
-LSA-SAF SEVIRI LST All Sky </a> dataset.
+The application is based on [LSA-SAF SEVIRI LST All
+Sky](https://landsaf.ipma.pt/en/products/land-surface-temperature/mlstas/)
+dataset.
 
 The administrative boundaries for all the cities used in this study were
-extracted from \<a
-href="<https://wiki.openstreetmap.org/wiki/Tag:boundary%3Dadministrative#10_admin_level_values_for_specific_countries>",
-target="\_blank"\> OpenStreetMap </a>.
+extracted from
+[OpenStreetMap.](https://wiki.openstreetmap.org/wiki/Tag:boundary%3Dadministrative#10_admin_level_values_for_specific_countries).
 
 The daily values of the Surface Urban Heat Island (SUHI) is detected for
-each city using the methodology proposed by \<a
-href="<https://www.sciencedirect.com/science/article/pii/S2212095521002868>",
-target="\_blank"\> Cheval et al. (2022) </a>.
+each city using the methodology proposed by [Cheval et al.
+(2022)](https://www.sciencedirect.com/science/article/pii/S2212095521002868).
 
 SUHI is computed as the difference between the LST values of the urban
 and, respectively, rural areas, as follows:
 
-$$SUHI = LST_U - LST_R$$
+$SUHI=LST_U-LST_R$
 
 -   $LST_U$: urban pixels within the administrative perimeter of an
     urban area; urban pixels refer to artificial surfaces and associated
@@ -46,10 +43,10 @@ the city centroid (blue dot) and nodes of the urban administrative
 perimeter (red
 dots).](https://ars.els-cdn.com/content/image/1-s2.0-S2212095521002868-gr3.jpg)
 
-$SUHI Max$ was calculated from images corresponding to the time step when the maximum LST value was recorded in urban areas.
-$SUHI Min$ was calculated from images corresponding to the time step when the minimum LST value was recorded in urban areas.
-$Urban LST mean$ was calculated from the urban pixels extracted from all the images coresponding to each day.
-$Rural LST mean$ was calculated from the urban pixels extracted from all the images coresponding to each day.
-
-
-
+$SUHI Max$ was calculated from images corresponding to the time step
+when the maximum LST value was recorded in urban areas. $SUHI Min$ was
+calculated from images corresponding to the time step when the minimum
+LST value was recorded in urban areas. $Urban LST mean$ was calculated
+from the urban pixels extracted from all the images coresponding to each
+day. $Rural LST mean$ was calculated from the urban pixels extracted
+from all the images coresponding to each day.
