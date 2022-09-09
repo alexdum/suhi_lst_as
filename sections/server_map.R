@@ -93,7 +93,7 @@ observe({
     clearControls() %>%
     addLegend(
       title =  gsub("mean", "", params()$param.label),
-      position = "bottomright",
+      position = "bottomleft",
       pal = pal_rev, values = vals,
       opacity = 1,
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
