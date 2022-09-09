@@ -20,6 +20,11 @@ ui_maps <- tabPanel(
         fluid = T,
         sidebarPanel(
           width = 3,
+          selectInput(
+            "parameter", "Prameter:", 
+            choices_map, 
+            selected = choices_map[2]
+          ),
           dateInput(
             'days_suhi',
             label = 'Select day',
