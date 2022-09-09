@@ -48,27 +48,23 @@ params <- reactive({
   param <- input$parameter
   param.label <- names(choices_map[choices_map==param])
   print(param.label)
-  list(param = param, param.label = param.label)
-})
-
-output$text_map <- renderText({
-  paste(params()$param.label, "computed for major cities")
-})
-
-observe({
-  
-
-  param_data <- filteredData() %>% select(id, params()$param) %>%
+  param_data <- filteredData() %>% select(id, param) %>%
     left_join(select_input_cities[,c("label", "choice")], by = c("id" = "choice"))
   names(param_data)[2] <- "values"
   # label pentru hover
   param_data$label <- paste0(param_data$label,": ",param_data$values)
-  
+  list(param = param, param.label = param.label, param_data = param_data)
+})
 
-  cities.filt <- cities_map |> right_join(param_data, by = c("city" = "id"))
+output$text_map <- renderText({
+  paste(params()$param.label, "computed for major cities:", input$days_suhi)
+})
+
+observe({
+  cities.filt <- cities_map |> right_join(params()$param_data, by = c("city" = "id"))
   #print( cities.filt$city)
 
-  vals <- seq(floor(min(param_data[,2], na.rm = T)),ceiling(max(param_data[, 2], na.rm = T)), 0.1)
+  vals <- seq(floor(min(cities.filt$values, na.rm = T)),ceiling(max(cities.filt$values, na.rm = T)), 0.1)
   pal_rev <- colorNumeric(
     "RdYlBu",
     vals,
@@ -98,5 +94,13 @@ observe({
       opacity = 1,
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
     )
-  
 })
+
+output$downloadDataMap <- downloadHandler(
+  filename = function() {
+    paste0('data_map-', gsub(" " , "_",params()$param.label),"_",input$days_suhi, '.csv')
+  },
+  content = function(con) {
+    write.csv(params()$param_data %>% select("id", "values"), con)
+  }
+)
