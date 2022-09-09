@@ -8,7 +8,7 @@ output$text_uhi <- renderText({
   paste("Minimum and maximum Surface Urban Heat Island - ", text.cust()$city)
 })
 output$text_lst <- renderText({
-  paste("Urban and Rural Land Surface Temperature - ", text.cust()$city)
+  paste("Urban and Rural Mean Land Surface Temperature - ", text.cust()$city)
 })
 
 datas <- reactive({
