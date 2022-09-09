@@ -31,7 +31,8 @@ ui_maps <- tabPanel(
             min = min(dt.lst$date) |> as.Date(),
             max = max(dt.lst$date) |> as.Date(),
             value = max(dt.lst$date) |> as.Date()
-          )
+          ),
+          downloadButton('downloadDataMap', 'Download'),
         )
         ,
         mainPanel(
