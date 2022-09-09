@@ -42,19 +42,31 @@ output$map <- renderLeaflet ({
 })
 
 
+
+params <- reactive({
+ 
+  param <- input$parameter
+  param.label <- names(choices_map[choices_map==param])
+  print(param.label)
+  list(param = param, param.label = param.label)
+})
+
+output$text_map <- renderText({
+  paste(params()$param.label, "computed for major cities")
+})
+
 observe({
   
-  print(head(filteredData()))
-  param <- input$parameter
-  print(param)
-  param_data <- filteredData() %>% select(id, param)
+
+  param_data <- filteredData() %>% select(id, params()$param) %>%
+    left_join(select_input_cities[,c("label", "choice")], by = c("id" = "choice"))
   names(param_data)[2] <- "values"
+  # label pentru hover
+  param_data$label <- paste0(param_data$label,": ",param_data$values)
   
-  print(head(param_data))
-  print(param)
-  print(min(param_data[,2], na.rm = T))
+
   cities.filt <- cities_map |> right_join(param_data, by = c("city" = "id"))
-  
+  #print( cities.filt$city)
 
   vals <- seq(floor(min(param_data[,2], na.rm = T)),ceiling(max(param_data[, 2], na.rm = T)), 0.1)
   pal_rev <- colorNumeric(
@@ -69,16 +81,18 @@ observe({
   proxy <- leafletProxy("map", data = cities.filt) %>%
     clearShapes() %>%
     addPolygons(
-      label = ~htmlEscape(paste("id", param)),
+      label = ~htmlEscape(label),
       group = "City borders",
       fillColor = ~pal(values),
       color = ~pal(values),
       fillOpacity = 1,
-      opacity = 1
+      opacity = 1,
+      layerId = ~city
       
     ) %>% 
     clearControls() %>%
     addLegend(
+      title =  gsub("mean", "", params()$param.label),
       position = "bottomright",
       pal = pal_rev, values = vals,
       opacity = 1,
