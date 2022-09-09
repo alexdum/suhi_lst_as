@@ -26,11 +26,14 @@ ui_graphs <- tabPanel(
         mainPanel( 
           width = 9,
           fluidRow(
+            wellPanel(
             textOutput("text_uhi"),
-            highchartOutput("suhi"),
+            highchartOutput("suhi")
+            ),
+            wellPanel(
             textOutput("text_lst"),
             highchartOutput("lst")
-            
+            )
           )
         )
       )
