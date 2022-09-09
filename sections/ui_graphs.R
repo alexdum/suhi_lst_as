@@ -13,7 +13,7 @@ ui_graphs <- tabPanel(
       value = "suhi",
       title = "SUHI",
       tags$h6(" "),
-      tags$h5("Surface urban heat island (SUHI) and Land Surface Temperature (LST) as detected from LST AS SEVIRI product"),
+      tags$h5("Surface Urban Heat Island (SUHI) and Land Surface Temperature (LST) as detected from LST AS SEVIRI product"),
       #tags$h6(" "),
       tags$br(""),
       sidebarLayout(
