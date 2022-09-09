@@ -36,7 +36,10 @@ ui_maps <- tabPanel(
         ,
         mainPanel(
           width = 9,
-          fluidRow(
+          wellPanel(
+            textOutput("text_map")
+          ),
+          wellPanel(
             leafletOutput("map")
           )
         )
