@@ -42,10 +42,21 @@ output$map <- renderLeaflet ({
 })
 
 
-
 observe({
   
-  vals <- seq(floor(min(filteredData()$uhi.min)),ceiling(max(filteredData()$uhi.min)), 0.1)
+  print(head(filteredData()))
+  param <- input$parameter
+  print(param)
+  param_data <- filteredData() %>% select(id, param)
+  names(param_data)[2] <- "values"
+  
+  print(head(param_data))
+  print(param)
+  print(min(param_data[,2], na.rm = T))
+  cities.filt <- cities_map |> right_join(param_data, by = c("city" = "id"))
+  
+
+  vals <- seq(floor(min(param_data[,2], na.rm = T)),ceiling(max(param_data[, 2], na.rm = T)), 0.1)
   pal_rev <- colorNumeric(
     "RdYlBu",
     vals,
@@ -54,16 +65,14 @@ observe({
     "RdYlBu",
     vals,
     reverse = T)
-  print(summary(filteredData()$uhi.min))
-  cities.filt <- cities_map |> right_join(filteredData(), by = c("city" = "id"))
   
   proxy <- leafletProxy("map", data = cities.filt) %>%
     clearShapes() %>%
     addPolygons(
-      label = ~htmlEscape(uhi.min),
+      label = ~htmlEscape(paste("id", param)),
       group = "City borders",
-      fillColor = ~pal(uhi.min),
-      color = ~pal(uhi.min),
+      fillColor = ~pal(values),
+      color = ~pal(values),
       fillOpacity = 1,
       opacity = 1
       
