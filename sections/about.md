@@ -21,6 +21,9 @@ SUHI is computed as the difference between the LST values of the urban and, resp
 -   $LST_U$: urban pixels within the administrative perimeter of an urban area; urban pixels refer to artificial surfaces and associated areas;
 -   $LST_R$ non-urban pixels from the buffer extended up to 1/2 \* average distance between the city centroid and nodes of the urban administrative perimeter (see figure below); non-urban pixels refer to any land cover category except for urban and water, and they define the rural area used for comparison with the urban pixels.
 
-![Delimitation of areas for computing LST_U and LST_R for Brașov (Romania) is depicted in the figure above. The rural buffer is drawn at 1/2 . average distance between the city centroid (blue dot) and nodes of the urban administrative perimeter (red dots).](https://ars.els-cdn.com/content/image/1-s2.0-S2212095521002868-gr3.jpg) 
+![Delimitation of areas for computing LST_U and LST_R for Brașov (Romania) is depicted in the figure above. The rural buffer is drawn at 1/2 . average distance between the city centroid (blue dot) and nodes of the urban administrative perimeter (red dots).](https://ars.els-cdn.com/content/image/1-s2.0-S2212095521002868-gr3.jpg) <br>
+<sup>Delimitation of areas for computing $LST_U$ and $LST_R$ for Brașov (Romania) is depicted in the figure above. The rural buffer is drawn at 1/2 \* average distance between the city centroid (blue dot) and nodes of the urban administrative perimeter (red dots).</sup>
+
+
 
 *SUHI Max* and *SUHI Min* were calculated for each day from images corresponding to the time step when the maximum/minimum LST values were recorded. *Urban LST mean* and *Rural LST mean* were calculated from the urban/rural pixels extracted from all the images corresponding to each day.
