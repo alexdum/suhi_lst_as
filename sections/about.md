@@ -1,8 +1,10 @@
 ---
 output: 
-    html_document
+  html_document: 
+    fig_caption: yes
+    self_contained: no
+    theme: spacelab
 ---
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML.js"></script>
 
@@ -17,10 +19,8 @@ The daily values of the Surface Urban Heat Island (SUHI) is detected for each ci
 SUHI is computed as the difference between the LST values of the urban and, respectively, rural areas, as follows: $$SUHI = LST_U - LST_R$$
 
 -   $LST_U$: urban pixels within the administrative perimeter of an urban area; urban pixels refer to artificial surfaces and associated areas;
--   $LST_R$ non-urban pixels from the buffer extended up to 1/2 \* average distance between the city centroid and nodes of the urban administrative perimeter; non-urban pixels refer to any land cover category except for urban and water, and they define the rural area used for comparison with the urban pixels.
+-   $LST_R$ non-urban pixels from the buffer extended up to 1/2 \* average distance between the city centroid and nodes of the urban administrative perimeter (see figure below); non-urban pixels refer to any land cover category except for urban and water, and they define the rural area used for comparison with the urban pixels.
 
-![](https://ars.els-cdn.com/content/image/1-s2.0-S2212095521002868-gr3.jpg)
+![Delimitation of areas for computing LST_U and LST_R for Brașov (Romania) is depicted in the figure above. The rural buffer is drawn at 1/2 . average distance between the city centroid (blue dot) and nodes of the urban administrative perimeter (red dots).](https://ars.els-cdn.com/content/image/1-s2.0-S2212095521002868-gr3.jpg) 
 
-Delimitation of areas for computing $LST_U$ and $LST_R$ for Brașov (Romania). The rural buffer is drawn at 1/2\* average distance between the city centroid (blue dot) and nodes of the urban administrative perimeter (red dots).
-
-$SUHI Max$ was calculated from images corresponding to the time step when the maximum LST value was recorded in urban areas. $SUHI Min$ was calculated from images corresponding to the time step when the minimum LST value was recorded in urban areas. $Urban LST mean$ was calculated from the urban pixels extracted from all the images coresponding to each day. $Rural LST mean$ was calculated from the rural pixels extracted from all the images coresponding to each day.
+*SUHI Max* and *SUHI Min* were calculated for each day from images corresponding to the time step when the maximum/minimum LST values were recorded. *Urban LST mean* and *Rural LST mean* were calculated from the urban/rural pixels extracted from all the images corresponding to each day.
