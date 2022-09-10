@@ -9,7 +9,7 @@ library(sf)
 library(leaflet)
 library(htmltools)
 library(RColorBrewer)
-
+library(markdown)
 #https://shiny.rstudio.com/gallery/superzip-example.htmlhttps://shiny.rstudio.com/gallery/superzip-example.html
 
 source("utils/graphs_funs.R")
