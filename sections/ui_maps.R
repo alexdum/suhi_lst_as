@@ -1,8 +1,3 @@
-library(shiny)
-library(shinythemes)
-library(highcharter)
-library(tidyr)
-library(dplyr)
 
 ui_maps <- tabPanel(
   "Maps",value = "#maps", id = "#maps",icon = icon("map"),
