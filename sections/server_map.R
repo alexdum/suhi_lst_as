@@ -13,7 +13,7 @@ filteredData <- eventReactive(
 output$map <- renderLeaflet ({
   leaflet(data = cities_map,
           options = leafletOptions(
-            minZoom = 4, maxZoom = 12
+            minZoom = 3, maxZoom = 12
           ) 
   ) %>%
     leaflet.extras::addBootstrapDependency() %>%
