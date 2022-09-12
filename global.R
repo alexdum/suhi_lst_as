@@ -10,6 +10,7 @@ library(leaflet)
 library(htmltools)
 library(RColorBrewer)
 library(markdown)
+library(raster)
 #https://shiny.rstudio.com/gallery/superzip-example.htmlhttps://shiny.rstudio.com/gallery/superzip-example.html
 
 source("utils/graphs_funs.R")
@@ -44,3 +45,8 @@ files.lst <- gsub("/suhi_","/stats_",files.suhi)
 dt.lst <- lapply(files.lst, fread) 
 names(dt.lst) <- strsplit(files.lst, "stats_|_v") %>% do.call(rbind,.) %>% as_tibble() %>% dplyr::select(V2) %>% unlist()
 dt.lst <- rbindlist(dt.lst, idcol = "id" )
+
+# read daily lst
+
+lst.avg <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_avg_2021.nc")
+dats.lst.avg  <- as.Date(names(lst.avg) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00")
