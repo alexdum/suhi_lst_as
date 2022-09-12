@@ -16,7 +16,8 @@ hc_plot <- function(input, xaxis_series, filename_save, cols, names, ytitle) {
              minorGridLineDashStyle = "LongDashDotDot",
              showFirstLabel = FALSE,
              showLastLabel = FALSE
-    )
+    ) |>
+    hc_rangeSelector(selected = 4)
   
   
   return(hh)
