@@ -48,7 +48,7 @@ params <- reactive({
   param <- input$parameter
   param.label <- names(choices_map[choices_map==param])
   print(param.label)
-  param_data <- filteredData() %>% dplyr::select(id, param) %>%
+  param_data <- filteredData() %>% dplyr::select(id, all_of(param)) %>%
     left_join(select_input_cities[,c("label", "choice")], by = c("id" = "choice"))
   names(param_data)[2] <- "values"
   # label pentru hover
