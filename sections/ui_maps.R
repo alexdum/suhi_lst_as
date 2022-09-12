@@ -40,6 +40,42 @@ ui_maps <- tabPanel(
           )
         )
       )
+    ),
+    tabPanel(
+      value = "cont_maps",
+      title = "LST",
+      tags$h6(" "),
+      tags$h5("Spatial distribution of LST data at continental scale"),
+      #tags$h6(" "),
+      tags$br(""),
+      sidebarLayout(
+        fluid = T,
+        sidebarPanel(
+          #   width = 3,
+          #   selectInput(
+          #     "parameter", "Prameter:", 
+          #     choices_map, 
+          #     selected = choices_map[2]
+          #   ),
+            dateInput(
+              'days_europe',
+              label = 'Day:',
+              min = min(dats.lst.avg),
+              max = max(dats.lst.avg),
+              value = max(dats.lst.avg)
+            ),
+          #   downloadButton('downloadDataMap', 'Download'),
+        ),
+        mainPanel(
+          #   width = 9,
+          #   wellPanel(
+          #     textOutput("text_map")
+          #   ),
+            wellPanel(
+              leafletOutput("map_europe")
+            )
+        )
+      )
     )
   )
 )
