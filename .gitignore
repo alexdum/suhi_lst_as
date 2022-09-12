@@ -4,6 +4,7 @@
 .Ruserdata
 misc/*
 www/data/tabs/suhi/*
+www/data/tabs/ncs/*
 ../../../../.DS_Store
 ../../../.DS_Store
 ../../.DS_Store
