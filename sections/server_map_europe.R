@@ -9,6 +9,11 @@
 # output$mapno2_act.text <- renderText(paste0("Satellite Observed Tropospheric NO₂ Concentration - montlhy means January 01, 2020 - ", 
 #                                             format(max(dats.act), "%B %d, %Y")))
 
+# colors continental urban scale
+domain <- c(-40, 60)
+pal_rev <- colorNumeric("RdYlBu", domain = domain, reverse = F, na.color = "transparent")
+pal <- colorNumeric("RdYlBu", domain = domain, reverse = T, na.color = "transparent")
+
 output$text_map_europe <- renderText({
   paste0("Daily LST ",input$param_europe," values: ", format(input$days_europe, "%B %d, %Y"))
 })
@@ -29,7 +34,7 @@ reactiveAct <- eventReactive(
    
     lst <- lst[[index]]
     print(summary(lst))
-    list(lst = lst)
+    list(lst = lst, index = index)
   })
 
 output$map_europe <- renderLeaflet({
@@ -37,6 +42,10 @@ output$map_europe <- renderLeaflet({
     options = leafletOptions(minZoom = 3, maxZoom = 12)) %>%
     setView(25, 46, zoom = 3) %>%
     setMaxBounds(-13.5, 30, 57, 65) %>% 
+    addProviderTiles("CartoDB.PositronNoLabels") %>%
+    addProviderTiles("Stamen.TonerLines") %>%
+    addRasterImage(lst.avg[[isolate(reactiveAct()$index)]], colors = pal, opacity = .8)  %>%
+    addProviderTiles("CartoDB.PositronOnlyLabels") %>%
     addEasyButton(
       easyButton(
         icon    = "glyphicon glyphicon-home", title = "Reset zoom",
@@ -52,11 +61,7 @@ output$map_europe <- renderLeaflet({
 
 
 observe({
-  
-  # colors continental urban scale
-  domain <- c(-40, 60)
-  pal_rev <- colorNumeric("RdYlBu", domain = domain, reverse = F, na.color = "transparent")
-  pal <- colorNumeric("RdYlBu", domain = domain, reverse = T, na.color = "transparent")
+
 
   lst <- reactiveAct()$lst
   leafletProxy("map_europe") %>%
