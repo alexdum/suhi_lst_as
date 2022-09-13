@@ -10,7 +10,7 @@
 #                                             format(max(dats.act), "%B %d, %Y")))
 
 output$text_map_europe <- renderText({
-  paste0("Daily LST values", format(input$days_europe, "%B %d, %Y"))
+  paste0("Daily LST values: ", format(input$days_europe, "%B %d, %Y"))
 })
 
 # set color palette
@@ -52,15 +52,24 @@ output$map_europe <- renderLeaflet({
 
 
 observe({
-  
+
+  pal_rev <- colorNumeric("RdYlBu", domain = c(-30, 60), reverse = F, na.color = "transparent")
+  pal <- colorNumeric("RdYlBu", domain = c(-30, 60), reverse = T, na.color = "transparent")
+
   lst <- lst.avg[[reactiveAct()$index]]
   leafletProxy("map_europe") %>%
     clearImages() %>%
     addProviderTiles("CartoDB.PositronNoLabels") %>%
     addProviderTiles("Stamen.TonerLines") %>%
-    addRasterImage(lst, colors = color_pal, opacity = .8)  %>%
-    addProviderTiles("CartoDB.PositronOnlyLabels") 
-  
-  
+    addRasterImage(lst, colors = pal, opacity = .8)  %>%
+    addProviderTiles("CartoDB.PositronOnlyLabels") %>%
+    clearControls() %>%
+    addLegend(
+      title =  "     °C",
+      position = "bottomright",
+      pal = pal_rev, values = -30:60,
+      opacity = 1,
+      labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
+    )
   
 })
