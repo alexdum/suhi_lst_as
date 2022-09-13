@@ -48,5 +48,8 @@ dt.lst <- rbindlist(dt.lst, idcol = "id" )
 
 # read daily lst
 
-lst.avg <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_avg_2021.nc")
-dats.lst.avg  <- as.Date(names(lst.avg) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00")
+lst.avg <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_avg_2022.nc")
+
+dats.lst.avg  <- as.Date(names(lst.avg) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+dats.lst.avg <- dats.lst.avg[dats.lst.avg <=  max(dt.lst$date)]
+                 
