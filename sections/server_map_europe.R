@@ -10,18 +10,26 @@
 #                                             format(max(dats.act), "%B %d, %Y")))
 
 output$text_map_europe <- renderText({
-  paste0("Daily LST values: ", format(input$days_europe, "%B %d, %Y"))
+  paste0("Daily LST ",input$param_europe," values: ", format(input$days_europe, "%B %d, %Y"))
 })
 
 
 #lst <- lst.avg[[which(as.character(dats.lst.avg) %in% as.character("2021-01-01"))]]
 
 reactiveAct <- eventReactive(
-  list(isolate(input$tab_maps), input$days_europe), {
-    
+  list(isolate(input$tab_maps), input$days_europe,  input$param_europe), {
     index <- which(as.character(dats.lst.avg) %in% as.character(input$days_europe))
-    print(input$days_europe)
-    list(index = index)
+    
+    switch (
+      which(c("avg","min","max" ) %in%  input$param_europe),
+      lst <- lst.avg,
+      lst <- lst.min,
+      lst <- lst.max
+    )
+   
+    lst <- lst[[index]]
+    print(summary(lst))
+    list(lst = lst)
   })
 
 output$map_europe <- renderLeaflet({
@@ -50,7 +58,7 @@ observe({
   pal_rev <- colorNumeric("RdYlBu", domain = domain, reverse = F, na.color = "transparent")
   pal <- colorNumeric("RdYlBu", domain = domain, reverse = T, na.color = "transparent")
 
-  lst <- lst.avg[[reactiveAct()$index]]
+  lst <- reactiveAct()$lst
   leafletProxy("map_europe") %>%
     clearImages() %>%
     addProviderTiles("CartoDB.PositronNoLabels") %>%
