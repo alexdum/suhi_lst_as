@@ -51,7 +51,7 @@ ui_maps <- tabPanel(
       sidebarLayout(
         fluid = T,
         sidebarPanel(
-          #   width = 3,
+          width = 3,
           #   selectInput(
           #     "parameter", "Prameter:", 
           #     choices_map, 
@@ -67,10 +67,10 @@ ui_maps <- tabPanel(
           #   downloadButton('downloadDataMap', 'Download'),
         ),
         mainPanel(
-          #   width = 9,
-          #   wellPanel(
-          #     textOutput("text_map")
-          #   ),
+          width = 9,
+          wellPanel(
+          textOutput("text_map_europe")
+          ),
             wellPanel(
               leafletOutput("map_europe")
             )
