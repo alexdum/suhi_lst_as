@@ -53,8 +53,8 @@ output$map_europe <- renderLeaflet({
 
 observe({
 
-  pal_rev <- colorNumeric("RdYlBu", domain = c(-30, 60), reverse = F, na.color = "transparent")
-  pal <- colorNumeric("RdYlBu", domain = c(-30, 60), reverse = T, na.color = "transparent")
+  pal_rev <- colorNumeric("RdYlBu", domain = c(-20, 40), reverse = F, na.color = "transparent")
+  pal <- colorNumeric("RdYlBu", domain = c(-20, 40), reverse = T, na.color = "transparent")
 
   lst <- lst.avg[[reactiveAct()$index]]
   leafletProxy("map_europe") %>%
