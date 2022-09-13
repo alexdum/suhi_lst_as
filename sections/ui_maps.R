@@ -11,7 +11,7 @@ ui_maps <- tabPanel(
       tags$h5("Cities for which Surface Urban Heat Island (SUHI) and Land Surface Temperature (LST) has been calculated from LST AS SEVIRI product"),
       #tags$h6(" "),
       tags$br(""),
-      fluidrow(
+      fluidRow(
         column(
           width = 3,
           wellPanel(
