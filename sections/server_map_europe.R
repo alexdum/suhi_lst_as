@@ -67,7 +67,7 @@ observe({
     addLegend(
       title =  "     °C",
       position = "bottomright",
-      pal = pal_rev, values = -30:60,
+      pal = pal_rev, values = -20:40,
       opacity = 1,
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
     )
