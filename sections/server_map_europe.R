@@ -45,7 +45,11 @@ output$map_europe <- renderLeaflet({
         icon    = "glyphicon glyphicon-home", title = "Reset zoom",
         onClick = JS("function(btn, map){ map.setView([46, 25], 3); }")
       )
-    )
+    ) %>%
+  addScaleBar(
+    position = c("bottomleft"),
+    options = scaleBarOptions(metric = TRUE)
+  )
   
 })
 

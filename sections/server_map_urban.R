@@ -37,6 +37,10 @@ output$map <- renderLeaflet ({
       "CartoDB.PositronOnlyLabels",
       options = pathOptions(pane = "maplabels"),
       group = "Labels"
+    ) %>%
+    addScaleBar(
+      position = c("bottomleft"),
+      options = scaleBarOptions(metric = TRUE)
     )
   
 })
@@ -44,7 +48,7 @@ output$map <- renderLeaflet ({
 
 
 params <- reactive({
- 
+  
   param <- input$parameter
   param.label <- names(choices_map[choices_map==param])
   print(param.label)
@@ -63,7 +67,7 @@ output$text_map <- renderText({
 observe({
   cities.filt <- cities_map |> right_join(params()$param_data, by = c("city" = "id"))
   #print( cities.filt$city)
-
+  
   vals <- seq(floor(min(cities.filt$values, na.rm = T)),ceiling(max(cities.filt$values, na.rm = T)), 0.1)
   pal_rev <- colorNumeric(
     "RdYlBu",
