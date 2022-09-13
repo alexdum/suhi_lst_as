@@ -11,27 +11,28 @@ ui_maps <- tabPanel(
       tags$h5("Cities for which Surface Urban Heat Island (SUHI) and Land Surface Temperature (LST) has been calculated from LST AS SEVIRI product"),
       #tags$h6(" "),
       tags$br(""),
-      sidebarLayout(
-        fluid = T,
-        sidebarPanel(
-          width = 2,
-          selectInput(
-            "parameter", "Prameter:", 
-            choices_map, 
-            selected = choices_map[2]
-          ),
-          dateInput(
-            'days_suhi',
-            label = 'Day:',
-            min = min(dt.lst$date) |> as.Date(),
-            max = max(dt.lst$date) |> as.Date(),
-            value = max(dt.lst$date) |> as.Date()
-          ),
-          downloadButton('downloadDataMap', 'Download'),
+      fluidrow(
+        column(
+          width = 3,
+          wellPanel(
+            selectInput(
+              "parameter", "Prameter:", 
+              choices_map, 
+              selected = choices_map[2]
+            ),
+            dateInput(
+              'days_suhi',
+              label = 'Day:',
+              min = min(dt.lst$date) |> as.Date(),
+              max = max(dt.lst$date) |> as.Date(),
+              value = max(dt.lst$date) |> as.Date()
+            ),
+            downloadButton('downloadDataMap', 'Download'),
+          )
         )
         ,
-        mainPanel(
-          width = 8,
+        column(
+          width = 9,
           wellPanel(
             textOutput("text_map")
           ),
@@ -50,7 +51,7 @@ ui_maps <- tabPanel(
       tags$br(""),
       fluidRow(
         column(
-          width = 2,
+          width = 3,
           wellPanel(
             dateInput(
               'days_europe',
@@ -63,7 +64,7 @@ ui_maps <- tabPanel(
           )
         ),
         column(
-          width = 8,
+          width = 9,
           wellPanel(
             textOutput("text_map_europe")
           ),

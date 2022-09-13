@@ -16,23 +16,24 @@ ui_graphs <- tabPanel(
       tags$h5("Surface Urban Heat Island (SUHI) and Land Surface Temperature (LST) as detected from LST AS SEVIRI product"),
       #tags$h6(" "),
       tags$br(""),
-      sidebarLayout(
-        fluid = T,
-        sidebarPanel(
-          width = 2,
-          selectInput("city", "City:", choices, selected = choices[sample(1:length(choices), 1)]),
-          downloadButton('downloadData', 'Download')
+      fluidRow(
+        column(
+          width = 3,
+          wellPanel(
+            selectInput("city", "City:", choices, selected = choices[sample(1:length(choices), 1)]),
+            downloadButton('downloadData', 'Download')
+          )
         ),
-        mainPanel( 
-          width = 8,
+        column( 
+          width = 9,
           fluidRow(
             wellPanel(
-            textOutput("text_uhi"),
-            highchartOutput("suhi")
+              textOutput("text_uhi"),
+              highchartOutput("suhi")
             ),
             wellPanel(
-            textOutput("text_lst"),
-            highchartOutput("lst")
+              textOutput("text_lst"),
+              highchartOutput("lst")
             )
           )
         )
