@@ -48,15 +48,10 @@ ui_maps <- tabPanel(
       tags$h5("Spatial distribution of LST data at continental scale"),
       #tags$h6(" "),
       tags$br(""),
-      sidebarLayout(
-        fluid = T,
-        sidebarPanel(
+      fluidRow(
+        column(
           width = 2,
-          #   selectInput(
-          #     "parameter", "Prameter:", 
-          #     choices_map, 
-          #     selected = choices_map[2]
-          #   ),
+          wellPanel(
             dateInput(
               'days_europe',
               label = 'Day:',
@@ -64,16 +59,17 @@ ui_maps <- tabPanel(
               max = max(dats.lst.avg),
               value = max(dats.lst.avg)
             ),
-          #   downloadButton('downloadDataMap', 'Download'),
+            #   downloadButton('downloadDataMap', 'Download'),
+          )
         ),
-        mainPanel(
+        column(
           width = 8,
           wellPanel(
-          textOutput("text_map_europe")
+            textOutput("text_map_europe")
           ),
-            wellPanel(
-              leafletOutput("map_europe")
-            )
+          wellPanel(
+            leafletOutput("map_europe")
+          )
         )
       )
     )
