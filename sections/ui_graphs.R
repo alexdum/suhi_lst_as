@@ -19,12 +19,12 @@ ui_graphs <- tabPanel(
       sidebarLayout(
         fluid = T,
         sidebarPanel(
-          width = 3,
+          width = 2,
           selectInput("city", "City:", choices, selected = choices[sample(1:length(choices), 1)]),
           downloadButton('downloadData', 'Download')
         ),
         mainPanel( 
-          width = 9,
+          width = 8,
           fluidRow(
             wellPanel(
             textOutput("text_uhi"),

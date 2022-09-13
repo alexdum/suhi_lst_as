@@ -14,7 +14,7 @@ ui_maps <- tabPanel(
       sidebarLayout(
         fluid = T,
         sidebarPanel(
-          width = 3,
+          width = 2,
           selectInput(
             "parameter", "Prameter:", 
             choices_map, 
@@ -31,7 +31,7 @@ ui_maps <- tabPanel(
         )
         ,
         mainPanel(
-          width = 9,
+          width = 8,
           wellPanel(
             textOutput("text_map")
           ),
@@ -51,7 +51,7 @@ ui_maps <- tabPanel(
       sidebarLayout(
         fluid = T,
         sidebarPanel(
-          width = 3,
+          width = 2,
           #   selectInput(
           #     "parameter", "Prameter:", 
           #     choices_map, 
@@ -67,7 +67,7 @@ ui_maps <- tabPanel(
           #   downloadButton('downloadDataMap', 'Download'),
         ),
         mainPanel(
-          width = 9,
+          width = 8,
           wellPanel(
           textOutput("text_map_europe")
           ),
