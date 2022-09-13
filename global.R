@@ -47,9 +47,11 @@ names(dt.lst) <- strsplit(files.lst, "stats_|_v") %>% do.call(rbind,.) %>% as_ti
 dt.lst <- rbindlist(dt.lst, idcol = "id" )
 
 # read daily lst
+lst.max <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_max.nc")
+dats.lst.max  <- as.Date(names(lst.max) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+dats.lst.max <- dats.lst.max[dats.lst.max <=  max(dt.lst$date)]
 
-lst.avg <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_avg_2022.nc")
-
+lst.avg <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_avg.nc")
 dats.lst.avg  <- as.Date(names(lst.avg) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
-dats.lst.avg <- dats.lst.avg[dats.lst.avg <=  max(dt.lst$date)]
+dats.lst.avg <- dats.lst.max[dats.lst.avg <=  max(dt.lst$date)]
                  
