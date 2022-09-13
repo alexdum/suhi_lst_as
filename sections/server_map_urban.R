@@ -91,7 +91,7 @@ observe({
     ) %>% 
     clearControls() %>%
     addLegend(
-      title =  gsub("mean", "", params()$param.label),
+      title =  paste(gsub("mean", "", params()$param.label),"[°C]"),
       position = "bottomright",
       pal = pal_rev, values = vals,
       opacity = 1,
