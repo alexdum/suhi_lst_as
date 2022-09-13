@@ -54,4 +54,11 @@ dats.lst.max <- dats.lst.max[dats.lst.max <=  max(dt.lst$date)]
 lst.avg <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_avg.nc")
 dats.lst.avg  <- as.Date(names(lst.avg) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
 dats.lst.avg <- dats.lst.max[dats.lst.avg <=  max(dt.lst$date)]
-                 
+
+lst.min <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_min.nc")
+dats.lst.min  <- as.Date(names(lst.min) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+dats.lst.min <- dats.lst.max[dats.lst.min <=  max(dt.lst$date)]
+
+    
+
+
