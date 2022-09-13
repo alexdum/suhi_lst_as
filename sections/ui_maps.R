@@ -53,6 +53,11 @@ ui_maps <- tabPanel(
         column(
           width = 3,
           wellPanel(
+            selectInput(
+              "param_europe", "Prameter:", 
+              choices_map_europe, 
+              selected = choices_map_europe[1]
+            ),
             dateInput(
               'days_europe',
               label = 'Day:',
