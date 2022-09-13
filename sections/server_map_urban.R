@@ -11,19 +11,18 @@ filteredData <- eventReactive(
 
 # harta leaflet -----------------------------------------------------------
 output$map <- renderLeaflet ({
-  leaflet(data = cities_map,
-          options = leafletOptions(
-            minZoom = 3, maxZoom = 12
-          ) 
+  leaflet(
+    data = cities_map,
+    options = leafletOptions(
+      minZoom = 3, maxZoom = 12
+    ) 
   ) %>%
     leaflet.extras::addBootstrapDependency() %>%
     setView(25, 46, zoom = 3) %>%
     setMaxBounds(-13.5, 30, 57, 65) %>% 
     addMapPane(name = "pol", zIndex = 410) %>%
     addMapPane(name = "maplabels", zIndex = 420) %>%
-    addProviderTiles(
-      "CartoDB.PositronNoLabels"
-    )   %>% 
+    addProviderTiles( "CartoDB.PositronNoLabels")   %>% 
     addEasyButton(
       easyButton (
         icon    = "glyphicon glyphicon-home", title = "Reset zoom",
@@ -78,7 +77,7 @@ observe({
     vals,
     reverse = T)
   
-  proxy <- leafletProxy("map", data = cities.filt) %>%
+  leafletProxy("map", data = cities.filt) %>%
     clearShapes() %>%
     addPolygons(
       label = ~htmlEscape(label),
