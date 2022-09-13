@@ -1,13 +1,4 @@
-# data vezi in global
-# omi.act <- raster::stack("data/OMI-Aura/OMI-Aura_L3-OMNO2d_monthly.nc")
-# omi.act <- omi.act/10^15  
-# dats.act <- as.Date(names(omi.act), "X%Y.%m.%d")
-# 
-# omi.act[omi.act > 8] <- 8
-# omi.act[omi.act < 2] <- 2
-
-# output$mapno2_act.text <- renderText(paste0("Satellite Observed Tropospheric NO₂ Concentration - montlhy means January 01, 2020 - ", 
-#                                             format(max(dats.act), "%B %d, %Y")))
+# https://stackoverflow.com/questions/54679054/r-leaflet-use-pane-with-addrasterimage                                  format(max(dats.act), "%B %d, %Y")))
 
 # colors continental urban scale
 domain <- c(-40, 60)
@@ -31,9 +22,8 @@ reactiveAct <- eventReactive(
       lst <- lst.min,
       lst <- lst.max
     )
-   
+    
     lst <- lst[[index]]
-    print(summary(lst))
     list(lst = lst, index = index)
   })
 
@@ -41,11 +31,19 @@ output$map_europe <- renderLeaflet({
   leaflet( 
     options = leafletOptions(minZoom = 3, maxZoom = 12)) %>%
     setView(25, 46, zoom = 3) %>%
-    setMaxBounds(-13.5, 30, 57, 65) %>% 
+    setMaxBounds(-13.5, 30, 57, 65) %>%
+    addMapPane(name = "raster", zIndex = 410) %>%
+    addMapPane(name = "maplabels", zIndex = 420)%>% 
     addProviderTiles("CartoDB.PositronNoLabels") %>%
     addProviderTiles("Stamen.TonerLines") %>%
-    addRasterImage(lst.avg[[isolate(reactiveAct()$index)]], colors = pal, opacity = .8)  %>%
-    addProviderTiles("CartoDB.PositronOnlyLabels") %>%
+    addRasterImage(
+      lst.avg[[isolate(reactiveAct()$index)]], colors = pal, opacity = .8,
+      options = leafletOptions(pane = "raster")
+    )  %>%
+    addProviderTiles(
+      "CartoDB.PositronOnlyLabels",
+      options = pathOptions(pane = "maplabels")
+    ) %>%
     addEasyButton(
       easyButton(
         icon    = "glyphicon glyphicon-home", title = "Reset zoom",
@@ -61,15 +59,15 @@ output$map_europe <- renderLeaflet({
 
 
 observe({
-
-
+  
+  
   lst <- reactiveAct()$lst
   leafletProxy("map_europe") %>%
     clearImages() %>%
-    addProviderTiles("CartoDB.PositronNoLabels") %>%
-    addProviderTiles("Stamen.TonerLines") %>%
+    #addProviderTiles("CartoDB.PositronNoLabels") %>%
+    #addProviderTiles("Stamen.TonerLines") %>%
     addRasterImage(lst, colors = pal, opacity = .8)  %>%
-    addProviderTiles("CartoDB.PositronOnlyLabels") %>%
+    #addProviderTiles("CartoDB.PositronOnlyLabels") %>%
     clearControls() %>%
     addLegend(
       title =  "     °C",
