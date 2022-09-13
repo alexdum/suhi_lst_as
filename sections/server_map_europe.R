@@ -13,14 +13,6 @@ output$text_map_europe <- renderText({
   paste0("Daily LST values: ", format(input$days_europe, "%B %d, %Y"))
 })
 
-# set color palette
-color_pal <- colorNumeric(rev(c('#0A0615','#190D3D','#a50026','#d73027','#f46d43','#fdae61','#fee090','#ffffbf','#e0f3f8','#abd9e9','#74add1','#4575b4')),
-                          domain = c(-30, 60),
-                          na.color = "transparent")
-
-# pal = colorNumeric(c("#7f007f", "#0000ff",  "#007fff", "#00ffff", "#00bf00", "#7fdf00",
-#                      "#ffff00", "#ff7f00", "#ff3f00", "#ff0000", "#bf0000"), values(sst.tz),  na.color = "transparent")
-
 
 #lst <- lst.avg[[which(as.character(dats.lst.avg) %in% as.character("2021-01-01"))]]
 
@@ -52,9 +44,10 @@ output$map_europe <- renderLeaflet({
 
 
 observe({
-
-  pal_rev <- colorNumeric("RdYlBu", domain = c(-20, 40), reverse = F, na.color = "transparent")
-  pal <- colorNumeric("RdYlBu", domain = c(-20, 40), reverse = T, na.color = "transparent")
+  
+  # colors continental urban scale
+  pal_rev <- colorNumeric("RdYlBu", domain = c(-40, 60), reverse = F, na.color = "transparent")
+  pal <- colorNumeric("RdYlBu", domain = c(-40, 60), reverse = T, na.color = "transparent")
 
   lst <- lst.avg[[reactiveAct()$index]]
   leafletProxy("map_europe") %>%
