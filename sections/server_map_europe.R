@@ -42,8 +42,8 @@ output$map_europe <- renderLeaflet({
     #ddTiles(group = "OSM ") %>%
     #addProviderTiles(providers$Stamen.Toner, group = "Toner (default)") %>%
     addProviderTiles(providers$Stamen.TonerLite) %>%
-    addProviderTiles(providers$Stamen.TonerLabels) %>%
     addRasterImage( lst.avg[[isolate(reactiveAct()$index)]], colors = color_pal, opacity = .8)  %>%
+    addProviderTiles(providers$Stamen.TonerLabels) %>%
     addEasyButton(
       easyButton(
         icon    = "glyphicon glyphicon-home", title = "Reset zoom",
