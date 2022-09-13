@@ -10,7 +10,7 @@
 #                                             format(max(dats.act), "%B %d, %Y")))
 
 output$text_map_europe <- renderText({
-  paste0("Daily LST values: ", format(input$days_europe, "%B %d, %Y"))
+  paste0("Daily LST values", format(input$days_europe, "%B %d, %Y"))
 })
 
 # set color palette
@@ -37,13 +37,6 @@ output$map_europe <- renderLeaflet({
     options = leafletOptions(minZoom = 3, maxZoom = 12)) %>%
     setView(25, 46, zoom = 3) %>%
     setMaxBounds(-13.5, 30, 57, 65) %>% 
-    
-    #ddTiles(group = "OSM ") %>%
-    #addProviderTiles(providers$Stamen.Toner, group = "Toner (default)") %>%
-    addProviderTiles("CartoDB.PositronNoLabels") %>%
-    addProviderTiles("Stamen.TonerLines") %>%
-    addRasterImage( lst.avg[[isolate(reactiveAct()$index)]], colors = color_pal, opacity = .8)  %>%
-    addProviderTiles("CartoDB.PositronOnlyLabels")  %>%
     addEasyButton(
       easyButton(
         icon    = "glyphicon glyphicon-home", title = "Reset zoom",
@@ -63,8 +56,10 @@ observe({
   lst <- lst.avg[[reactiveAct()$index]]
   leafletProxy("map_europe") %>%
     clearImages() %>%
-    addRasterImage(lst, colors = color_pal, opacity = .8) 
-   
+    addProviderTiles("CartoDB.PositronNoLabels") %>%
+    addProviderTiles("Stamen.TonerLines") %>%
+    addRasterImage(lst, colors = color_pal, opacity = .8)  %>%
+    addProviderTiles("CartoDB.PositronOnlyLabels") 
   
   
   
