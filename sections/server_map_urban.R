@@ -68,14 +68,8 @@ observe({
   #print( cities.filt$city)
   
   vals <- seq(floor(min(cities.filt$values, na.rm = T)),ceiling(max(cities.filt$values, na.rm = T)), 0.1)
-  pal_rev <- colorNumeric(
-    "RdYlBu",
-    vals,
-    reverse = F)
-  pal <- colorNumeric(
-    "RdYlBu",
-    vals,
-    reverse = T)
+  pal_rev <- colorNumeric("RdYlBu", vals, reverse = F)
+  pal <- colorNumeric( "RdYlBu", vals, reverse = T)
   
   leafletProxy("map", data = cities.filt) %>%
     clearShapes() %>%
