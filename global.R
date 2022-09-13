@@ -32,6 +32,10 @@ cities_map <- st_read("www/data/shp/cities_one_file.shp") %>%
 # pentru dropdown parameters maps
 choices_map <- read.csv("www/data/tabs/slelect_input_parameters.csv") 
 choices_map <-   setNames(choices_map$choice, choices_map$parameter)
+
+# pentru dropdown parameters maps europ
+choices_map_europe <- read.csv("www/data/tabs/slelect_input_parameters_europe.csv") 
+choices_map_europe <- setNames(choices_map_europe$choice, choices_map_europe$parameter)
        
 
 # read all uhi files
