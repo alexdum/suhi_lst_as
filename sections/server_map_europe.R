@@ -10,8 +10,7 @@
 #                                             format(max(dats.act), "%B %d, %Y")))
 
 output$text_map_europe <- renderText({
-  paste0("Satellite Observed Tropospheric NO₂ Concentration - montlhy means January 01, 2020 - ", 
-         format(input, "%B %d, %Y"))
+  paste0("Daily LST values", forma(input$days_europe, "%B %d, %Y"))
 })
 
 # set color palette
@@ -50,22 +49,22 @@ output$map_europe <- renderLeaflet({
         onClick = JS("function(btn, map){ map.setView([46, 25], 3); }")
       )
     ) %>%
-  addScaleBar(
-    position = c("bottomleft"),
-    options = scaleBarOptions(metric = TRUE)
-  )
+    addScaleBar(
+      position = c("bottomleft"),
+      options = scaleBarOptions(metric = TRUE)
+    )
   
 })
 
 
 observe({
-
+  
   lst <- lst.avg[[reactiveAct()$index]]
   leafletProxy("map_europe") %>%
     clearImages() %>%
-    addProviderTiles(providers$Stamen.TonerLite) %>%
+    addProviderTiles("CartoDB.PositronNoLabels") %>%
     addRasterImage(lst, colors = color_pal, opacity = .8)  %>%
-  addProviderTiles(providers$Stamen.TonerLabels) 
+    addProviderTiles(providers$Stamen.TonerLabels) 
   
   
   
