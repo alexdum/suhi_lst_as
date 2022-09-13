@@ -46,8 +46,9 @@ output$map_europe <- renderLeaflet({
 observe({
   
   # colors continental urban scale
-  pal_rev <- colorNumeric("RdYlBu", domain = c(-40, 60), reverse = F, na.color = "transparent")
-  pal <- colorNumeric("RdYlBu", domain = c(-40, 60), reverse = T, na.color = "transparent")
+  domain <- c(-40, 60)
+  pal_rev <- colorNumeric("RdYlBu", domain = domain, reverse = F, na.color = "transparent")
+  pal <- colorNumeric("RdYlBu", domain = domain, reverse = T, na.color = "transparent")
 
   lst <- lst.avg[[reactiveAct()$index]]
   leafletProxy("map_europe") %>%
@@ -60,7 +61,7 @@ observe({
     addLegend(
       title =  "     °C",
       position = "bottomright",
-      pal = pal_rev, values = -20:40,
+      pal = pal_rev, values = domain,
       opacity = 1,
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
     )
