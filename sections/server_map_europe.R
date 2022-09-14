@@ -53,6 +53,14 @@ output$map_europe <- renderLeaflet({
     addScaleBar(
       position = c("bottomleft"),
       options = scaleBarOptions(metric = TRUE)
+    )  %>% 
+    clearControls() %>%
+    addLegend(
+      title =  "     °C",
+      position = "bottomright",
+      pal = pal_rev, values = domain,
+      opacity = 1,
+      labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
     )
   
 })
@@ -66,15 +74,8 @@ observe({
     clearImages() %>%
     #addProviderTiles("CartoDB.PositronNoLabels") %>%
     #addProviderTiles("Stamen.TonerLines") %>%
-    addRasterImage(lst, colors = pal, opacity = .8)  %>%
+    addRasterImage(lst, colors = pal, opacity = .8)  
     #addProviderTiles("CartoDB.PositronOnlyLabels") %>%
-    clearControls() %>%
-    addLegend(
-      title =  "     °C",
-      position = "bottomright",
-      pal = pal_rev, values = domain,
-      opacity = 1,
-      labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
-    )
+   
   
 })
