@@ -1,6 +1,6 @@
 
 filteredData <- eventReactive(
-  list(isolate(input$tab_maps), input$days_suhi), {
+  list(input$days_suhi), {
     dt.suhi.filt <- dt.suhi[date == input$days_suhi]
     dt.lst.filt <- dt.lst[date == input$days_suhi]
     merge(dt.suhi.filt,  dt.lst.filt, by.x.y = "id")
@@ -64,6 +64,10 @@ output$text_map <- renderText({
 })
 
 observe({
+  
+  req(input$tabs == "#maps")
+  # req(input$tab_maps == "suhi_maps")
+  
   cities.filt <- cities_map |> right_join(params()$param_data, by = c("city" = "id"))
   #print( cities.filt$city)
   
