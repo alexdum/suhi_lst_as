@@ -84,7 +84,8 @@ observe({
       color = ~pal(values),
       fillOpacity = 1,
       opacity = 1,
-      layerId = ~city
+      layerId = ~city,
+      weight = 8
       
     ) %>% 
     clearControls() %>%
