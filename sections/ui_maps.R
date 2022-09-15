@@ -74,7 +74,7 @@ ui_maps <- tabPanel(
             textOutput("text_map_europe")
           ),
           wellPanel(
-            leafletOutput("map_europe")
+            leafletOutput("map.europe")
           )
         )
       )
