@@ -28,6 +28,7 @@ ui_maps <- tabPanel(
               value = max(dt.lst$date) |> as.Date()
             ),
             downloadButton('downloadDataMap', 'Download'),
+            h6(textOutput("text_down_urb"))
           )
         )
         ,
