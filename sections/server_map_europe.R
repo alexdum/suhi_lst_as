@@ -6,7 +6,7 @@ pal_rev <- colorNumeric("RdYlBu", domain = domain, reverse = F, na.color = "tran
 pal <- colorNumeric("RdYlBu", domain = domain, reverse = T, na.color = "transparent")
 
 output$text_map_europe <- renderText({
-  paste0("Daily LST ",input$param_europe," values: ", format(input$days_europe, "%B %d, %Y"))
+  paste0("Daily LST ",input$param_europe," values: ", format(input$days_europe, "%B %d, %Y") ," (click on map to see the LST value)")
 })
 
 
@@ -27,7 +27,7 @@ reactiveAct <- eventReactive(
     list(lst = lst, index = index)
   })
 
-output$map_europe <- renderLeaflet({
+output$map.europe <- renderLeaflet({
   leaflet( 
     options = leafletOptions(minZoom = 3, maxZoom = 12)) %>%
     setView(25, 46, zoom = 3) %>%
@@ -65,17 +65,27 @@ output$map_europe <- renderLeaflet({
   
 })
 
-
 observe({
-  
-  
   lst <- reactiveAct()$lst
-  leafletProxy("map_europe") %>%
+  leafletProxy("map.europe") %>%
     clearImages() %>%
     #addProviderTiles("CartoDB.PositronNoLabels") %>%
     #addProviderTiles("Stamen.TonerLines") %>%
     addRasterImage(lst, colors = pal, opacity = .8)  
-    #addProviderTiles("CartoDB.PositronOnlyLabels") %>%
-   
-  
+  #addProviderTiles("CartoDB.PositronOnlyLabels") %>%
+})
+
+#Observer to show Popups on click https://stackoverflow.com/questions/37523323/identify-position-of-a-click-on-a-raster-in-leaflet-in-r
+observe({ proxy <- leafletProxy("map.europe")
+
+click <- input$map.europe_click
+
+if (!is.null(click)) {
+  lst <- reactiveAct()$lst
+  cell <- cellFromXY(lst, c(click$lng, click$lat))
+  rc <- rowColFromCell(lst, cell)
+  val = lst[cell]
+  if (!is.na(val)) proxy %>% clearPopups() %>% addPopups(click$lng,click$lat, popup = paste("LST: ", round(val,1)))
+}
+
 })
