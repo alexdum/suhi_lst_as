@@ -59,10 +59,13 @@ params <- reactive({
   list(param = param, param.label = param.label, param_data = param_data)
 })
 
-output$text_map <- renderText({
-  paste(params()$param.label, "computed for major cities:", input$days_suhi)
-})
+output$text_down_urb <- renderText({
+paste("Download", params()$param.label,"data for all cities")
+}) 
 
+output$text_map <- renderText({
+paste(params()$param.label, "computed for major cities:", input$days_suhi)
+}) 
 observe({
   
   req(input$tabs == "#maps")
