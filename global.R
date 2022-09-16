@@ -55,19 +55,19 @@ dt.lst <- rbindlist(dt.lst, idcol = "id" )
 
 
 # read lst parquet
-lst.max <- read_pq(file = "lst_max.parquet") %>% collect()
+lst.max <- read_pq(file = "www/data/pq/lst_max.parquet") %>% collect()
 dats.lst.max <- data.frame(
   names = names(lst.max),
   days = as.Date(names(lst.max) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
 )
 
-lst.min <- read_pq(file = "lst_min.parquet") %>% collect()
+lst.min <- read_pq(file = "www/data/pq/lst_min.parquet") %>% collect()
 dats.lst.min <- data.frame(
   names = names(lst.min),
   days = as.Date(names(lst.min) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
 )
 
-lst.avg <- read_pq(file = "lst_avg.parquet") %>% collect()
+lst.avg <- read_pq(file = "www/data/pq/lst_avg.parquet") %>% collect()
 dats.lst.avg <- data.frame(
   names = names(lst.avg),
   days = as.Date(names(lst.avg) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
