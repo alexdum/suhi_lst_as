@@ -62,9 +62,9 @@ ui_maps <- tabPanel(
             dateInput(
               'days_europe',
               label = 'Day:',
-              min = min(dats.lst.avg$days),
-              max = max(dats.lst.avg$days),
-              value = max(dats.lst.avg$days)
+              min = min(dats.lst.avg),
+              max = max(dats.lst.avg),
+              value = max(dats.lst.avg)
             ),
             #   downloadButton('downloadDataMap', 'Download'),
           )
