@@ -7,6 +7,7 @@ www/data/tabs/suhi/*
 # exception to the rule
 !www/data/tabs/suhi/.gitkeep 
 www/data/ncs/*
+www/data/pq/*
 !www/data/ncs/.gitkeep 
 ../../../../.DS_Store
 ../../../.DS_Store
