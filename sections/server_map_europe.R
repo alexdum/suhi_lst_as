@@ -14,7 +14,8 @@ output$text_map_europe <- renderText({
 
 reactiveAct <- eventReactive(
   list(isolate(input$tab_maps), input$days_europe,  input$param_europe), {
-    index <- which(as.character(dats.lst.avg) %in% as.character(input$days_europe))
+    
+    index <- which(as.character(dats.lst.avg$days) %in% as.character(input$days_europe))
     
     switch (
       which(c("avg","min","max" ) %in%  input$param_europe),
@@ -23,11 +24,14 @@ reactiveAct <- eventReactive(
       lst <- lst.max
     )
     
-    lst <- lst[[index]]
-    list(lst = lst, index = index)
+    rc[] <- lst[,index]
+    list(lst = rc, index = index)
   })
 
 output$map.europe <- renderLeaflet({
+
+  rc[] <- lst.avg[,isolate(reactiveAct()$index)]
+
   leaflet( 
     options = leafletOptions(minZoom = 3, maxZoom = 12)) %>%
     setView(25, 46, zoom = 3) %>%
@@ -37,7 +41,7 @@ output$map.europe <- renderLeaflet({
     addProviderTiles("CartoDB.PositronNoLabels") %>%
     addProviderTiles("Stamen.TonerLines") %>%
     addRasterImage(
-      lst.avg[[isolate(reactiveAct()$index)]], colors = pal, opacity = .8,
+      rc, colors = pal, opacity = .8,
       options = leafletOptions(pane = "raster")
     )  %>%
     addProviderTiles(
