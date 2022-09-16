@@ -11,12 +11,9 @@ library(htmltools)
 library(RColorBrewer)
 library(markdown)
 library(raster)
-library(arrow)
-library(reticulate)
 #https://shiny.rstudio.com/gallery/superzip-example.htmlhttps://shiny.rstudio.com/gallery/superzip-example.html
 
 source("utils/graphs_funs.R")
-source_python("utils/read_pq.py")
 
 # listă orașe din tabel selectInput care au date cities
 cities <- list.files("www/data/tabs/suhi", pattern = "^suhi", full.names = T) %>%
@@ -39,7 +36,7 @@ choices_map <-   setNames(choices_map$choice, choices_map$parameter)
 # pentru dropdown parameters maps europ
 choices_map_europe <- read.csv("www/data/tabs/slelect_input_parameters_europe.csv") 
 choices_map_europe <- setNames(choices_map_europe$choice, choices_map_europe$parameter)
-
+       
 
 # read all uhi files
 files.suhi <- paste0(select_input_cities$V1,"suhi_",select_input_cities$choice, "_v02.csv")
@@ -53,32 +50,19 @@ dt.lst <- lapply(files.lst, fread)
 names(dt.lst) <- strsplit(files.lst, "stats_|_v") %>% do.call(rbind,.) %>% as_tibble() %>% dplyr::select(V2) %>% unlist()
 dt.lst <- rbindlist(dt.lst, idcol = "id" )
 
+# read daily lst
+lst.max <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_max.nc")
+dats.lst.max  <- as.Date(names(lst.max) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+dats.lst.max <- dats.lst.max[dats.lst.max <=  max(dt.lst$date)]
 
-# read lst parquet
-lst.max <- read_pq(file = "www/data/pq/lst_max.parquet") %>% collect()
-dats.lst.max <- data.frame(
-  names = names(lst.max),
-  days = as.Date(names(lst.max) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
-)
+lst.avg <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_avg.nc")
+dats.lst.avg  <- as.Date(names(lst.avg) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+dats.lst.avg <- dats.lst.max[dats.lst.avg <=  max(dt.lst$date)]
 
-lst.min <- read_pq(file = "www/data/pq/lst_min.parquet") %>% collect()
-dats.lst.min <- data.frame(
-  names = names(lst.min),
-  days = as.Date(names(lst.min) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
-)
+lst.min <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_min.nc")
+dats.lst.min  <- as.Date(names(lst.min) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+dats.lst.min <- dats.lst.max[dats.lst.min <=  max(dt.lst$date)]
 
-lst.avg <- read_pq(file = "www/data/pq/lst_avg.parquet") %>% collect()
-dats.lst.avg <- data.frame(
-  names = names(lst.avg),
-  days = as.Date(names(lst.avg) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
-)
-
-# raster container europe domain
-rc <- raster(xmn = -12, xmx = 56, ymn = 27.58, ymx = 71.5, nrow = 1098, ncol = 1700, crs = "+proj=longlat +datum=WGS84", res = 0.04)
-
-
-
-
-
+    
 
 
