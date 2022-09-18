@@ -65,6 +65,7 @@ output$map.europe <- renderLeaflet({
   
 })
 
+
 observe({
   lst <- reactiveAct()$lst
   leafletProxy("map.europe") %>%
@@ -75,17 +76,42 @@ observe({
   #addProviderTiles("CartoDB.PositronOnlyLabels") %>%
 })
 
+
+
 #Observer to show Popups on click https://stackoverflow.com/questions/37523323/identify-position-of-a-click-on-a-raster-in-leaflet-in-r
-observe({ proxy <- leafletProxy("map.europe")
-
-click <- input$map.europe_click
-
-if (!is.null(click)) {
+observe({ 
+  print(input$param_europe)
+  proxy <- leafletProxy("map.europe")
+  click <- input$map.europe_click
   lst <- reactiveAct()$lst
-  cell <- cellFromXY(lst, c(click$lng, click$lat))
-  rc <- rowColFromCell(lst, cell)
-  val = lst[cell]
-  if (!is.na(val)) proxy %>% clearPopups() %>% addPopups(click$lng,click$lat, popup = paste("LST: ", round(val,1)))
-}
-
+  
+  # afiseaza popup sau grafic time series
+  if (input$radio == 1) {
+    if (!is.null(click)) show_pop(x = click$lng, y = click$lat, rdat = lst, proxy = proxy)
+  }  else {
+    proxy %>% clearPopups()
+    click <- input$map.europe_click
+    # grafic timeseries
+    if (!is.null(click)) {
+      dd <- extract_point(fname = paste0("www/data/ncs/wmo_6_msg_lst_as_daily_",input$param_europe,".nc"), lon = click$lng, lat = click$lat, variable = 'MLST-AS') 
+      # pentru afisare conditional panel si titlu grafic coordonates
+      output$condpan <- renderText({
+        ifelse(is.na(mean(dd, na.rm = T)), "nas", paste(click$lng, click$lat))
+      })
+      outputOptions(output, "condpan", suspendWhenHidden = FALSE)
+      # subseteaza in dunctie de data selectata
+      ddf <- data.frame(date = as.Date(names(dd)), lst = round(dd, 1)) %>% slice(1:reactiveAct()$index)
+      output$lst_rast <- renderHighchart({
+        hc_plot(
+          input = ddf, xaxis_series = c("lst"), filename_save = "lst",
+          cols =  c("#800026"), names = c("LST"), ytitle = "LST [°C]"
+        )
+        
+      })
+    }
+  }
+  
 })
+
+
+# 
