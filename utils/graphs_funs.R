@@ -1,13 +1,12 @@
 # https://www.tmbish.me/lab/highcharter-cookbook/#tidy-data
-hc_plot <- function(input, xaxis_series, filename_save, cols, names, ytitle) {
+hc_plot <- function(input, xaxis_series, filename_save, cols, names, ytitle, title = NULL) {
   
-  hh <-  
-    highchart(type = "stock")  |>
+  hh <- highchart(type = "stock")  |>
     hc_xAxis(type = "date") |>
     hc_add_series(input,type = "line", hcaes_string("date", xaxis_series[1]), color = cols[1], name = names[1])
-    if (length(xaxis_series) == 2) {
-      hh <- hh |> hc_add_series(input,type = "line", hcaes_string("date", xaxis_series[2]), color = cols[2], name = names[2]) 
-    }
+  if (length(xaxis_series) == 2) {
+    hh <- hh |> hc_add_series(input,type = "line", hcaes_string("date", xaxis_series[2]), color = cols[2], name = names[2]) 
+  }
   hh <- hh|> hc_legend(enabled = T) |>
     hc_exporting(
       enabled = TRUE, # always enabled
@@ -20,6 +19,7 @@ hc_plot <- function(input, xaxis_series, filename_save, cols, names, ytitle) {
              showLastLabel = FALSE
     ) |>
     hc_rangeSelector(selected = 4)
+  if (!is.null(title))  hh <- hh |> hc_title(text = title)
   
   
   return(hh)
