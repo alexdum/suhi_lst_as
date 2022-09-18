@@ -66,6 +66,16 @@ ui_maps <- tabPanel(
               max = max(dats.lst.avg),
               value = max(dats.lst.avg)
             ),
+            radioButtons(
+              "radio", label = "Click on map behavior",
+              choices = 
+                list(
+                  "Display current values on popup" = 1, 
+                  "Plot timeseries" = 2
+                ), 
+              selected = 1
+              #   downloadButton('downloadDataMap', 'Download'),
+            )
             #   downloadButton('downloadDataMap', 'Download'),
           )
         ),
@@ -76,6 +86,18 @@ ui_maps <- tabPanel(
           ),
           wellPanel(
             leafletOutput("map.europe")
+          ),
+          conditionalPanel(
+            condition = "input.radio == 2 && output.condpan != 'nas'",
+            wellPanel(
+              highchartOutput("lst_rast")
+            )
+          ),
+          conditionalPanel(
+            condition = "input.radio == 2 && output.condpan == 'nas'",
+            wellPanel(
+              p("You must click on an area with LST values available")
+            )
           )
         )
       )
