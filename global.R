@@ -11,9 +11,12 @@ library(htmltools)
 library(RColorBrewer)
 library(markdown)
 library(raster)
+library(reticulate)
 #https://shiny.rstudio.com/gallery/superzip-example.htmlhttps://shiny.rstudio.com/gallery/superzip-example.html
 
 source("utils/graphs_funs.R")
+source("utils/show_pop.R")
+source_python("utils/extract_point.py") 
 
 # listă orașe din tabel selectInput care au date cities
 cities <- list.files("www/data/tabs/suhi", pattern = "^suhi", full.names = T) %>%
