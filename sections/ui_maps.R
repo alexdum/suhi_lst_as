@@ -87,6 +87,7 @@ ui_maps <- tabPanel(
           wellPanel(
             leafletOutput("map.europe")
           ),
+          # show graphs only when data available
           conditionalPanel(
             condition = "input.radio == 2 && output.condpan != 'nas'",
             wellPanel(
