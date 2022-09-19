@@ -74,7 +74,7 @@ observe({
   cities.filt <- cities_map |> right_join(params()$param_data, by = c("city" = "id"))
   #print( cities.filt$city)
   
-  vals <- seq(floor(min(cities.filt$values, na.rm = T)),ceiling(max(cities.filt$values, na.rm = T)), 0.1)
+  vals <- range(floor(min(cities.filt$values, na.rm = T)),ceiling(max(cities.filt$values, na.rm = T)))
   pal_rev <- colorNumeric("RdYlBu", vals, reverse = F)
   pal <- colorNumeric( "RdYlBu", vals, reverse = T)
   
