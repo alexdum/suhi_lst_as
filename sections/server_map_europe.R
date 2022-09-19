@@ -53,7 +53,8 @@ output$map.europe <- renderLeaflet({
     addScaleBar(
       position = c("bottomleft"),
       options = scaleBarOptions(metric = TRUE)
-    )  %>% 
+    ) %>%
+    leafem::addMouseCoordinates() %>% 
     clearControls() %>%
     addLegend(
       title =  "     °C",
