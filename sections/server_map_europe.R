@@ -95,7 +95,11 @@ observe({
       xy <- xyFromCell(lst, cell)
       dd <- extract_point(fname = paste0("www/data/ncs/wmo_6_msg_lst_as_daily_", input$param_europe,".nc"), lon = xy[1], lat = xy[2], variable = 'MLST-AS') 
       # pentru afisare conditional panel si titlu grafic coordonates
-      condpan.txt <- ifelse(is.na(mean(dd, na.rm = T)) | is.na(cell), "nas", paste(click$lng, click$lat))
+      condpan.txt <- ifelse(
+        is.na(mean(dd, na.rm = T)) | is.na(cell), 
+        "nas", 
+        paste0("Extracted LST values for point lon = ",round(click$lng, 5)," lat = "  , round(click$lat, 5))
+        )
       output$condpan <- renderText({
         condpan.txt 
       })
