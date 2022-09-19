@@ -12,6 +12,7 @@ library(RColorBrewer)
 library(markdown)
 library(raster)
 library(reticulate)
+library(shinycssloaders)
 #https://shiny.rstudio.com/gallery/superzip-example.htmlhttps://shiny.rstudio.com/gallery/superzip-example.html
 
 source("utils/graphs_funs.R")
