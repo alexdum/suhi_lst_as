@@ -6,7 +6,7 @@ pal_rev <- colorNumeric("RdYlBu", domain = domain, reverse = F, na.color = "tran
 pal <- colorNumeric("RdYlBu", domain = domain, reverse = T, na.color = "transparent")
 
 output$text_map_europe <- renderText({
-  paste0("Daily LST ",input$param_europe," values: ", format(input$days_europe, "%B %d, %Y") ," (click on map to see the LST value)")
+  paste0("Daily LST ",input$param_europe," values: ", format(input$days_europe, "%B %d, %Y") ," (click on map to see or plot the LST value)")
 })
 
 
@@ -68,6 +68,8 @@ output$map.europe <- renderLeaflet({
 
 
 observe({
+  
+  withProgress(message = 'Plot LST data', value = 0, {
   lst <- reactiveAct()$lst
   leafletProxy("map.europe") %>%
     clearImages() %>%
@@ -75,6 +77,9 @@ observe({
     #addProviderTiles("Stamen.TonerLines") %>%
     addRasterImage(lst, colors = pal, opacity = .8)  
   #addProviderTiles("CartoDB.PositronOnlyLabels") %>%
+  # Pause for 0.1 seconds to simulate a long computation.
+  #Sys.sleep(0.1)
+  })
 })
 
 # reactive values pentru plot lst time series din raster
