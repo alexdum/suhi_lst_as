@@ -78,7 +78,7 @@ observe({
 })
 
 # reactive values pentru plot lst time series din raster
-values_plot_lst <- reactiveValues(input = NULL, title = NULL)
+values_plot_lst <- reactiveValues(input = NULL, title = NULL, cors = NULL)
 
 #Observer to show Popups on click https://stackoverflow.com/questions/37523323/identify-position-of-a-click-on-a-raster-in-leaflet-in-r
 observe({ 
@@ -99,7 +99,7 @@ observe({
       condpan.txt <- ifelse(
         is.na(mean(dd, na.rm = T)) | is.na(cell), 
         "nas", 
-        paste0("Extracted LST values for point lon = ",round(click$lng, 5)," lat = "  , round(click$lat, 5))
+        paste0("Extracted LST ",input$param_europe," values for point lon = ",round(click$lng, 5)," lat = "  , round(click$lat, 5))
         )
       output$condpan <- renderText({
         condpan.txt 
@@ -111,6 +111,8 @@ observe({
       # valori pentru plot la reactive values
       values_plot_lst$title <- condpan.txt
       values_plot_lst$input <- ddf
+      values_plot_lst$cors <- paste0(round(click$lng, 5), "_", round(click$lat, 5))
+      
     }
   }
 })
@@ -124,6 +126,16 @@ output$lst_rast <- renderHighchart({
     title =   values_plot_lst$title
   )
 })
+
+
+output$downloadLST <- downloadHandler(
+  filename = function() {
+    paste0('lst_',input$param_europe,"_", values_plot_lst$cors, '.csv')
+  },
+  content = function(con) {
+    write.csv(values_plot_lst$input, con)
+  }
+)
 
 
 # 
