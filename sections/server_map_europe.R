@@ -77,7 +77,7 @@ observe({
 })
 
 # reactive values pentru plot lst time series din raster
-values_plot_lst <- reactiveValues(input = NA, title = NA)
+values_plot_lst <- reactiveValues(input = NULL, title = NULL)
 
 #Observer to show Popups on click https://stackoverflow.com/questions/37523323/identify-position-of-a-click-on-a-raster-in-leaflet-in-r
 observe({ 
@@ -112,7 +112,7 @@ observe({
 
 # plot actualizat daca schimb si coordonatee
 output$lst_rast <- renderHighchart({
-  req(values_plot_lst)
+  req(!is.na(values_plot_lst$input))
   hc_plot(
     input =  values_plot_lst$input , xaxis_series = c("lst"), filename_save = "lst",
     cols = c("#800026"), names = c("LST"), ytitle = "LST [°C]",
