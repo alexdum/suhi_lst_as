@@ -38,7 +38,7 @@ ui_maps <- tabPanel(
             textOutput("text_map")
           ),
           wellPanel(
-            leafletOutput("map")
+            leafletOutput("map") %>% withSpinner(size = 0.5)
           )
         )
       )
@@ -85,7 +85,7 @@ ui_maps <- tabPanel(
             textOutput("text_map_europe")
           ),
           wellPanel(
-            leafletOutput("map.europe")
+            leafletOutput("map.europe") %>% withSpinner(size = 0.5)
           ),
           # show graphs only when data available
           conditionalPanel(
