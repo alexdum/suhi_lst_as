@@ -29,20 +29,34 @@ reactiveAct <- eventReactive(
 
 output$map.europe <- renderLeaflet({
   leaflet( 
+    data = cities_map,
     options = leafletOptions(minZoom = 3, maxZoom = 12)) %>%
     setView(25, 46, zoom = 3) %>%
-    setMaxBounds(-13.5, 30, 57, 65) %>%
+    setMaxBounds(-12, 27.58, 56, 71.5) %>%
     addMapPane(name = "raster", zIndex = 410) %>%
-    addMapPane(name = "maplabels", zIndex = 420)%>% 
+    addMapPane(name = "citie", zIndex = 415) %>% 
+    addMapPane(name = "maplabels", zIndex = 420) %>% 
+    addLayersControl(
+      baseGroups = "CartoDB.PositronNoLabels",
+      overlayGroups = c("Labels", "City borders")) %>%
     addProviderTiles("CartoDB.PositronNoLabels") %>%
-    addProviderTiles("Stamen.TonerLines") %>%
+    addProviderTiles("Stamen.TonerLines") %>% 
     addRasterImage(
       lst.avg[[isolate(reactiveAct()$index)]], colors = pal, opacity = .8,
       options = leafletOptions(pane = "raster")
     )  %>%
+    addPolygons(
+      color = "#444444", weight = 1, smoothFactor = 0.5,
+      opacity = 0.7, fillOpacity = 0.1,
+      highlightOptions = highlightOptions(color = "white", weight = 2,
+                                          bringToFront = TRUE),
+      options = pathOptions(pane = "citie"),
+      group = "City borders"
+    ) %>%
     addProviderTiles(
       "CartoDB.PositronOnlyLabels",
-      options = pathOptions(pane = "maplabels")
+      options = pathOptions(pane = "maplabels"),
+      group = "Labels"
     ) %>%
     addEasyButton(
       easyButton(
@@ -69,7 +83,7 @@ output$map.europe <- renderLeaflet({
 
 observe({
   
-  withProgress(message = 'Plot LST data', value = 0, {
+  #withProgress(message = 'Plot LST data', value = 0, {
   lst <- reactiveAct()$lst
   leafletProxy("map.europe") %>%
     clearImages() %>%
@@ -79,7 +93,7 @@ observe({
   #addProviderTiles("CartoDB.PositronOnlyLabels") %>%
   # Pause for 0.1 seconds to simulate a long computation.
   #Sys.sleep(0.1)
-  })
+  #  })
 })
 
 # reactive values pentru plot lst time series din raster
@@ -105,7 +119,7 @@ observe({
         is.na(mean(dd, na.rm = T)) | is.na(cell), 
         "nas", 
         paste0("Extracted LST ",input$param_europe," values for point lon = ",round(click$lng, 5)," lat = "  , round(click$lat, 5))
-        )
+      )
       output$condpan <- renderText({
         condpan.txt 
       })
