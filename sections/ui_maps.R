@@ -74,9 +74,11 @@ ui_maps <- tabPanel(
                   "Plot timeseries" = 2
                 ), 
               selected = 1
-              #   downloadButton('downloadDataMap', 'Download'),
+            ),
+            conditionalPanel(
+              condition = "input.radio == 2 && output.lst_rast && output.condpan != 'nas'",
+              downloadButton('downloadLST', 'Download')
             )
-            #   downloadButton('downloadDataMap', 'Download'),
           )
         ),
         column(
