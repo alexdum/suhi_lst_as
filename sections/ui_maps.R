@@ -91,7 +91,7 @@ ui_maps <- tabPanel(
           conditionalPanel(
             condition = "input.radio == 2 && output.condpan != 'nas'",
             wellPanel(
-              highchartOutput("lst_rast")
+              highchartOutput("lst_rast") %>% withSpinner(size = 0.5),
             )
           ),
           conditionalPanel(
