@@ -35,7 +35,7 @@ ui_maps <- tabPanel(
         column(
           width = 9,
           wellPanel(
-            textOutput("text_map") %>% withSpinner(size = 0.5)
+            textOutput("text_map")
           ),
           wellPanel(
             leafletOutput("map") %>% withSpinner(size = 0.5)
@@ -82,7 +82,7 @@ ui_maps <- tabPanel(
         column(
           width = 9,
           wellPanel(
-            textOutput("text_map_europe") %>% withSpinner(size = 0.5)
+            textOutput("text_map_europe")
           ),
           wellPanel(
             leafletOutput("map.europe") %>% withSpinner(size = 0.5)
