@@ -25,3 +25,5 @@ SUHI is computed as the difference between the LST values of the urban and, resp
 <p><sup>Delimitation of areas for computing LST_U and LST_R for Brașov (Romania) is depicted in the figure above. The rural buffer is drawn at 1/2 * average distance between the city centroid (blue dot) and nodes of the urban administrative perimeter (red dots).</sup></p>
 
 *SUHI Max* and *SUHI Min* were calculated for each day from images corresponding to the time step when the maximum/minimum LST values were recorded. *Urban LST mean* and *Rural LST mean* were calculated from the urban/rural pixels extracted from all the images corresponding to each day.
+
+Daily statistics were calculated when at least 38 out of 48 possible values are available each pixel and day.
