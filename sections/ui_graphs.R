@@ -29,11 +29,11 @@ ui_graphs <- tabPanel(
           fluidRow(
             wellPanel(
               textOutput("text_uhi"),
-              highchartOutput("suhi")
+              highchartOutput("suhi") %>% withSpinner(size = 0.5)
             ),
             wellPanel(
               textOutput("text_lst"),
-              highchartOutput("lst")
+              highchartOutput("lst") %>% withSpinner(size = 0.5)
             )
           )
         )
