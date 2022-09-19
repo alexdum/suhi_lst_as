@@ -19,7 +19,7 @@ output$map <- renderLeaflet ({
   ) %>%
     leaflet.extras::addBootstrapDependency() %>%
     setView(25, 46, zoom = 3) %>%
-    setMaxBounds(-13.5, 30, 57, 65) %>% 
+    setMaxBounds(-12, 27.58, 56, 71.5) %>% 
     addMapPane(name = "pol", zIndex = 410) %>%
     addMapPane(name = "maplabels", zIndex = 420) %>%
     addProviderTiles( "CartoDB.PositronNoLabels")   %>% 
