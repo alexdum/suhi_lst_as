@@ -13,7 +13,8 @@ ui_graphs <- tabPanel(
       value = "suhi",
       title = "SUHI & LST",
       tags$h6(" "),
-      tags$h5("Surface Urban Heat Island (SUHI) and Land Surface Temperature (LST) as detected from LST AS SEVIRI product"),
+      tags$h5(paste("Surface Urban Heat Island (SUHI) and Land Surface Temperatur
+              e (LST) as detected from LST AS SEVIRI product (last processed date",  max(dt.lst$date),").")),
       #tags$h6(" "),
       tags$br(""),
       fluidRow(

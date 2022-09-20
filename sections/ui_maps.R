@@ -8,7 +8,8 @@ ui_maps <- tabPanel(
       value = "suhi_maps",
       title = "SUHI & Cities LST",
       tags$h6(" "),
-      tags$h5("Cities for which Surface Urban Heat Island (SUHI) and Land Surface Temperature (LST) has been calculated from LST AS SEVIRI product"),
+      tags$h5(paste("Cities for which Surface Urban Heat Island (SUHI) and Land Surface Temperature (LST) 
+              has been calculated from LST AS SEVIRI product (last processed date",  max(dt.lst$date),").")),
       #tags$h6(" "),
       tags$br(""),
       fluidRow(
@@ -47,7 +48,7 @@ ui_maps <- tabPanel(
       value = "cont_maps",
       title = "LST",
       tags$h6(" "),
-      tags$h5("Spatial distribution of LST data at continental scale"),
+      tags$h5(paste0("Spatial distribution of LST data at continental scale (last processed date", max(dt.lst$date),").")),
       #tags$h6(" "),
       tags$br(""),
       fluidRow(
