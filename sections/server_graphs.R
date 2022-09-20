@@ -17,7 +17,7 @@ datas <- reactive({
   datas <- merge(uhi, lst, by.x.y = "date")
   
   list(datas = datas)
-}) %>% bindCache(input$city)
+}) 
 # grafice
 output$suhi <- renderHighchart({
   
@@ -25,7 +25,7 @@ output$suhi <- renderHighchart({
     input = datas()$datas, xaxis_series = c("uhi.max", "uhi.min"), filename_save = paste0(input$city, "_suhi"),
     cols =  c("#800026","#fd8d3c" ), names = c("SUHI Max", "SUHI Min"), ytitle = "SUHI [°C]"
   )
-})
+}) %>% bindCache(input$city)
 
 output$lst <- renderHighchart({
   hc_plot(
@@ -33,7 +33,7 @@ output$lst <- renderHighchart({
     cols =  c("#ef3b2c","#9ecae1"), names = c("Urban", "Rural"), ytitle = "LST [°C]"
   )
   
-}) 
+})  %>% bindCache(input$city)
 
 output$downloadData <- downloadHandler(
   
