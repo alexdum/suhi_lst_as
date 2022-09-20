@@ -1,7 +1,7 @@
 text.cust <- reactive({
   city <- select_input_cities$label[select_input_cities$choice == input$city]
   list(city = city)
-})
+}) 
 
 # titluri grafice
 output$text_uhi <- renderText({
@@ -17,7 +17,7 @@ datas <- reactive({
   datas <- merge(uhi, lst, by.x.y = "date")
   
   list(datas = datas)
-})
+}) %>% bindCache(input$city)
 # grafice
 output$suhi <- renderHighchart({
   
@@ -33,7 +33,7 @@ output$lst <- renderHighchart({
     cols =  c("#ef3b2c","#9ecae1"), names = c("Urban", "Rural"), ytitle = "LST [°C]"
   )
   
-})
+}) 
 
 output$downloadData <- downloadHandler(
   
