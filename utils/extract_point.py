@@ -1,7 +1,6 @@
 import xarray as xr
 
 def extract_point(fname, lon, lat, variable):
-  fname = fname
   ds = xr.open_dataset(fname)
   ds.close()
   dsloc = ds.sel(lon=lon,lat=lat,method='nearest')
