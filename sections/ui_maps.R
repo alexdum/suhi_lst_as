@@ -6,7 +6,7 @@ ui_maps <- tabPanel(
     id = "tab_maps",
     tabPanel(
       value = "suhi_maps",
-      title = "SUHI & LST",
+      title = "SUHI & Cities LST",
       tags$h6(" "),
       tags$h5("Cities for which Surface Urban Heat Island (SUHI) and Land Surface Temperature (LST) has been calculated from LST AS SEVIRI product"),
       #tags$h6(" "),
@@ -71,7 +71,7 @@ ui_maps <- tabPanel(
               choices = 
                 list(
                   "Display current values on popup" = 1, 
-                  "Plot timeseries" = 2
+                  "Plot timeseries (below map)" = 2
                 ), 
               selected = 1
             ),
@@ -104,6 +104,12 @@ ui_maps <- tabPanel(
           )
         )
       )
+    ),
+    tabPanel(
+      value = "clim_ind",
+      title = "Indicators",
+      tags$h6(" "),
+      tags$h5("TBA"),
     )
   )
 )
