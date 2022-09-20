@@ -33,6 +33,10 @@ choices <- setNames(select_input_cities$choice, paste0(select_input_cities$label
 cities_map <- st_read("www/data/shp/cities_one_file.shp") %>% 
   mutate(city =  strsplit(name, "-") %>% do.call(rbind, .) %>% as_tibble() %>% dplyr::select(V2) %>% unlist()) %>%
   filter(city %in% select_input_cities$choice)
+
+cities_map.buff <- st_read("www/data/shp/cities_buff_one_file.shp") %>% 
+                  dplyr::filter(name %in% cities_map$name )
+
 # pentru dropdown parameters maps
 choices_map <- read.csv("www/data/tabs/slelect_input_parameters.csv") 
 choices_map <-   setNames(choices_map$choice, choices_map$parameter)
