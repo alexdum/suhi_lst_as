@@ -4,7 +4,8 @@ ui_about <- tabPanel(
   
   fluidRow( 
     h4("About"),
-    includeMarkdown("sections/about.md")
+    includeMarkdown("sections/about.md"),
+    leafletOutput("map.about", height = 500) %>% withSpinner(size = 0.5)
   )
   
   
