@@ -13,20 +13,20 @@ ui_graphs <- tabPanel(
       value = "suhi",
       title = "SUHI & LST",
       tags$h6(" "),
-      tags$h5(paste("Surface Urban Heat Island (SUHI) and Land Surface Temperatur
-              e (LST) as detected from LST AS SEVIRI product (last processed date",  max(dt.lst$date),").")),
+      tags$h5(paste0("Surface Urban Heat Island (SUHI) and Land Surface Temperatur
+              e (LST) as detected from LST AS SEVIRI product (last processed date ",  max(dt.lst$date),").")),
       #tags$h6(" "),
       tags$br(""),
       fluidRow(
         column(
-          width = 3,
+          width = width_panels[1],
           wellPanel(
             selectInput("city", "City:", choices, selected = choices[sample(1:length(choices), 1)]),
             downloadButton('downloadData', 'Download')
           )
         ),
         column( 
-          width = 9,
+          width = width_panels[2],
           fluidRow(
             wellPanel(
               textOutput("text_uhi"),
