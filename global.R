@@ -19,6 +19,8 @@ source("utils/graphs_funs.R")
 source("utils/show_pop.R")
 source_python("utils/extract_point.py") 
 
+width_panels <- c(2,7)
+
 # listă orașe din tabel selectInput care au date cities
 cities <- list.files("www/data/tabs/suhi", pattern = "^suhi", full.names = T) %>%
   strsplit(., "suhi_|_v02.csv") %>% do.call(rbind, .) %>% as_tibble() 
