@@ -12,8 +12,7 @@ output$text_map_europe <- renderText({
 
 #lst <- lst.avg[[which(as.character(dats.lst.avg) %in% as.character("2021-01-01"))]]
 
-reactiveAct <- eventReactive(
-  list(isolate(input$tab_maps), input$days_europe,  input$param_europe), {
+reactiveAct <- reactive ({
     index <- which(as.character(dats.lst.avg) %in% as.character(input$days_europe))
     
     switch (
@@ -25,7 +24,9 @@ reactiveAct <- eventReactive(
     
     lst <- lst[[index]]
     list(lst = lst, index = index)
-  })
+  }) %>% 
+  bindCache(input$days_europe,  input$param_europe) %>% 
+  bindEvent(isolate(input$tab_maps), input$days_europe,  input$param_europe)
 
 output$map.europe <- renderLeaflet({
   leaflet( 
