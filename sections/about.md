@@ -8,13 +8,13 @@ output:
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML.js"></script>
 
-Built in [Shiny](https://shiny.rstudio.com/), this dashboard aims to provide accurate and relevant facts and statistics about SUHI for large cities located in WMO Region 6.
+Built in [Shiny](https://shiny.rstudio.com/), this dashboard aims to provide relevant  statistics about  Surface Urban Heat Island (SUHI) for large cities located in WMO Region 6.
 
 The application is based on [LSA-SAF SEVIRI LST All Sky](https://landsaf.ipma.pt/en/products/land-surface-temperature/mlstas/) dataset.
 
 The administrative boundaries for all the cities used in this study were extracted from [OpenStreetMap.](https://wiki.openstreetmap.org/wiki/Tag:boundary%3Dadministrative#10_admin_level_values_for_specific_countries).
 
-The daily values of the Surface Urban Heat Island (SUHI) is detected for each city using the methodology proposed by [Cheval et al. (2022)](https://www.sciencedirect.com/science/article/pii/S2212095521002868).
+The SUHI daily values are computed for each city using the methodology proposed by [Cheval et al. (2022)](https://www.sciencedirect.com/science/article/pii/S2212095521002868).
 
 SUHI is computed as the difference between the LST values of the urban and, respectively, rural areas, as follows: $$SUHI = LST_U - LST_R$$
 
@@ -26,6 +26,7 @@ SUHI is computed as the difference between the LST values of the urban and, resp
 
 *SUHI Max* and *SUHI Min* were calculated for each day from images corresponding to the time step when the maximum/minimum LST values were recorded. *Urban LST mean* and *Rural LST mean* were calculated from the urban/rural pixels extracted from all the images corresponding to each day.
 
-Daily statistics were calculated when at least 38 out of 48 possible values are available each pixel and day. The urban statistics were computed for the cities shown on the below map. The buffers used as rural areas in the SUHI calculation are displayed on the map with red lines.
+Daily statistics were calculated when at least 38 out of 48 possible values are available each pixel and day. The urban statistics were computed for the cities shown on the below map. 
+The buffers used as rural areas in the SUHI calculation are displayed on the interactive map with red lines.
 
 
