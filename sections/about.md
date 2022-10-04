@@ -8,7 +8,7 @@ output:
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML.js"></script>
 
-Built in [Shiny](https://shiny.rstudio.com/), this dashboard aims to provide relevant  statistics about  Surface Urban Heat Island (SUHI) for large cities located in WMO Region 6.
+Built in [Shiny](https://shiny.rstudio.com/), this dashboard aims to provide relevant  statistics about Urban Climate for large cities located in WMO Region 6.
 
 The application is based on [LSA-SAF SEVIRI LST All Sky](https://landsaf.ipma.pt/en/products/land-surface-temperature/mlstas/) dataset.
 
@@ -16,7 +16,7 @@ The administrative boundaries for all the cities used in this study were extract
 
 The SUHI daily values are computed for each city using the methodology proposed by [Cheval et al. (2022)](https://www.sciencedirect.com/science/article/pii/S2212095521002868).
 
-SUHI is computed as the difference between the LST values of the urban and, respectively, rural areas, as follows: $$SUHI = LST_U - LST_R$$
+The Surface Urban Heat Island (SUHI) is computed as the difference between the LST values of the urban and, respectively, rural areas, as follows: $$SUHI = LST_U - LST_R$$
 
 -   $LST_U$: urban pixels within the administrative perimeter of an urban area; urban pixels refer to artificial surfaces and associated areas;
 -   $LST_R$ non-urban pixels from the buffer extended up to 1/2 \* average distance between the city centroid and nodes of the urban administrative perimeter (see figure below); non-urban pixels refer to any land cover category except for urban and water, and they define the rural area used for comparison with the urban pixels.

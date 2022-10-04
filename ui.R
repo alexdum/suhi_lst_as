@@ -35,7 +35,7 @@ ui <- shinyUI(
               useShinyjs(),
               
               navbarPage(
-                "SUHI explorer", selected = "#about", collapsible = T, fluid = T, id = "tabs", position =  "fixed-top",
+                "Urban Climate explorer", selected = "#about", collapsible = T, fluid = T, id = "tabs", position =  "fixed-top",
                 
                 ui_graphs,
                 ui_maps,
