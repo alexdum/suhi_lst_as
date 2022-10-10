@@ -34,7 +34,7 @@ output$map.europe <- renderLeaflet({
     options = leafletOptions(minZoom = 3, maxZoom = 12)) %>%
     setView(25, 46, zoom = 3) %>%
     setMaxBounds(-12, 27.58, 56, 71.5) %>%
-    addMapPane(name = "raster", zIndex = 410) %>%
+    #addMapPane(name = "raster", zIndex = 410) %>%
     addMapPane(name = "citie", zIndex = 415) %>% 
     addMapPane(name = "maplabels", zIndex = 420) %>% 
     addLayersControl(
@@ -43,8 +43,8 @@ output$map.europe <- renderLeaflet({
     addProviderTiles("CartoDB.PositronNoLabels") %>%
     addProviderTiles("Stamen.TonerLines") %>% 
     addRasterImage(
-      lst.avg[[isolate(reactiveAct()$index)]], colors = pal, opacity = .8,
-      options = leafletOptions(pane = "raster")
+      lst.avg[[isolate(reactiveAct()$index)]], colors = pal, opacity = .8
+     # options = leafletOptions(pane = "raster")
     )  %>%
     addPolygons(
       color = "#444444", weight = 1, smoothFactor = 0.5,
