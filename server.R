@@ -8,11 +8,11 @@ server <- shinyServer(function(input, output, session) {
   source(file = "sections/server_map_europe.R", local = T)
   
   # run code before accesing section
-  outputOptions(output, "map.europe", suspendWhenHidden = FALSE)
+  outputOptions(output, "map.about", suspendWhenHidden = FALSE)
   outputOptions(output, "lst", suspendWhenHidden = FALSE)
   outputOptions(output, "suhi", suspendWhenHidden = FALSE)
   outputOptions(output, "map", suspendWhenHidden = FALSE)
-
+  outputOptions(output, "map.europe", suspendWhenHidden = FALSE)
   
 })
 
