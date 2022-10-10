@@ -112,8 +112,8 @@ observe({
     proxy %>% clearPopups()
     # grafic timeseries
     if (!is.null(click)) {
-      cell <- cellFromXY(lst, c(click$lng, click$lat))
-      xy <- xyFromCell(lst, cell)
+      cell <- terra::cellFromXY(lst, cbind(click$lng, click$lat))
+      xy <- terra::xyFromCell(lst, cell)
       dd <- extract_point(fname = paste0("www/data/ncs/wmo_6_msg_lst_as_daily_", input$param_europe,".nc"), lon = xy[1], lat = xy[2], variable = 'MLST-AS') 
       # pentru afisare conditional panel si titlu grafic coordonates
       condpan.txt <- ifelse(
