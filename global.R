@@ -10,7 +10,7 @@ library(leaflet)
 library(htmltools)
 library(RColorBrewer)
 library(markdown)
-library(raster)
+library(terra)
 library(reticulate)
 library(shinycssloaders)
 #https://shiny.rstudio.com/gallery/superzip-example.htmlhttps://shiny.rstudio.com/gallery/superzip-example.html
@@ -19,7 +19,7 @@ source("utils/graphs_funs.R")
 source("utils/show_pop.R")
 source_python("utils/extract_point.py") 
 
-width_panels <- c(2,7)
+width_panels <- c(3,8)
 
 # listă orașe din tabel selectInput care au date cities
 cities <- list.files("www/data/tabs/suhi", pattern = "^suhi", full.names = T) %>%
@@ -61,16 +61,16 @@ names(dt.lst) <- strsplit(files.lst, "stats_|_v") %>% do.call(rbind,.) %>% as_ti
 dt.lst <- rbindlist(dt.lst, idcol = "id" )
 
 # read daily lst
-lst.max <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_max.nc")
-dats.lst.max  <- as.Date(names(lst.max) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+lst.max <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_max.nc")
+dats.lst.max  <- as.Date(names(lst.max) %>% gsub("MLST-AS_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
 dats.lst.max <- dats.lst.max[dats.lst.max <=  max(dt.lst$date)]
 
-lst.avg <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_avg.nc")
-dats.lst.avg  <- as.Date(names(lst.avg) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+lst.avg <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_avg.nc")
+dats.lst.avg  <- as.Date(names(lst.avg) %>% gsub("MLST-AS_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
 dats.lst.avg <- dats.lst.max[dats.lst.avg <=  max(dt.lst$date)]
 
-lst.min <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_min.nc")
-dats.lst.min  <- as.Date(names(lst.min) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+lst.min <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_min.nc")
+dats.lst.min  <- as.Date(names(lst.min) %>% gsub("MLST-AS_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
 dats.lst.min <- dats.lst.max[dats.lst.min <=  max(dt.lst$date)]
 
     

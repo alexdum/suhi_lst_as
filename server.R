@@ -12,7 +12,7 @@ server <- shinyServer(function(input, output, session) {
   outputOptions(output, "lst", suspendWhenHidden = FALSE)
   outputOptions(output, "suhi", suspendWhenHidden = FALSE)
   outputOptions(output, "map", suspendWhenHidden = FALSE)
-  outputOptions(output, "map.europe", suspendWhenHidden = FALSE)
+  #outputOptions(output, "map.europe", suspendWhenHidden = FALSE)
   
 })
 
