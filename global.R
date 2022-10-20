@@ -17,6 +17,7 @@ library(shinycssloaders)
 
 source("utils/graphs_funs.R")
 source("utils/show_pop.R")
+source("utils/leaflet_fun.R")
 source_python("utils/extract_point.py") 
 
 width_panels <- c(2,7)
