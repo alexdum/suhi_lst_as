@@ -1,9 +1,9 @@
 # https://stackoverflow.com/questions/54679054/r-leaflet-use-pane-with-addrasterimage                                  format(max(dats.act), "%B %d, %Y")))
 
 # colors continental urban scale
-domain <- c(-40, 60)
-pal_rev <- colorNumeric("RdYlBu", domain = domain, reverse = F, na.color = "transparent")
-pal <- colorNumeric("RdYlBu", domain = domain, reverse = T, na.color = "transparent")
+domain_daily <- c(-30, 70)
+pal_rev_daily <- colorNumeric("RdYlBu", domain = domain_daily, reverse = F, na.color = "transparent")
+pal_daily <- colorNumeric("RdYlBu", domain = domain_daily, reverse = T, na.color = "transparent")
 
 output$text_map_europe <- renderText({
   paste0("Daily LST ",input$param_europe," values: ", format(input$days_europe, "%B %d, %Y") ," (click on map to see or plot the LST value)")
@@ -45,7 +45,7 @@ output$map.europe <- renderLeaflet({
     addProviderTiles("CartoDB.PositronNoLabels") %>%
     addProviderTiles("Stamen.TonerLines") %>% 
     addRasterImage(
-      lst.avg[[isolate(reactiveAct()$index)]], colors = pal, opacity = .8
+      lst.avg[[isolate(reactiveAct()$index)]], colors = pal_daily, opacity = .8
       # options = leafletOptions(pane = "raster")
     )  %>%
     addPolygons(
@@ -76,7 +76,7 @@ output$map.europe <- renderLeaflet({
     addLegend(
       title =  "     °C",
       position = "bottomright",
-      pal = pal_rev, values = domain,
+      pal = pal_rev_daily, values = domain_daily,
       opacity = 1,
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
     )
@@ -92,7 +92,7 @@ observe({
     clearImages() %>%
     #addProviderTiles("CartoDB.PositronNoLabels") %>%
     #addProviderTiles("Stamen.TonerLines") %>%
-    addRasterImage(lst, colors = pal, opacity = .8)  
+    addRasterImage(lst, colors = pal_daily, opacity = .8)  
   #addProviderTiles("CartoDB.PositronOnlyLabels") %>%
   # Pause for 0.1 seconds to simulate a long computation.
   #Sys.sleep(0.1)
