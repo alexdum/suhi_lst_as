@@ -13,20 +13,22 @@ output$text_map_europe <- renderText({
 #lst <- lst.avg[[which(as.character(dats.lst.avg) %in% as.character("2021-01-01"))]]
 
 reactiveAct <- reactive ({
-    index <- which(as.character(dats.lst.avg) %in% as.character(input$days_europe))
-    
-    switch (
-      which(c("avg","min","max" ) %in%  input$param_europe),
-      lst <- lst.avg,
-      lst <- lst.min,
-      lst <- lst.max
-    )
-    
-    lst <- lst[[index]]
-    list(lst = lst, index = index)
-  }) %>% 
-  bindCache(input$days_europe,  input$param_europe) %>% 
-  bindEvent(isolate(input$tab_maps), input$days_europe,  input$param_europe)
+  index <- which(as.character(dats.lst.avg) %in% as.character(input$days_europe))
+  
+  
+  switch (
+    which(c("avg","min","max" ) %in%  input$param_europe_daily),
+    lst <- lst.avg,
+    lst <- lst.min,
+    lst <- lst.max
+  )
+  
+  
+  lst <- lst[[index]]
+  list(lst = lst, index = index)
+}) %>% 
+  bindCache(input$days_europe,  input$param_europe_daily) %>% 
+  bindEvent(isolate(input$tab_maps), input$days_europe,  input$param_europe_daily)
 
 output$map.europe <- renderLeaflet({
   leaflet( 
@@ -44,7 +46,7 @@ output$map.europe <- renderLeaflet({
     addProviderTiles("Stamen.TonerLines") %>% 
     addRasterImage(
       lst.avg[[isolate(reactiveAct()$index)]], colors = pal, opacity = .8
-     # options = leafletOptions(pane = "raster")
+      # options = leafletOptions(pane = "raster")
     )  %>%
     addPolygons(
       color = "#444444", weight = 1, smoothFactor = 0.5,
@@ -114,12 +116,12 @@ observe({
     if (!is.null(click)) {
       cell <- terra::cellFromXY(lst, cbind(click$lng, click$lat))
       xy <- terra::xyFromCell(lst, cell)
-      dd <- extract_point(fname = paste0("www/data/ncs/wmo_6_msg_lst_as_daily_", input$param_europe,".nc"), lon = xy[1], lat = xy[2], variable = 'MLST-AS') 
+      dd <- extract_point(fname = paste0("www/data/ncs/wmo_6_msg_lst_as_daily_", input$param_europe_daily,".nc"), lon = xy[1], lat = xy[2], variable = 'MLST-AS') 
       # pentru afisare conditional panel si titlu grafic coordonates
       condpan.txt <- ifelse(
         is.na(mean(dd, na.rm = T)) | is.na(cell), 
         "nas", 
-        paste0("Extracted LST ",input$param_europe," values for point lon = ",round(click$lng, 5)," lat = "  , round(click$lat, 5))
+        paste0("Extracted LST ",input$param_europe_daily," values for point lon = ",round(click$lng, 5)," lat = "  , round(click$lat, 5))
       )
       output$condpan <- renderText({
         condpan.txt 
@@ -150,7 +152,7 @@ output$lst_rast <- renderHighchart({
 
 output$downloadLST <- downloadHandler(
   filename = function() {
-    paste0('lst_',input$param_europe,"_", values_plot_lst$cors, '.csv')
+    paste0('lst_',input$param_europe_daily,"_", values_plot_lst$cors, '.csv')
   },
   content = function(con) {
     write.csv(values_plot_lst$input, con)
