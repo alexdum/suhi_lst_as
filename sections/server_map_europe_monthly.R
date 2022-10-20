@@ -1,19 +1,19 @@
 # https://stackoverflow.com/questions/54679054/r-leaflet-use-pane-with-addrasterimage                                  format(max(dats.act), "%B %d, %Y")))
 
 # colors continental urban scale
-domain_indicator <- c(-20, 40)
+domain_indicator <- c(-50, 60)
 pal_rev_indicator <- colorNumeric("RdYlBu", domain = domain_indicator, reverse = F, na.color = "transparent")
 pal_indicator <- colorNumeric("RdYlBu", domain = domain_indicator, reverse = T, na.color = "transparent")
 
 output$text_map_europe_monthly <- renderText({
-
+  
   switch( # alege nume indicator care să fie afișat
     which(c("mn", "mm" ,"mx") %in% input$parameter_europe_monthly),
     name_indicator <- "LST  monthly minimum",
     name_indicator <- "LST  monthly average",
     name_indicator <- "LST  monthly maximum"
   )
-
+  
   paste0(input$month_indicator," : ",name_indicator," (click on map to see or plot the grid value)")
   
 })
@@ -32,18 +32,17 @@ reac_lst_indicator <- reactive ({
   
   lst <- lst[[index]]
   list(lst = lst, index = index)
-
+  
 }) %>%
   bindCache(input$month_indicator,  input$parameter_europe_monthly) %>%
   bindEvent(isolate(input$tab_maps), input$month_indicator, input$parameter_europe_monthly)
 
 output$map_europe_indicator <- renderLeaflet({
-  
-  
- leaflet_fun(cities_map, lst.mm[[isolate(reac_lst_indicator()$index)]])
-  
+  leaflet_fun(
+    cities_map, lst.mm[[isolate(reac_lst_indicator()$index)]], 
+    domain = domain_indicator, cols = pal_indicator, cols_rev = pal_rev_indicator 
+    )
 })
-
 
 observe({
   lst <- reac_lst_indicator()$lst
@@ -51,9 +50,21 @@ observe({
     clearImages() %>%
     addRasterImage(lst, colors = pal_indicator, opacity = .8)
 })
+
+observe({
+  proxy <- leafletProxy("map_europe_indicator")
+  click <- input$map_europe_indicator_click
+  lst <- reac_lst_indicator()$lst
+  # afiseaza popup sau grafic time series
+  #if (input$radio == 1 & !is.null(click)) {
+  if (!is.null(click)) {
+    show_pop(x = click$lng, y = click$lat, rdat = lst, proxy = proxy)
+  }
+  })
+
 # 
 # # reactive values pentru plot lst time series din raster
-# values_plot_lst <- reactiveValues(input = NULL, title = NULL, cors = NULL)
+# values_plot_l <- reactiveValues(input = NULL, title = NULL, cors = NULL)
 # 
 # #Observer to show Popups on click https://stackoverflow.com/questions/37523323/identify-position-of-a-click-on-a-raster-in-leaflet-in-r
 # observe({ 
