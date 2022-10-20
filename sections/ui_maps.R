@@ -122,7 +122,7 @@ ui_maps <- tabPanel(
               selected = choices_map_europe_monthly[2]
             ),
             selectInput(
-              'month_inidcator',
+              'month_indicator',
               label = 'Month:',
               dats.lst.mx |> format("%Y %b"),
               selected = max(dats.lst.mx) |> format("%Y %b")
@@ -132,15 +132,15 @@ ui_maps <- tabPanel(
           )
         )
         ,
-        # column(
-        #   width = width_panels[2],
-        #   wellPanel(
-        #     textOutput("text_map")
-        #   ),
-        #   wellPanel(
-        #     leafletOutput("map", height = 500) %>% withSpinner(size = 0.5)
-        #   )
-        # )
+        column(
+          width = width_panels[2],
+          wellPanel(
+            textOutput("text_map_europe_monthly")
+          ),
+          wellPanel(
+            leafletOutput("map_europe_indicator", height = 500) %>% withSpinner(size = 0.5)
+          )
+        )
       )
     )
   )
