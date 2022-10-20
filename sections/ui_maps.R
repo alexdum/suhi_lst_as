@@ -56,9 +56,9 @@ ui_maps <- tabPanel(
           width = width_panels[1],
           wellPanel(
             selectInput(
-              "param_europe", "Prameter:", 
-              choices_map_europe, 
-              selected = choices_map_europe[1]
+              "param_europe_daily", "Prameter:", 
+              choices_map_europe_daily, 
+              selected = choices_map_europe_daily[1]
             ),
             dateInput(
               'days_europe',
@@ -110,7 +110,38 @@ ui_maps <- tabPanel(
       value = "clim_ind",
       title = "Indicators",
       tags$h6(" "),
-      tags$h5("TBA"),
+      tags$h5("Climate indicators as computed from daily minimum, maximum and average LST data"),
+      tags$br(""),
+      fluidRow(
+        column(
+          width = width_panels[1],
+          wellPanel(
+            selectInput(
+              "parameter_europe_monthly", "Prameter:", 
+              choices_map_europe_monthly, 
+              selected = choices_map_europe_monthly[2]
+            ),
+            selectInput(
+              'month_inidcator',
+              label = 'Month:',
+              dats.lst.mx |> format("%Y %b"),
+              selected = max(dats.lst.mx) |> format("%Y %b")
+            ),
+            # downloadButton('downloadDataMap', 'Download'),
+            # h6(textOutput("text_down_urb"))
+          )
+        )
+        ,
+        # column(
+        #   width = width_panels[2],
+        #   wellPanel(
+        #     textOutput("text_map")
+        #   ),
+        #   wellPanel(
+        #     leafletOutput("map", height = 500) %>% withSpinner(size = 0.5)
+        #   )
+        # )
+      )
     )
   )
 )
