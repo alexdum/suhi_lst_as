@@ -1,9 +1,9 @@
 # https://stackoverflow.com/questions/54679054/r-leaflet-use-pane-with-addrasterimage                                  format(max(dats.act), "%B %d, %Y")))
 
 # colors continental urban scale
-domain <- c(-20, 40)
-pal_rev <- colorNumeric("RdYlBu", domain = domain, reverse = F, na.color = "transparent")
-pal <- colorNumeric("RdYlBu", domain = domain, reverse = T, na.color = "transparent")
+domain_indicator <- c(-20, 40)
+pal_rev_indicator <- colorNumeric("RdYlBu", domain = domain_indicator, reverse = F, na.color = "transparent")
+pal_indicator <- colorNumeric("RdYlBu", domain = domain_indicator, reverse = T, na.color = "transparent")
 
 output$text_map_europe_monthly <- renderText({
 
@@ -32,79 +32,25 @@ reac_lst_indicator <- reactive ({
   
   lst <- lst[[index]]
   list(lst = lst, index = index)
-  print(index)
+
 }) %>%
   bindCache(input$month_indicator,  input$parameter_europe_monthly) %>%
   bindEvent(isolate(input$tab_maps), input$month_indicator, input$parameter_europe_monthly)
 
-# output$map.europe <- renderLeaflet({
-#   leaflet( 
-#     data = cities_map,
-#     options = leafletOptions(minZoom = 3, maxZoom = 12)) %>%
-#     setView(25, 46, zoom = 3) %>%
-#     setMaxBounds(-12, 27.58, 56, 71.5) %>%
-#     #addMapPane(name = "raster", zIndex = 410) %>%
-#     addMapPane(name = "citie", zIndex = 415) %>% 
-#     addMapPane(name = "maplabels", zIndex = 420) %>% 
-#     addLayersControl(
-#       baseGroups = "CartoDB.PositronNoLabels",
-#       overlayGroups = c("Labels", "City borders")) %>%
-#     addProviderTiles("CartoDB.PositronNoLabels") %>%
-#     addProviderTiles("Stamen.TonerLines") %>% 
-#     addRasterImage(
-#       lst.avg[[isolate(reactiveAct()$index)]], colors = pal, opacity = .8
-#       # options = leafletOptions(pane = "raster")
-#     )  %>%
-#     addPolygons(
-#       color = "#444444", weight = 1, smoothFactor = 0.5,
-#       opacity = 0.7, fillOpacity = 0.1,
-#       highlightOptions = highlightOptions(color = "white", weight = 2,
-#                                           bringToFront = TRUE),
-#       options = pathOptions(pane = "citie"),
-#       group = "City borders"
-#     ) %>%
-#     addProviderTiles(
-#       "CartoDB.PositronOnlyLabels",
-#       options = pathOptions(pane = "maplabels"),
-#       group = "Labels"
-#     ) %>%
-#     addEasyButton(
-#       easyButton(
-#         icon    = "glyphicon glyphicon-home", title = "Reset zoom",
-#         onClick = JS("function(btn, map){ map.setView([46, 25], 3); }")
-#       )
-#     ) %>%
-#     addScaleBar(
-#       position = c("bottomleft"),
-#       options = scaleBarOptions(metric = TRUE)
-#     ) %>%
-#     leafem::addMouseCoordinates() %>% 
-#     clearControls() %>%
-#     addLegend(
-#       title =  "     °C",
-#       position = "bottomright",
-#       pal = pal_rev, values = domain,
-#       opacity = 1,
-#       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
-#     )
-#   
-# })
-# 
-# 
-# observe({
-#   
-#   #withProgress(message = 'Plot LST data', value = 0, {
-#   lst <- reactiveAct()$lst
-#   leafletProxy("map.europe") %>%
-#     clearImages() %>%
-#     #addProviderTiles("CartoDB.PositronNoLabels") %>%
-#     #addProviderTiles("Stamen.TonerLines") %>%
-#     addRasterImage(lst, colors = pal, opacity = .8)  
-#   #addProviderTiles("CartoDB.PositronOnlyLabels") %>%
-#   # Pause for 0.1 seconds to simulate a long computation.
-#   #Sys.sleep(0.1)
-#   #  })
-# })
+output$map_europe_indicator <- renderLeaflet({
+  
+  
+ leaflet_fun(cities_map, lst.mm[[isolate(reac_lst_indicator()$index)]])
+  
+})
+
+
+observe({
+  lst <- reac_lst_indicator()$lst
+  leafletProxy("map_europe_indicator") %>%
+    clearImages() %>%
+    addRasterImage(lst, colors = pal_indicator, opacity = .8)
+})
 # 
 # # reactive values pentru plot lst time series din raster
 # values_plot_lst <- reactiveValues(input = NULL, title = NULL, cors = NULL)
