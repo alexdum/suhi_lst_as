@@ -1,5 +1,5 @@
 # functie harta
-leaflet_fun <- function(data, raster) {
+leaflet_fun <- function(data, raster, domain, cols, cols_rev) {
   
   
   map <- leaflet(
@@ -16,7 +16,7 @@ leaflet_fun <- function(data, raster) {
     addProviderTiles("CartoDB.PositronNoLabels") %>%
     addProviderTiles("Stamen.TonerLines") %>%
     addRasterImage(
-      raster, colors = pal_indicator, opacity = .8
+      raster, colors = cols, opacity = .8
       # options = leafletOptions(pane = "raster")
     )  %>%
     addPolygons(
@@ -47,7 +47,7 @@ leaflet_fun <- function(data, raster) {
     addLegend(
       title =  "     °C",
       position = "bottomright",
-      pal = pal_rev_indicator, values = domain_indicator,
+      pal = cols_rev, values = domain,
       opacity = 1,
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
     )
