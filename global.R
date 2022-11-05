@@ -66,15 +66,15 @@ names(dt.lst) <- strsplit(files.lst, "stats_|_v") %>% do.call(rbind,.) %>% as_ti
 dt.lst <- rbindlist(dt.lst, idcol = "id" )
 
 # read ncs
-lst.max <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_max.nc")
+lst.max <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_max.nc")
 dats.lst.max  <- as.Date(names(lst.max) %>% gsub("MLST-AS_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
 dats.lst.max <- dats.lst.max[dats.lst.max <=  max(dt.lst$date)]
 
-lst.avg <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_avg.nc")
+lst.avg <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_avg.nc")
 dats.lst.avg  <- as.Date(names(lst.avg) %>% gsub("MLST-AS_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
 dats.lst.avg <- dats.lst.max[dats.lst.avg <=  max(dt.lst$date)]
 
-lst.min <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_min.nc")
+lst.min <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_min.nc")
 dats.lst.min  <- as.Date(names(lst.min) %>% gsub("MLST-AS_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
 dats.lst.min <- dats.lst.max[dats.lst.min <=  max(dt.lst$date)]
 
@@ -88,34 +88,34 @@ lst.mx <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_tmx.nc")
 dats.lst.mx <- as.Date(names(lst.mx) %>% gsub("MLST-AS_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
 
 
-# for mac
-if (Sys.info()[1] == "Darwin") {
-  # read daily lst
-  lst.maxx <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_max.nc") 
-  dats.lst.max  <- as.Date(names(lst.maxx) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
-  dats.lst.max <- dats.lst.max[dats.lst.max <=  max(dt.lst$date)]
-  lst.max <- rast(lst.maxx)
-  
-  lst.avgg <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_avg.nc")
-  dats.lst.avg  <- as.Date(names(lst.avgg) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
-  dats.lst.avg <- dats.lst.max[dats.lst.avg <=  max(dt.lst$date)]
-  lst.avg <- rast(lst.avgg)
-  
-  lst.minn <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_min.nc")
-  dats.lst.min  <- as.Date(names(lst.minn) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
-  dats.lst.min <- dats.lst.max[dats.lst.min <=  max(dt.lst$date)]
-  lst.min <- rast(lst.minn)
-  
-  lst.mavg <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_tmm.nc")
-  dats.lst.mm <- as.Date(names(lst.mavg) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
-  lst.mm <- rast(lst.mavg)
-  lst.mmin <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_tmn.nc")
-  dats.lst.mn <- as.Date(names(lst.mmin) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
-  lst.mn <- rast(lst.mmin)
-  lst.mmax <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_tmx.nc")
-  dats.lst.mx <- as.Date(names(lst.mmax) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
-  lst.mx <- rast(lst.mmax)
-  
-}
+# # for mac
+# if (Sys.info()[1] == "Darwin") {
+#   # read daily lst
+#   lst.maxx <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_max.nc") 
+#   dats.lst.max  <- as.Date(names(lst.maxx) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+#   dats.lst.max <- dats.lst.max[dats.lst.max <=  max(dt.lst$date)]
+#   lst.max <- rast(lst.maxx)
+#   
+#   lst.avgg <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_avg.nc")
+#   dats.lst.avg  <- as.Date(names(lst.avgg) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+#   dats.lst.avg <- dats.lst.max[dats.lst.avg <=  max(dt.lst$date)]
+#   lst.avg <- rast(lst.avgg)
+#   
+#   lst.minn <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_min.nc")
+#   dats.lst.min  <- as.Date(names(lst.minn) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+#   dats.lst.min <- dats.lst.max[dats.lst.min <=  max(dt.lst$date)]
+#   lst.min <- rast(lst.minn)
+#   
+#   lst.mavg <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_tmm.nc")
+#   dats.lst.mm <- as.Date(names(lst.mavg) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+#   lst.mm <- rast(lst.mavg)
+#   lst.mmin <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_tmn.nc")
+#   dats.lst.mn <- as.Date(names(lst.mmin) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+#   lst.mn <- rast(lst.mmin)
+#   lst.mmax <- raster::stack("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_tmx.nc")
+#   dats.lst.mx <- as.Date(names(lst.mmax) %>% gsub("X", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+#   lst.mx <- rast(lst.mmax)
+#   
+# }
 
 
