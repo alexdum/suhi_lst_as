@@ -116,7 +116,7 @@ observe({
     if (!is.null(click)) {
       cell <- terra::cellFromXY(lst, cbind(click$lng, click$lat))
       xy <- terra::xyFromCell(lst, cell)
-      dd <- extract_point(fname = paste0("www/data/ncs/wmo_6_msg_lst_as_daily_", input$param_europe_daily,".nc"), lon = xy[1], lat = xy[2], variable = 'MLST-AS') 
+      dd <- extract_point(fname = paste0("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_", input$param_europe_daily,".nc"), lon = xy[1], lat = xy[2], variable = 'MLST-AS') 
       # pentru afisare conditional panel si titlu grafic coordonates
       condpan.txt <- ifelse(
         is.na(mean(dd, na.rm = T)) | is.na(cell), 
