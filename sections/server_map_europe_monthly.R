@@ -9,9 +9,9 @@ output$text_map_europe_monthly <- renderText({
   
   switch( # alege nume indicator care să fie afișat
     which(c("mn", "mm" ,"mx") %in% input$parameter_europe_monthly),
-    name_indicator <- "LST  monthly minimum",
-    name_indicator <- "LST  monthly average",
-    name_indicator <- "LST  monthly maximum"
+    name_indicator <- "LST monthly minimum",
+    name_indicator <- "LST monthly average",
+    name_indicator <- "LST monthly maximum"
   )
   
   paste0(input$month_indicator," : ",name_indicator," (click on map to see or plot the grid value)")
@@ -51,77 +51,62 @@ observe({
     addRasterImage(lst, colors = pal_indicator, opacity = .8)
 })
 
+# reactive values pentru plot lst time series din raster
+values_plot_lst_mon <- reactiveValues(input = NULL, title = NULL, cors = NULL)
+
 observe({
   proxy <- leafletProxy("map_europe_indicator")
   click <- input$map_europe_indicator_click
   lst <- reac_lst_indicator()$lst
   # afiseaza popup sau grafic time series
-  #if (input$radio == 1 & !is.null(click)) {
-  if (!is.null(click)) {
+  if (input$radio_mon == 1 & !is.null(click)) {
     show_pop(x = click$lng, y = click$lat, rdat = lst, proxy = proxy)
+  } else {
+    proxy %>% clearPopups()
+    # grafic timeseries
+    if (!is.null(click)) {
+      cell <- terra::cellFromXY(lst, cbind(click$lng, click$lat))
+      xy <- terra::xyFromCell(lst, cell)
+      fil.nc <- paste0("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_t", input$parameter_europe_monthly,".nc")
+      dd <- extract_point(fname = fil.nc , lon = xy[1], lat = xy[2], variable = 'MLST-AS') 
+      # pentru afisare conditional panel si titlu grafic coordonates
+      condpan_monthly.txt <- ifelse(
+        is.na(mean(dd, na.rm = T)) | is.na(cell), 
+        "nas", 
+        paste0("Extracted LST ",input$param_europe_monthly," values for point lon = ",round(click$lng, 5)," lat = "  , round(click$lat, 5))
+      )
+      output$condpan_monthly <- renderText({
+        condpan_monthly.txt 
+      })
+      outputOptions(output, "condpan_monthly", suspendWhenHidden = FALSE)
+      # subseteaza in dunctie de data selectata
+      ddf <- data.frame(date = as.Date(names(dd)), lst = round(dd, 1)) %>% slice(1:reac_lst_indicator()$index)
+      
+      # valori pentru plot la reactive values
+      values_plot_lst_mon$title <- condpan_monthly.txt
+      values_plot_lst_mon$input <- ddf
+      values_plot_lst_mon$cors <- paste0(round(click$lng, 5), "_", round(click$lat, 5))
+    }
   }
-  })
+})
 
-# 
-# # reactive values pentru plot lst time series din raster
-# values_plot_l <- reactiveValues(input = NULL, title = NULL, cors = NULL)
-# 
-# #Observer to show Popups on click https://stackoverflow.com/questions/37523323/identify-position-of-a-click-on-a-raster-in-leaflet-in-r
-# observe({ 
-#   proxy <- leafletProxy("map.europe")
-#   click <- input$map.europe_click
-#   lst <- reactiveAct()$lst
-#   # afiseaza popup sau grafic time series
-#   if (input$radio == 1 & !is.null(click)) {
-#     show_pop(x = click$lng, y = click$lat, rdat = lst, proxy = proxy)
-#   } else {
-#     proxy %>% clearPopups()
-#     # grafic timeseries
-#     if (!is.null(click)) {
-#       cell <- terra::cellFromXY(lst, cbind(click$lng, click$lat))
-#       xy <- terra::xyFromCell(lst, cell)
-#       dd <- extract_point(fname = paste0("www/data/ncs/wmo_6_msg_lst_as_daily_", input$param_europe_daily,".nc"), lon = xy[1], lat = xy[2], variable = 'MLST-AS') 
-#       # pentru afisare conditional panel si titlu grafic coordonates
-#       condpan.txt <- ifelse(
-#         is.na(mean(dd, na.rm = T)) | is.na(cell), 
-#         "nas", 
-#         paste0("Extracted LST ",input$param_europe_daily," values for point lon = ",round(click$lng, 5)," lat = "  , round(click$lat, 5))
-#       )
-#       output$condpan <- renderText({
-#         condpan.txt 
-#       })
-#       outputOptions(output, "condpan", suspendWhenHidden = FALSE)
-#       # subseteaza in dunctie de data selectata
-#       ddf <- data.frame(date = as.Date(names(dd)), lst = round(dd, 1)) %>% slice(1:reactiveAct()$index)
-#       
-#       # valori pentru plot la reactive values
-#       values_plot_lst$title <- condpan.txt
-#       values_plot_lst$input <- ddf
-#       values_plot_lst$cors <- paste0(round(click$lng, 5), "_", round(click$lat, 5))
-#       
-#     }
-#   }
-# })
-# 
-# # plot actualizat daca schimb si coordonatee
-# output$lst_rast <- renderHighchart({
-#   req(!is.na(values_plot_lst$input))
-#   hc_plot(
-#     input =  values_plot_lst$input , xaxis_series = c("lst"), filename_save = "lst",
-#     cols = c("#800026"), names = c("LST"), ytitle = "LST [°C]",
-#     title =   values_plot_lst$title
-#   )
-# })
-# 
-# 
-# output$downloadLST <- downloadHandler(
-#   filename = function() {
-#     paste0('lst_',input$param_europe_daily,"_", values_plot_lst$cors, '.csv')
-#   },
-#   content = function(con) {
-#     write.csv(values_plot_lst$input, con)
-#   }
-# )
-# 
-# 
-# # 
+# plot actualizat daca schimb si coordonatee
+output$lst_rast_mon <- renderHighchart({
+  req(!is.na(values_plot_lst_mon$input))
+  hc_plot(
+    input =  values_plot_lst_mon$input , xaxis_series = c("lst"), filename_save = "lst_mon",
+    cols = c("#800026"), names = c("LST"), ytitle = "LST [°C]",
+    title =   values_plot_lst_mon$title
+  )
+})
+
+output$downloadLST_mon <- downloadHandler(
+  filename = function() {
+    paste0('indicator_',input$parameter_europe_monthly,"_", values_plot_lst_mon$cors, '.csv')
+  },
+  content = function(con) {
+    write.csv(values_plot_lst_mon$input, con)
+  }
+)
+
+
