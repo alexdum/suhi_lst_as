@@ -90,8 +90,7 @@ ui_maps <- tabPanel(
           wellPanel(
             leafletOutput("map.europe", height = 500) %>% withSpinner(size = 0.5)
           ),
-          # show graphs only when data available
-          conditionalPanel(
+          conditionalPanel( # show graphs only when data available
             condition = "input.radio == 2 && output.condpan != 'nas'",
             wellPanel(
               highchartOutput("lst_rast") %>% withSpinner(size = 0.5)
@@ -110,7 +109,7 @@ ui_maps <- tabPanel(
       value = "clim_ind",
       title = "Indicators",
       tags$h6(" "),
-      tags$h5("Climate indicators as computed from daily minimum, maximum and average LST data"),
+      tags$h5(paste0("Climate indicators as computed from daily minimum, maximum and average LST data (last processed date ", max(dt.lst$date),").")),
       tags$br(""),
       fluidRow(
         column(
@@ -127,8 +126,19 @@ ui_maps <- tabPanel(
               dats.lst.mx |> format("%Y %b"),
               selected = max(dats.lst.mx) |> format("%Y %b")
             ),
-            # downloadButton('downloadDataMap', 'Download'),
-            # h6(textOutput("text_down_urb"))
+            radioButtons( # radio button show values
+              "radio_mon", label = "Click on map behavior",
+              choices = 
+                list(
+                  "Display current values on popup" = 1, 
+                  "Plot timeseries (below map)" = 2
+                ), 
+              selected = 1
+            ),
+            conditionalPanel( # show download when data available
+              condition = "input.radio_mon == 2 && output.lst_rast && output.condpan_monthly != 'nas'",
+              downloadButton('downloadLST_mon', 'Download')
+            )
           )
         )
         ,
@@ -139,14 +149,21 @@ ui_maps <- tabPanel(
           ),
           wellPanel(
             leafletOutput("map_europe_indicator", height = 500) %>% withSpinner(size = 0.5)
+          ),
+          conditionalPanel( # show graphs only when data available
+            condition = "input.radio_mon == 2 && output.condpan_monthly != 'nas'",
+            wellPanel(
+              highchartOutput("lst_rast_mon") %>% withSpinner(size = 0.5)
+            )
+          ),
+          conditionalPanel(
+            condition = "input.radio_mon == 2 && output.condpan_monthly == 'nas'",
+            wellPanel(
+              p("You must click on an area with indicator values available")
+            )
           )
         )
       )
     )
   )
 )
-
-
-
-
-
