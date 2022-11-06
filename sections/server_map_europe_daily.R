@@ -102,7 +102,7 @@ observe({
 # reactive values pentru plot lst time series din raster
 values_plot_lst <- reactiveValues(input = NULL, title = NULL, cors = NULL)
 
-#Observer to show Popups on click https://stackoverflow.com/questions/37523323/identify-position-of-a-click-on-a-raster-in-leaflet-in-r
+# Observer to show Popups on click https://stackoverflow.com/questions/37523323/identify-position-of-a-click-on-a-raster-in-leaflet-in-r
 observe({ 
   proxy <- leafletProxy("map.europe")
   click <- input$map.europe_click
