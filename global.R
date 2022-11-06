@@ -35,11 +35,11 @@ select_input_cities <- read.csv("www/data/tabs/select_input_cities.csv") %>%
 # pentru dropdown graphs cities
 choices <- setNames(select_input_cities$choice, paste0(select_input_cities$label, " (", select_input_cities$country,")"))
 
-cities_map <- st_read("www/data/shp/cities_one_file.shp") %>% 
+cities_map <- st_read("www/data/shp/cities_one_file.shp", quiet = T) %>% 
   mutate(city =  strsplit(name, "-") %>% do.call(rbind, .) %>% as_tibble() %>% dplyr::select(V2) %>% unlist()) %>%
   filter(city %in% select_input_cities$choice)
 
-cities_map.buff <- st_read("www/data/shp/cities_buff_one_file.shp") %>% 
+cities_map.buff <- st_read("www/data/shp/cities_buff_one_file.shp", quiet = T) %>% 
                   dplyr::filter(name %in% cities_map$name )
 
 # pentru dropdown parameters maps
