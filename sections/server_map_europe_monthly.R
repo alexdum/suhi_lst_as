@@ -8,10 +8,13 @@ pal_indicator <- colorNumeric("RdYlBu", domain = domain_indicator, reverse = T, 
 output$text_map_europe_monthly <- renderText({
   
   switch( # alege nume indicator care să fie afișat
-    which(c("mn", "mm" ,"mx") %in% input$parameter_europe_monthly),
+    which(c("mn", "mm" ,"mx","cwmn00", "hwmn20","hwmx35") %in% input$parameter_europe_monthly),
     name_indicator <- "LST monthly minimum",
     name_indicator <- "LST monthly average",
-    name_indicator <- "LST monthly maximum"
+    name_indicator <- "LST monthly maximum",
+    name_indicator <- "CW (cold waves defined as monthly maximum no of consecutive days when LST min ≤ 0)",
+    name_indicator <- "HW20 (heat waves defined as monthly maximum no of consecutive days when LST min ≥ 20)",
+    name_indicator <- "HW35 (heat waves defined as monthky maximum no of consecutive days whenLST max  ≥ 35)"
   )
   
   paste0(input$month_indicator," : ",name_indicator," (click on map to see or plot the grid value)")
@@ -24,10 +27,13 @@ reac_lst_indicator <- reactive ({
   index <- which(format(dats.lst.mm, "%Y %b") %in% input$month_indicator)
   
   switch (
-    which(c("mn", "mm" ,"mx") %in% input$parameter_europe_monthly),
+    which(c("mn", "mm" ,"mx", "cwmn00", "hwmn20","hwmx35") %in% input$parameter_europe_monthly),
     lst <- lst.mn,
     lst <- lst.mm,
-    lst <- lst.mx
+    lst <- lst.mx,
+    lst <- lst.cwmn00,
+    lst <- lst.hwmn20,
+    lst <- lst.hwmx35
   )
   
   lst <- lst[[index]]
