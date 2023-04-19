@@ -1,9 +1,5 @@
 # https://stackoverflow.com/questions/54679054/r-leaflet-use-pane-with-addrasterimage                                  format(max(dats.act), "%B %d, %Y")))
 
-# colors continental urban scale
-domain_indicator <- c(-50, 60)
-pal_rev_indicator <- colorNumeric("RdYlBu", domain = domain_indicator, reverse = F, na.color = "transparent")
-pal_indicator <- colorNumeric("RdYlBu", domain = domain_indicator, reverse = T, na.color = "transparent")
 
 output$text_map_europe_monthly <- renderText({
   
@@ -25,6 +21,8 @@ output$text_map_europe_monthly <- renderText({
 reac_lst_indicator <- reactive ({
   
   index <- which(format(dats.lst.mm, "%Y %b") %in% input$month_indicator)
+  indicator <- input$parameter_europe_monthly
+  # indicator <- "mm" 
   
   switch (
     which(c("mn", "mm" ,"mx", "cwmn00", "hwmn20","hwmx35") %in% input$parameter_europe_monthly),
@@ -36,8 +34,18 @@ reac_lst_indicator <- reactive ({
     lst <- lst.hwmx35
   )
   
+  
   lst <- lst[[index]]
-  list(lst = lst, index = index)
+  lst[lst > 50] <- 50
+  lst[lst  < -50] <- -50
+  if (indicator %in% c("cwmn00", "hwmn20","hwmx35")) lst[lst ==0] <- NA # na pentru cand nu ai zile cu indicator
+  domain <- terra::minmax(lst)
+
+  map_leg <- map_func_cols(indic = indicator, domain )
+  
+  
+  list(lst = lst, index = index, domain = domain, pal =  map_leg$pal, pal_rev =  map_leg$pal_rev,  
+       tit_leg  =   map_leg$tit_leg)
   
 }) %>%
   bindCache(input$month_indicator,  input$parameter_europe_monthly) %>%
@@ -45,8 +53,12 @@ reac_lst_indicator <- reactive ({
 
 output$map_europe_indicator <- renderLeaflet({
   leaflet_fun(
-    cities_map, lst.mm[[isolate(reac_lst_indicator()$index)]], 
-    domain = domain_indicator, cols = pal_indicator, cols_rev = pal_rev_indicator 
+    cities_map,
+    isolate(reac_lst_indicator()$lst), 
+    domain =   isolate(reac_lst_indicator()$domain),
+    cols = isolate(reac_lst_indicator()$pal), 
+    cols_rev = isolate(reac_lst_indicator()$pal_rev),
+    title = isolate(reac_lst_indicator()$tit_leg)
     )
 })
 
@@ -54,7 +66,18 @@ observe({
   lst <- reac_lst_indicator()$lst
   leafletProxy("map_europe_indicator") %>%
     clearImages() %>%
-    addRasterImage(lst, colors = pal_indicator, opacity = .8)
+    addRasterImage(
+      lst, 
+      colors = reac_lst_indicator()$pal,  
+      opacity = .8 ) %>%
+    clearControls() %>%
+    leaflet::addLegend(
+      title = reac_lst_indicator()$tit_leg,
+      position = "bottomright",
+      pal = reac_lst_indicator()$pal_rev, values =  reac_lst_indicator()$domain,
+      opacity = 1,
+      labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
+    )
 })
 
 # reactive values pentru plot lst time series din raster
