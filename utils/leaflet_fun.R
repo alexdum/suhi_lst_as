@@ -1,5 +1,5 @@
 # functie harta
-leaflet_fun <- function(data, raster, domain, cols, cols_rev) {
+leaflet_fun <- function(data, raster, domain, cols, cols_rev, title) {
   
   
   map <- leaflet(
@@ -45,7 +45,7 @@ leaflet_fun <- function(data, raster, domain, cols, cols_rev) {
     leafem::addMouseCoordinates() %>%
     clearControls() %>%
     addLegend(
-      title =  "     °C",
+      title = title,
       position = "bottomright",
       pal = cols_rev, values = domain,
       opacity = 1,
