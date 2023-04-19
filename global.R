@@ -1,6 +1,5 @@
 library(shiny)
 library(shinythemes)
-library(highcharter)
 library(tidyr)
 library(dplyr)
 library(shinyjs)
@@ -12,7 +11,7 @@ library(RColorBrewer)
 library(markdown)
 library(terra)
 library(reticulate)
-
+library(highcharter)
 library(shinycssloaders)
 
 
@@ -21,6 +20,7 @@ library(shinycssloaders)
 source("utils/graphs_funs.R")
 source("utils/show_pop.R")
 source("utils/leaflet_fun.R")
+source("utils/map_fun_cols.R")
 source_python("utils/extract_point.py") 
 
 width_panels <- c(2,7)
