@@ -4,6 +4,6 @@ show_pop <- function(x = NULL, y = NULL, rdat = NULL, proxy = NULL) {
   if (!is.na(cell)) {
     xy <- terra::xyFromCell(rdat, cell)
     val = rdat[cell]
-    if (!is.na(val)) proxy %>% clearPopups() %>% addPopups(xy[1],xy[2], popup = paste("LST: ", round(val,1)))
+    if (!is.na(val)) proxy %>% clearPopups() %>% addPopups(xy[1],xy[2], popup = paste("value: ", round(val,1)))
   }
 }
