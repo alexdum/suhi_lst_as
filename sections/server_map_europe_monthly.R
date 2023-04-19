@@ -12,9 +12,9 @@ output$text_map_europe_monthly <- renderText({
     name_indicator <- "LST monthly minimum",
     name_indicator <- "LST monthly average",
     name_indicator <- "LST monthly maximum",
-    name_indicator <- "CW (cold waves defined as monthly maximum no of consecutive days when LST min ≤ 0)",
-    name_indicator <- "HW20 (heat waves defined as monthly maximum no of consecutive days when LST min ≥ 20)",
-    name_indicator <- "HW35 (heat waves defined as monthky maximum no of consecutive days whenLST max  ≥ 35)"
+    name_indicator <- "CW - cold waves defined as monthly maximum no of consecutive days when LST min ≤ 0",
+    name_indicator <- "HW20 - heat waves defined as monthly maximum no of consecutive days when LST min ≥ 20",
+    name_indicator <- "HW35 - heat waves defined as monthky maximum no of consecutive days whenLST max  ≥ 35"
   )
   
   paste0(input$month_indicator," : ",name_indicator," (click on map to see or plot the grid value)")
