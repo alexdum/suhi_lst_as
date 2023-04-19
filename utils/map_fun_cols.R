@@ -1,29 +1,7 @@
 # culori culori leaflet ---------------------------------------------------------
-colintYlOrRd <- colorRampPalette( brewer.pal(9,"YlOrRd"),interpolate = "linear")
 colintRdYlBu <- colorRampPalette(brewer.pal(10,"RdYlBu"),interpolate = "linear")
-colintBrBG <- colorRampPalette( brewer.pal(11,"BrBG")[1:5],interpolate = "linear")
-colintBlues <- colorRampPalette(brewer.pal(9,"Blues"), interpolate = "linear")
-colintReds <- colorRampPalette(brewer.pal(9,"Reds"), interpolate = "linear")
-colintBuPu <- colorRampPalette(brewer.pal(9,"BuPu"), interpolate = "linear")
-colintPuBu <- colorRampPalette(brewer.pal(9,"BuPu"), interpolate = "linear")
-colintPuRd <- colorRampPalette(brewer.pal(9,"PuRd"), interpolate = "linear")
-colintYlOrBr <- colorRampPalette(brewer.pal(9,"YlOrBr"), interpolate = "linear")
-colintinferno <- colorRampPalette(rev(viridis::inferno(14)), interpolate = "linear")
-colintGnBu <- colorRampPalette(brewer.pal(9,"GnBu"), interpolate = "linear")
-colintRdPu <- colorRampPalette(brewer.pal(9,"RdPu"), interpolate = "linear")
-colintBrBG <- colorRampPalette(brewer.pal(11,"BrBG"),interpolate = "linear")
-colintYlGn <- colorRampPalette(brewer.pal(9,"YlGn"),interpolate = "linear")
-colintPuOr <- colorRampPalette(brewer.pal(9,"PuOr"),interpolate = "linear")
-colintOrRd <- colorRampPalette( brewer.pal(9,"OrRd"),interpolate = "linear")
-colintPRGn <- colorRampPalette( brewer.pal(11,"PRGn"),interpolate = "linear")
-colintPiYG <- colorRampPalette( brewer.pal(11,"PiYG"),interpolate = "linear")
-#windabs <- colorRampPalette(rainbow(8)[2:8],interpolate = "linear")
-windabs2 <- colorRampPalette(colors = c("#00FF00", "#33FF33", "#66FF66", "#99FF99", "#CCFFCC", "#FFFF00", "#FFCC00", "#FF9900", "#FF6600", "#FF3300", "#FF0000", "#990000"), interpolate = "linear")
-colintHWD <- colorRampPalette(colors = c("#FFFF00", "#FFCC00", "#FF9900", "#FF6600", "#FF3300", "#FF0000", "#CC0000", "#990000", "#660000", "#330000"),  interpolate = "linear")
-colintCWDabs <- colorRampPalette(colors = c("#00FFFF", "#00CCFF", "#0099FF", "#0066FF", "#0033FF", "#0000FF", "#0000CC", "#000099", "#000066", "#000033"),  interpolate = "linear")
-colintCWDano <- colorRampPalette(colors = c("#00FF00", "#33FF33", "#66FF66", "#99FF99", "#CCFFCC", "#FFFFFF", "#CCCCFF", "#9999FF", "#6666FF", "#3333FF", "#0000FF"),  interpolate = "linear")
-
-
+colintBuPu <- colorRampPalette(brewer.pal(9,"BuPu"),interpolate = "linear")
+colintYlOrBr <- colorRampPalette(brewer.pal(9,"YlOrBr"),interpolate = "linear")
 
 #windabs2 <- colorRampPalette(c("#6389B3","#5BB2B8", "#3AB284","#3AB284", "#8DCE6B", "#AEC356", "#CAB942", "#AC4D85", "#AC4D85", "#9645A3","#895CAC", "#9C49D5","#D3B4ED", "#F6DFDF" , "white"),interpolate = "linear")
 map_func_cols <- function(indic = NA,  domain = NA) {
@@ -34,9 +12,23 @@ map_func_cols <- function(indic = NA,  domain = NA) {
           cols = rev(colintRdYlBu(21)), 
           vals = seq(-50,50,5)
         ) 
-    
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "°C","</html>")
+  }
   
+  if (indic %in% c("cwmn00")) {
+    df.col <- data.frame(
+      cols = colintBuPu(16), 
+      vals = seq(1,31, 2)
+    ) 
+    leaflet_titleg <- paste0("<html>", "consec. days","</html>")
+  }
+  
+  if (indic %in% c("hwmn20","hwmx35")) {
+    df.col <- data.frame(
+      cols = colintYlOrBr(16), 
+      vals = seq(1,31, 2)
+    ) 
+    leaflet_titleg <- paste0("<html>", "consec. days","</html>")
   }
   
   
