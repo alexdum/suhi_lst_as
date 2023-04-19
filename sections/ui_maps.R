@@ -116,7 +116,7 @@ ui_maps <- tabPanel(
           width = width_panels[1],
           wellPanel(
             selectInput(
-              "parameter_europe_monthly", "Prameter:", 
+              "parameter_europe_monthly", "Parameter:", 
               choices_map_europe_monthly, 
               selected = choices_map_europe_monthly[2]
             ),
