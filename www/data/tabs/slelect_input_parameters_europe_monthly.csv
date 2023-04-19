@@ -2,4 +2,6 @@ parameter,choice
 LST monthly min,mn
 LST monthly avg,mm
 LST monthly max,mx
-
+CW (LST min ≤ 0),cwmn00
+HW20 (LST min  ≥ 0),hwmn20
+HW35 (LST max  ≥ 0),hwmx35
