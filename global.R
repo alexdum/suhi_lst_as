@@ -97,8 +97,11 @@ dats.lst.hwmn20 <- as.Date(names(lst.hwmn20) %>% gsub("hwmn20_days=", "",.) %>% 
 lst.hwmx35 <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_hwmx35.nc")
 dats.lst.hwmx35 <- as.Date(names(lst.hwmx35) %>% gsub("hwmx35_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
 
+lst.hwdi <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_hwdi.nc", subd = "hwdi")
+dats.lst.hwdi <- time(lst.hwdi)
 
-
+lst.cwdi <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_cwdi.nc", subd = "cwdi")
+dats.lst.cwdi <- time(lst.cwdi)
 
 # # for mac
 # if (Sys.info()[1] == "Darwin") {
