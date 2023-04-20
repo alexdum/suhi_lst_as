@@ -15,12 +15,13 @@ library(highcharter)
 library(shinycssloaders)
 
 
-#https://shiny.rstudio.com/gallery/superzip-example.htmlhttps://shiny.rstudio.com/gallery/superzip-example.html
+
+# https://stackoverflow.com/questions/46719268/shiny-app-does-not-reflect-changes-in-update-rdata-file
 
 source("utils/graphs_funs.R")
 source("utils/show_pop.R")
 source("utils/leaflet_fun.R")
-source("utils/map_fun_cols.R")
+source("utils/mapa_fun_cols.R")
 source_python("utils/extract_point.py") 
 
 width_panels <- c(2,7)
