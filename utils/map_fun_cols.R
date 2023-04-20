@@ -1,11 +1,9 @@
-# culori culori leaflet ---------------------------------------------------------
-colintRdYlBu <- colorRampPalette(brewer.pal(10,"RdYlBu"),interpolate = "linear")
-colintBuPu <- colorRampPalette(brewer.pal(9,"BuPu"),interpolate = "linear")
-colintYlOrBr <- colorRampPalette(brewer.pal(9,"YlOrBr"),interpolate = "linear")
-
-#windabs2 <- colorRampPalette(c("#6389B3","#5BB2B8", "#3AB284","#3AB284", "#8DCE6B", "#AEC356", "#CAB942", "#AC4D85", "#AC4D85", "#9645A3","#895CAC", "#9C49D5","#D3B4ED", "#F6DFDF" , "white"),interpolate = "linear")
-map_func_cols <- function(indic = NA,  domain = NA) {
+map_fun_cols <- function(indic = NA,  domain = NA) {
   # culori interpolate
+  # culori culori leaflet ---------------------------------------------------------
+  colintRdYlBu <- colorRampPalette(brewer.pal(10,"RdYlBu"),interpolate = "linear")
+  colintBuPu <- colorRampPalette(brewer.pal(9,"BuPu"),interpolate = "linear")
+  colintYlOrBr <- colorRampPalette(brewer.pal(9,"YlOrBr"),interpolate = "linear")
   
   if (indic %in% c("mn", "mx", "mm")) {
         df.col <- data.frame(
