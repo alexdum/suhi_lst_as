@@ -15,7 +15,6 @@ library(highcharter)
 library(shinycssloaders)
 
 
-
 # https://stackoverflow.com/questions/46719268/shiny-app-does-not-reflect-changes-in-update-rdata-file
 
 source("utils/graphs_funs.R")
