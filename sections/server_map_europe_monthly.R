@@ -40,8 +40,8 @@ reac_lst_indicator <- reactive ({
   lst[lst  < -50] <- -50
   #if (indicator %in% c("cwmn00", "hwmn20","hwmx35")) lst[lst ==0] <- NA # na pentru cand nu ai zile cu indicator
   domain <- terra::minmax(lst)
-
-  map_leg <- map_fun_cols(indic = indicator, domain )
+  
+  map_leg <- mapa_fun_cols(indic = indicator, domain )
   
   
   list(lst = lst, index = index, domain = domain, pal =  map_leg$pal, pal_rev =  map_leg$pal_rev,  
@@ -59,7 +59,7 @@ output$map_europe_indicator <- renderLeaflet({
     cols = isolate(reac_lst_indicator()$pal), 
     cols_rev = isolate(reac_lst_indicator()$pal_rev),
     title = isolate(reac_lst_indicator()$tit_leg)
-    )
+  )
 })
 
 observe({
@@ -96,8 +96,15 @@ observe({
     if (!is.null(click)) {
       cell <- terra::cellFromXY(lst, cbind(click$lng, click$lat))
       xy <- terra::xyFromCell(lst, cell)
-      fil.nc <- paste0("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_t", input$parameter_europe_monthly,".nc")
-      dd <- extract_point(fname = fil.nc , lon = xy[1], lat = xy[2], variable = 'MLST-AS') 
+      
+      if (input$parameter_europe_monthly %in% c("cwmn00", "hwmn20","hwmx35")) {
+        fil.nc <- paste0("www/data/ncs/wmo_6_msg_lst_as_", input$parameter_europe_monthly,".nc")
+        variable_sel = input$parameter_europe_monthly
+      } else {
+        fil.nc <- paste0("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_t", input$parameter_europe_monthly,".nc")
+        variable_sel = 'MLST-AS'
+      }
+      dd <- extract_point(fname = fil.nc , lon = xy[1], lat = xy[2], variable = variable_sel) 
       # pentru afisare conditional panel si titlu grafic coordonates
       condpan_monthly.txt <- ifelse(
         is.na(mean(dd, na.rm = T)) | is.na(cell), 
