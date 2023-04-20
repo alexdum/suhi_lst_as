@@ -13,7 +13,7 @@ mapa_fun_cols <- function(indic = NA,  domain = NA) {
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "°C","</html>")
   }
   
-  if (indic %in% c("cwmn00")) {
+  if (indic %in% c("cwmn00","cwdi")) {
     df.col <- data.frame(
       cols = colintBuPu(16), 
       vals = seq(1,31, 2)
@@ -21,7 +21,7 @@ mapa_fun_cols <- function(indic = NA,  domain = NA) {
     leaflet_titleg <- paste0("<html>", "consec. days","</html>")
   }
   
-  if (indic %in% c("hwmn20","hwmx35")) {
+  if (indic %in% c("hwmn20","hwmx35", "hwdi")) {
     df.col <- data.frame(
       cols = colintYlOrBr(16), 
       vals = seq(1,31, 2)
