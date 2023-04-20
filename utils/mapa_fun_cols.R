@@ -1,4 +1,4 @@
-map_fun_cols <- function(indic = NA,  domain = NA) {
+mapa_fun_cols <- function(indic = NA,  domain = NA) {
   # culori interpolate
   # culori culori leaflet ---------------------------------------------------------
   colintRdYlBu <- colorRampPalette(brewer.pal(10,"RdYlBu"),interpolate = "linear")
