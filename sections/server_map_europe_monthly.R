@@ -38,10 +38,10 @@ reac_lst_indicator <- reactive ({
   lst <- lst[[index]]
   lst[lst > 50] <- 50
   lst[lst  < -50] <- -50
-  if (indicator %in% c("cwmn00", "hwmn20","hwmx35")) lst[lst ==0] <- NA # na pentru cand nu ai zile cu indicator
+  #if (indicator %in% c("cwmn00", "hwmn20","hwmx35")) lst[lst ==0] <- NA # na pentru cand nu ai zile cu indicator
   domain <- terra::minmax(lst)
 
-  map_leg <- map_func_cols(indic = indicator, domain )
+  map_leg <- map_fun_cols(indic = indicator, domain )
   
   
   list(lst = lst, index = index, domain = domain, pal =  map_leg$pal, pal_rev =  map_leg$pal_rev,  
