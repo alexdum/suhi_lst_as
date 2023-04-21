@@ -5,7 +5,7 @@ ui_maps <- tabPanel(
   tabsetPanel( 
     id = "tab_maps",
     tabPanel(
-      value = "suhi_maps",
+      id = "suhi_mapa",
       title = "SUHI & Cities LST",
       tags$h6(" "),
       tags$h5(paste0("Cities for which Surface Urban Heat Island (SUHI) and Land Surface Temperature (LST) 
@@ -40,7 +40,11 @@ ui_maps <- tabPanel(
           ),
           wellPanel(
             leafletOutput("map", height = 500) %>% withSpinner(size = 0.5)
+          ),
+          wellPanel(
+            highchartOutput("plot_city") %>% withSpinner(size = 0.5)
           )
+          
         )
       )
     ),
