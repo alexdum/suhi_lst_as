@@ -91,8 +91,8 @@ dats.lst.mx <- as.Date(names(lst.mx) %>% gsub("MLST-AS_days=", "",.) %>% as.inte
 lst.cwmn00 <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_cwmn00.nc")
 dats.lst.cwmn00 <- as.Date(names(lst.cwmn00) %>% gsub("cwmn00_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
 
-lst.hwmn20 <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_hwmn20.nc")
-dats.lst.hwmn20 <- as.Date(names(lst.hwmn20) %>% gsub("hwmn20_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+lst.trmn20 <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_trmn20.nc")
+dats.lst.trmn20 <- as.Date(names(lst.trmn20) %>% gsub("trmn20_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
 
 lst.hwmx35 <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_hwmx35.nc")
 dats.lst.hwmx35 <- as.Date(names(lst.hwmx35) %>% gsub("hwmx35_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 

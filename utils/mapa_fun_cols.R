@@ -21,7 +21,7 @@ mapa_fun_cols <- function(indic = NA,  domain = NA) {
     leaflet_titleg <- paste0("<html>", "consec. days","</html>")
   }
   
-  if (indic %in% c("hwmn20","hwmx35", "hwdi")) {
+  if (indic %in% c("trmn20","hwmx35", "hwdi")) {
     df.col <- data.frame(
       cols = colintYlOrBr(16), 
       vals = seq(1,31, 2)

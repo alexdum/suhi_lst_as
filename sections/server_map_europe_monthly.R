@@ -4,13 +4,13 @@
 output$text_map_europe_monthly <- renderText({
   
   switch( # alege nume indicator care să fie afișat
-    which(c("mn", "mm" ,"mx","cwmn00", "hwmn20","hwmx35", "hwdi", "cwdi") %in% input$parameter_europe_monthly),
+    which(c("mn", "mm" ,"mx","cwmn00", "trmn20","hwmx35", "hwdi", "cwdi") %in% input$parameter_europe_monthly),
     name_indicator <- "LST monthly minimum",
     name_indicator <- "LST monthly average",
     name_indicator <- "LST monthly maximum",
-    name_indicator <- "CW - cold waves defined as monthly maximum no of consecutive days when LST min ≤ 0",
-    name_indicator <- "HW20 - heat waves defined as monthly maximum no of consecutive days when LST min ≥ 20",
-    name_indicator <- "HW35 - heat waves defined as monthky maximum no of consecutive days whenLST max  ≥ 35",
+    name_indicator <- "CW - cold waves defined as monthly maximum no of consecutive days when LST min ≤ 0 °C",
+    name_indicator <- "TR20 - number of consecutive days when daily minimum temperature ≥ 20 °C",
+    name_indicator <- "HW35 - heat waves defined as monthky maximum no of consecutive days whenLST max  ≥ 35 °C",
     name_indicator <- "HWDI - the number of days per time period where in intervals of at least 6 consecutive days the daily maximum temperature is more than 5 degrees above a reference value. The reference value is calculated as the mean of maximum temperatures of a five day",
     name_indicator <- "CWDI - the number of days per time period where in intervals of at least 6 consecutive days the daily minimum temperature is more than 5 degrees below a reference value. The reference value is calculated  as the mean of minimum temperatures of a five day")
   
@@ -26,12 +26,12 @@ reac_lst_indicator <- reactive ({
   # indicator <- "mm" 
   
   switch (
-    which(c("mn", "mm" ,"mx", "cwmn00", "hwmn20","hwmx35", "hwdi", "cwdi") %in% input$parameter_europe_monthly),
+    which(c("mn", "mm" ,"mx", "cwmn00", "trmn20","hwmx35", "hwdi", "cwdi") %in% input$parameter_europe_monthly),
     lst <- lst.mn,
     lst <- lst.mm,
     lst <- lst.mx,
     lst <- lst.cwmn00,
-    lst <- lst.hwmn20,
+    lst <- lst.trmn20,
     lst <- lst.hwmx35,
     lst <- lst.hwdi,
     lst <- lst.cwdi
@@ -41,7 +41,7 @@ reac_lst_indicator <- reactive ({
   lst <- lst[[index]]
   lst[lst > 50] <- 50
   lst[lst  < -50] <- -50
-  #if (indicator %in% c("cwmn00", "hwmn20","hwmx35")) lst[lst ==0] <- NA # na pentru cand nu ai zile cu indicator
+  #if (indicator %in% c("cwmn00", "trmn20","hwmx35")) lst[lst ==0] <- NA # na pentru cand nu ai zile cu indicator
   domain <- terra::minmax(lst)
   
   map_leg <- mapa_fun_cols(indic = indicator, domain )
@@ -100,7 +100,7 @@ observe({
       cell <- terra::cellFromXY(lst, cbind(click$lng, click$lat))
       xy <- terra::xyFromCell(lst, cell)
       
-      if (input$parameter_europe_monthly %in% c("cwmn00", "hwmn20","hwmx35","hwdi", "cwdi")) {
+      if (input$parameter_europe_monthly %in% c("cwmn00", "trmn20","hwmx35","hwdi", "cwdi")) {
         fil.nc <- paste0("www/data/ncs/wmo_6_msg_lst_as_", input$parameter_europe_monthly,".nc")
         variable_sel = input$parameter_europe_monthly
       } else {
