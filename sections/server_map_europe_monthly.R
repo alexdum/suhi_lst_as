@@ -48,7 +48,7 @@ reac_lst_indicator <- reactive ({
   
   
   list(lst = lst, index = index, domain = domain, pal =  map_leg$pal, pal_rev =  map_leg$pal_rev,  
-       tit_leg  =   map_leg$tit_leg)
+       tit_leg  =   map_leg$tit_leg,  indicator= indicator)
   
 }) %>%
   bindCache(input$month_indicator,  input$parameter_europe_monthly) %>%
@@ -132,9 +132,13 @@ observe({
 # plot actualizat daca schimb si coordonatee
 output$lst_rast_mon <- renderHighchart({
   req(!is.na(values_plot_lst_mon$input))
+  indicator <- reac_lst_indicator()$indicator
+  
+  ytitle <- ifelse(indicator %in% c("cwmn00", "trmn20","hwmx35","hwdi", "cwdi"),"No of consecutive days","LST [°C]")
+  
   hc_plot(
     input =  values_plot_lst_mon$input , xaxis_series = c("lst"), filename_save = "lst_mon",
-    cols = c("#800026"), names = c("LST"), ytitle = "LST [°C]",
+    cols = c("#800026"), names = c("LST"), ytitle =   ytitle,
     title =   values_plot_lst_mon$title
   )
 })
