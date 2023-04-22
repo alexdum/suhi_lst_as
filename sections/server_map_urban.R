@@ -65,7 +65,7 @@ output$text_down_urb <- renderText({
 }) 
 
 output$text_map <- renderText({
-  paste(params()$param.label, "computed for major cities:", input$days_suhi)
+  paste(params()$param.label, "computed for major cities:", input$days_suhi,"(to view the time series graph, click on the city)")
 }) 
 observe({
   
@@ -103,23 +103,17 @@ observe({
 })
 
 
-
-
 # reactive values plot ----------------------------------------------------
 plot_vars <- reactiveValues(
   city = NULL
 )
-
-
-
 observe({ 
   plot_vars$city <- input$map_shape_click$id
 })
 
 output$plot_city <- renderHighchart({
   
-  if(is.null(plot_vars$city)) plot_vars$city <- input$city # pentru pronire variabile default
-
+  if (is.null(plot_vars$city)) plot_vars$city <- input$city # pentru pronire variabile default
   uhi <- fread(paste0("www/data/tabs/suhi/suhi_",plot_vars$city,"_v02.csv"))[,c("date", "uhi.min", "uhi.max")]
   lst <- fread(paste0("www/data/tabs/suhi/stats_",plot_vars$city,"_v02.csv"))[,c("date", "med.urb", "med.rur")]
   
@@ -127,14 +121,19 @@ output$plot_city <- renderHighchart({
     merge(uhi, lst, by.x.y = "date") |>
     filter(date <= input$days_suhi)
   
+  # nume grafic
   name <- select_input_cities$label[select_input_cities$choice == plot_vars$city]
-  
+  param <-  names(choices_map)[choices_map == params()$param]
+  # culoare grafic in functie de parametru
+  color <- map_urban_graph_color(param)
   
   hc_plot(
     input =  datas, xaxis_series = params()$param, filename_save = paste0(plot_vars$city , "_", params()$param),
-    cols =  "#800026", names = paste(name, params()$param), ytitle = "°C"
+    cols =  color, names = paste(name, param), ytitle = "°C"
   )
-}) 
+})  #|>
+#   bindCache(input$days_suhi,input$parameter) |>
+#   bindEvent(input$map_shape_click$id)# pentru cache
 
 
 output$downloadDataMap <- downloadHandler(
