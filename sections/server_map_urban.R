@@ -131,8 +131,8 @@ output$plot_city <- renderHighchart({
     input =  datas, xaxis_series = params()$param, filename_save = paste0(plot_vars$city , "_", params()$param),
     cols =  color, names = paste(name, param), ytitle = "°C"
   )
-})  #|>
-#   bindCache(input$days_suhi,input$parameter) |>
+})  |>
+  bindCache(input$days_suhi,input$parameter,input$map_shape_click$id) #|>
 #   bindEvent(input$map_shape_click$id)# pentru cache
 
 
