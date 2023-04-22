@@ -19,6 +19,7 @@ source("utils/graphs_funs.R")
 source("utils/show_pop.R")
 source("utils/leaflet_fun.R")
 source("utils/mapa_fun_cols.R")
+source("utils/map_urban_graph_color.R")
 source_python("utils/extract_point.py") 
 
 width_panels <- c(2,7)
