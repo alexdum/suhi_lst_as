@@ -147,7 +147,8 @@ output$lst_rast <- renderHighchart({
     cols = c("#800026"), names = c("LST"), ytitle = "LST [°C]",
     title =   values_plot_lst$title
   )
-})
+}) |>
+  bindCache(input$param_europe_daily,input$days_europe, input$map.europe_click)
 
 
 output$downloadLST <- downloadHandler(
