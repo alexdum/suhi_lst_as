@@ -12,11 +12,11 @@ output$text_map_europe <- renderText({
 
 #lst <- lst.avg[[which(as.character(dats.lst.avg) %in% as.character("2021-01-01"))]]
 
-reactiveAct <- reactive ({
+reactiveAct <- reactive({
   index <- which(as.character(dats.lst.avg) %in% as.character(input$days_europe))
   
   
-  switch (
+  switch(
     which(c("avg","min","max" ) %in%  input$param_europe_daily),
     lst <- lst.avg,
     lst <- lst.min,
@@ -26,9 +26,9 @@ reactiveAct <- reactive ({
   
   lst <- lst[[index]]
   list(lst = lst, index = index)
-}) %>% 
-  bindCache(input$days_europe,  input$param_europe_daily) %>% 
-  bindEvent(isolate(input$tab_maps), input$days_europe,  input$param_europe_daily)
+})# %>% 
+  # bindCache(input$days_europe,  input$param_europe_daily) %>% 
+  # bindEvent(isolate(input$tab_maps), input$days_europe,  input$param_europe_daily)
 
 output$map.europe <- renderLeaflet({
   leaflet( 
@@ -148,7 +148,8 @@ output$lst_rast <- renderHighchart({
     title =   values_plot_lst$title
   )
 }) |>
-  bindCache(input$param_europe_daily,input$days_europe, input$map.europe_click)
+  bindCache(input$param_europe_daily,input$days_europe, values_plot_lst,reactiveAct()) |>
+  bindEvent(input$map.europe_click)
 
 
 output$downloadLST <- downloadHandler(
