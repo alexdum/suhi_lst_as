@@ -21,17 +21,17 @@ observeEvent(input$tabs, {
   # between the two observers
 }, ignoreInit = TRUE)
 
-observeEvent(getUrlHash(), {
-  hash <- getUrlHash()
-  
-  # No work to be done if input$tabs and the hash are already the same
-  if (hash == input$tabs) return()
-  
-  valid <- c("#graphs","#maps","#about")
-  
-  if (hash %in% valid) {
-    updateTabsetPanel(session, "tabs", hash)
-  }
+# observeEvent(getUrlHash(), {
+#   hash <- getUrlHash()
+#   
+#   # No work to be done if input$tabs and the hash are already the same
+#   if (hash == input$tabs) return()
+#   
+#   valid <- c("#graphs","#maps","#about")
+#   
+#   if (hash %in% valid) {
+#     updateTabsetPanel(session, "tabs", hash)
+#   }
   
   
   
