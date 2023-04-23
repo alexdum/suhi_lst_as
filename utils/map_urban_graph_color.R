@@ -3,7 +3,7 @@ map_urban_graph_color <- function(parameter) {
     color <- "#fd8d3c"
   } else if (parameter == "SUHI Max") {
     color <- "#800026"
-  } else if (parameter == "Urban LST") {
+  } else if (parameter == "Urban LST mean") {
     color <- "#ef3b2c" 
   } else {
     color <- "#9ecae1" 
