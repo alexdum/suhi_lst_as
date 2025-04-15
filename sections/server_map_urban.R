@@ -3,10 +3,11 @@ filteredData <- eventReactive(
   list(input$days_suhi), {
     dt.suhi.filt <- dt.suhi[date == input$days_suhi]
     dt.lst.filt <- dt.lst[date == input$days_suhi]
-    merge(dt.suhi.filt,  dt.lst.filt, by.x.y = "id")
+    merge(dt.suhi.filt,  dt.lst.filt, by = "id")
     
   }
 )
+
 
 
 # harta leaflet -----------------------------------------------------------
@@ -118,7 +119,7 @@ output$plot_city <- renderHighchart({
   lst <- fread(paste0("www/data/tabs/suhi/stats_",plot_vars$city,"_v02.csv"))[,c("date", "med.urb", "med.rur")]
   
   datas <- 
-    merge(uhi, lst, by.x.y = "date") |>
+    merge(uhi, lst, by= "date") |>
     filter(date <= input$days_suhi)
   
   # nume grafic

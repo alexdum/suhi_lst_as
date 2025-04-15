@@ -17,7 +17,7 @@ datas <- reactive({
   # uhi <- fread(paste0("www/data/tabs/suhi/suhi_amman_v02.csv"))[,c("date", "uhi.min", "uhi.max")]
   # lst <- fread(paste0("www/data/tabs/suhi/stats_amman_v02.csv"))[,c("date", "med.urb", "med.rur")]
   
-  datas <- merge(uhi, lst, by.x.y = "date")
+  datas <- merge(uhi, lst, by = "date")
   
   list(datas = datas)
 }) 
