@@ -54,16 +54,49 @@ choices_map_europe_monthly <- setNames(choices_map_europe_monthly$choice, choice
        
 
 # read all uhi files
+
+# Define the expected column classes
+column_classes <- c(
+date = "Date",
+time.uhi.min = "character",
+uhi.min  = "numeric",
+time.uhi.max = "character",
+uhi.max = "numeric",
+uhi.med = "numeric"
+)
+
 files.suhi <- paste0(select_input_cities$V1,"suhi_",select_input_cities$choice, "_v02.csv")
-dt.suhi <- lapply(files.suhi, fread) 
+dt.suhi <- lapply(files.suhi, function(file) fread(file, colClasses = column_classes))
 names(dt.suhi) <- strsplit(files.suhi, "suhi_|_v") %>% do.call(rbind,.) %>% as_tibble() %>% dplyr::select(V2) %>% unlist()
 dt.suhi <- rbindlist(dt.suhi, idcol = "id" )
 
+dt.suhi$time.uhi.min <- as.POSIXct(dt.suhi$time.uhi.min,format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
+dt.suhi$time.uhi.max <- as.POSIXct(dt.suhi$time.uhi.max,format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
+# read all lst files
+column_classes <- c(
+date = "Date",
+time.uhi.min = "character",
+min.urb = "numeric",
+min.rur = "numeric",
+min.urb.q002 = "numeric",
+min.rur.q002 = "numeric",
+time.uhi.max = "character",
+max.urb = "numeric",
+max.rur = "numeric",
+max.urb.q098 = "numeric",
+max.rur.q098 = "numeric",
+uhi.med = "numeric",
+med.urb = "numeric",
+med.rur = "numeric"
+)
 # read all lst files
 files.lst <- gsub("/suhi_","/stats_",files.suhi)
-dt.lst <- lapply(files.lst, fread) 
+dt.lst <- lapply(files.lst, fread,  colClasses = column_classes)
 names(dt.lst) <- strsplit(files.lst, "stats_|_v") %>% do.call(rbind,.) %>% as_tibble() %>% dplyr::select(V2) %>% unlist()
 dt.lst <- rbindlist(dt.lst, idcol = "id" )
+dt.lst$time.uhi.max <- as.POSIXct(dt.lst$time.uhi.max, format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
+dt.lst$time.uhi.min <-  as.POSIXct(dt.lst$time.uhi.min, format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
+
 
 # read ncs
 lst.max <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_max.nc")
