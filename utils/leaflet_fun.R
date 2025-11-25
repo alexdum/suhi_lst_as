@@ -14,7 +14,6 @@ leaflet_fun <- function(data, raster, domain, cols, cols_rev, title) {
       baseGroups = "CartoDB.PositronNoLabels",
       overlayGroups = c("Labels", "City borders")) %>%
     addProviderTiles("CartoDB.PositronNoLabels") %>%
-    addProviderTiles("Stamen.TonerLines") %>%
     addRasterImage(
       raster, colors = cols, opacity = .8
       # options = leafletOptions(pane = "raster")

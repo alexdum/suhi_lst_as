@@ -43,7 +43,6 @@ output$map.europe <- renderLeaflet({
       baseGroups = "CartoDB.PositronNoLabels",
       overlayGroups = c("Labels", "City borders")) %>%
     addProviderTiles("CartoDB.PositronNoLabels") %>%
-    addProviderTiles("Stamen.TonerLines") %>% 
     addRasterImage(
       lst.avg[[isolate(reactiveAct()$index)]], colors = pal_daily, opacity = .8
       # options = leafletOptions(pane = "raster")
