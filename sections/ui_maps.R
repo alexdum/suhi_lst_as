@@ -1,21 +1,20 @@
 
 ui_maps <- tabPanel(
   "Maps",value = "#maps", id = "#maps",icon = icon("map"),
-  #tags$br(""),
   tabsetPanel( 
     id = "tab_maps",
     tabPanel(
       id = "suhi_mapa",
       title = "SUHI & Cities LST",
-      tags$h6(" "),
       tags$h5(paste0("Cities for which Surface Urban Heat Island (SUHI) and Land Surface Temperature (LST) 
               has been calculated from LST AS SEVIRI product (last processed date ",  max(dt.lst$date),").")),
-      #tags$h6(" "),
-      tags$br(""),
-      fluidRow(
-        column(
-          width = width_panels[1],
-          wellPanel(
+      layout_sidebar(
+        fill = TRUE,
+        gap = "1rem",
+        sidebar = card(
+          class = "sidebar-card",
+          card_header("Display options"),
+          card_body(
             selectInput(
               "parameter", "Prameter:", 
               choices_map, 
@@ -28,37 +27,35 @@ ui_maps <- tabPanel(
               max = max(dt.lst$date) |> as.Date(),
               value = max(dt.lst$date) |> as.Date()
             ),
-            downloadButton('downloadDataMap', 'Download'),
-            h6(textOutput("text_down_urb"))
+            downloadButton('downloadDataMap', 'Download', class = "w-100"),
+            h6(textOutput("text_down_urb"), class = "text-muted mt-2")
           )
-        )
-        ,
-        column(
-          width = width_panels[2],
-          wellPanel(
-            textOutput("text_map")
-          ),
-          wellPanel(
+        ),
+        card(
+          card_header(textOutput("text_map")),
+          card_body(
             leafletOutput("map", height = 500) %>% withSpinner(size = 0.5)
-          ),
-          wellPanel(
+          )
+        ),
+        card(
+          card_header("City time series"),
+          card_body(
             highchartOutput("plot_city") %>% withSpinner(size = 0.5)
           )
-          
         )
       )
     ),
     tabPanel(
       value = "cont_maps",
       title = "LST",
-      tags$h6(" "),
       tags$h5(paste0("Spatial distribution of LST data at continental scale (last processed date ", max(dt.lst$date),").")),
-      #tags$h6(" "),
-      tags$br(""),
-      fluidRow(
-        column(
-          width = width_panels[1],
-          wellPanel(
+      layout_sidebar(
+        fill = TRUE,
+        gap = "1rem",
+        sidebar = card(
+          class = "sidebar-card",
+          card_header("Display options"),
+          card_body(
             selectInput(
               "param_europe_daily", "Prameter:", 
               choices_map_europe_daily, 
@@ -82,27 +79,30 @@ ui_maps <- tabPanel(
             ),
             conditionalPanel(
               condition = "input.radio == 2 && output.lst_rast && output.condpan != 'nas'",
-              downloadButton('downloadLST', 'Download')
+              downloadButton('downloadLST', 'Download', class = "w-100")
             )
           )
         ),
-        column(
-          width = width_panels[2],
-          wellPanel(
-            textOutput("text_map_europe")
-          ),
-          wellPanel(
+        card(
+          card_header(textOutput("text_map_europe")),
+          card_body(
             leafletOutput("map.europe", height = 500) %>% withSpinner(size = 0.5)
-          ),
-          conditionalPanel( # show graphs only when data available
-            condition = "input.radio == 2 && output.condpan != 'nas'",
-            wellPanel(
+          )
+        ),
+        conditionalPanel( # show graphs only when data available
+          condition = "input.radio == 2 && output.condpan != 'nas'",
+          card(
+            card_header("Timeseries"),
+            card_body(
               highchartOutput("lst_rast") %>% withSpinner(size = 0.5)
             )
-          ),
-          conditionalPanel(
-            condition = "input.radio == 2 && output.condpan == 'nas'",
-            wellPanel(
+          )
+        ),
+        conditionalPanel(
+          condition = "input.radio == 2 && output.condpan == 'nas'",
+          card(
+            card_header("Timeseries"),
+            card_body(
               p("You must click on an area with LST values available")
             )
           )
@@ -112,13 +112,14 @@ ui_maps <- tabPanel(
     tabPanel(
       value = "clim_ind",
       title = "Indicators",
-      tags$h6(" "),
       tags$h5(paste0("Climate indicators as computed from daily minimum, maximum and average LST data (last processed date ", max(dt.lst$date),").")),
-      tags$br(""),
-      fluidRow(
-        column(
-          width = width_panels[1],
-          wellPanel(
+      layout_sidebar(
+        fill = TRUE,
+        gap = "1rem",
+        sidebar = card(
+          class = "sidebar-card",
+          card_header("Display options"),
+          card_body(
             selectInput(
               "parameter_europe_monthly", "Parameter:", 
               choices_map_europe_monthly, 
@@ -141,28 +142,31 @@ ui_maps <- tabPanel(
             ),
             conditionalPanel( # show download when data available
               condition = "input.radio_mon == 2 && output.lst_rast && output.condpan_monthly != 'nas'",
-              downloadButton('downloadLST_mon', 'Download')
+              downloadButton('downloadLST_mon', 'Download', class = "w-100")
             )
           )
         )
         ,
-        column(
-          width = width_panels[2],
-          wellPanel(
-            textOutput("text_map_europe_monthly")
-          ),
-          wellPanel(
+        card(
+          card_header(textOutput("text_map_europe_monthly")),
+          card_body(
             leafletOutput("map_europe_indicator", height = 500) %>% withSpinner(size = 0.5)
-          ),
-          conditionalPanel( # show graphs only when data available
-            condition = "input.radio_mon == 2 && output.condpan_monthly != 'nas'",
-            wellPanel(
+          )
+        ),
+        conditionalPanel( # show graphs only when data available
+          condition = "input.radio_mon == 2 && output.condpan_monthly != 'nas'",
+          card(
+            card_header("Timeseries"),
+            card_body(
               highchartOutput("lst_rast_mon") %>% withSpinner(size = 0.5)
             )
-          ),
-          conditionalPanel(
-            condition = "input.radio_mon == 2 && output.condpan_monthly == 'nas'",
-            wellPanel(
+          )
+        ),
+        conditionalPanel(
+          condition = "input.radio_mon == 2 && output.condpan_monthly == 'nas'",
+          card(
+            card_header("Timeseries"),
+            card_body(
               p("You must click on an area with indicator values available")
             )
           )

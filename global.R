@@ -9,6 +9,7 @@ library(leaflet)
 library(htmltools)
 library(RColorBrewer)
 library(markdown)
+library(bslib)
 library(terra)
 library(reticulate)
 library(highcharter)
@@ -164,5 +165,4 @@ dats.lst.cwdi <- time(lst.cwdi)
 #   lst.mx <- rast(lst.mmax)
 #   
 # }
-
 

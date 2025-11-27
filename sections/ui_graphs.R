@@ -6,33 +6,43 @@ library(dplyr)
 
 ui_graphs <- tabPanel(
   "Graphs",value = "#graphs", id = "#graphs",icon = icon("chart-line"),
-  #tags$br(""),
   tabsetPanel( 
     id = "tab_suhi",
     tabPanel(
       value = "suhi",
       title = "SUHI & LST",
-      tags$h6(" "),
-      tags$h5(paste0("Surface Urban Heat Island (SUHI) and Land Surface Temperature 
-                     (LST) as detected from LST AS SEVIRI product (last processed date ",  max(dt.lst$date),").")),
-      #tags$h6(" "),
-      tags$br(""),
-      fluidRow(
-        column(
-          width = width_panels[1],
-          wellPanel(
-            selectInput("city", "City:", choices, selected = choices[sample(1:length(choices), 1)]),
-            downloadButton('downloadData', 'Download')
+      tags$h5(
+        class = "section-lead",
+        paste0("Surface Urban Heat Island (SUHI) and Land Surface Temperature 
+                     (LST) as detected from LST AS SEVIRI product (last processed date ",  max(dt.lst$date),").")
+      ),
+      layout_sidebar(
+        fill = TRUE,
+        gap = "1rem",
+        sidebar = card(
+          class = "sidebar-card",
+          card_header("City & data"),
+          card_body(
+            selectizeInput(
+              "city", "City:", choices,
+              selected = choices[sample(1:length(choices), 1)],
+              options = list(dropdownParent = "body")
+            ),
+            downloadButton('downloadData', 'Download', class = "mt-2")
           )
         ),
-        column( 
-          width = width_panels[2],
-          fluidRow(
-            wellPanel(
+        layout_columns(
+          gap = "1rem",
+          card(
+            card_header("Surface Urban Heat Island"),
+            card_body(
               textOutput("text_uhi"),
               highchartOutput("suhi") %>% withSpinner(size = 0.5)
-            ),
-            wellPanel(
+            )
+          ),
+          card(
+            card_header("Land Surface Temperature"),
+            card_body(
               textOutput("text_lst"),
               highchartOutput("lst") %>% withSpinner(size = 0.5)
             )
@@ -42,5 +52,3 @@ ui_graphs <- tabPanel(
     )
   )
 )
-
-
