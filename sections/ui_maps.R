@@ -6,8 +6,14 @@ ui_maps <- tabPanel(
     tabPanel(
       id = "suhi_mapa",
       title = "SUHI & Cities LST",
-      tags$h5(paste0("Cities for which Surface Urban Heat Island (SUHI) and Land Surface Temperature (LST) 
-              has been calculated from LST AS SEVIRI product (last processed date ",  max(dt.lst$date),").")),
+      card(
+        class = "mb-3",
+        card_header("Cities coverage"),
+        card_body(
+          p("SUHI and LST coverage for all cities from the LST AS SEVIRI product."),
+          span(class = "badge bg-secondary", paste("Updated", format(max(dt.lst$date), "%Y-%m-%d")))
+        )
+      ),
       layout_sidebar(
         fill = TRUE,
         gap = "1rem",
@@ -48,7 +54,14 @@ ui_maps <- tabPanel(
     tabPanel(
       value = "cont_maps",
       title = "LST",
-      tags$h5(paste0("Spatial distribution of LST data at continental scale (last processed date ", max(dt.lst$date),").")),
+      card(
+        class = "mb-3",
+        card_header("Continental coverage"),
+        card_body(
+          p("Spatial distribution of LST at continental scale."),
+          span(class = "badge bg-secondary", paste("Updated", format(max(dats.lst.avg), "%Y-%m-%d")))
+        )
+      ),
       layout_sidebar(
         fill = TRUE,
         gap = "1rem",
@@ -112,7 +125,14 @@ ui_maps <- tabPanel(
     tabPanel(
       value = "clim_ind",
       title = "Indicators",
-      tags$h5(paste0("Climate indicators as computed from daily minimum, maximum and average LST data (last processed date ", max(dt.lst$date),").")),
+      card(
+        class = "mb-3",
+        card_header("Continental coverage"),
+        card_body(
+          p("Climate indicators computed from daily minimum, maximum, and average LST."),
+          span(class = "badge bg-secondary", paste("Updated", format(max(dt.lst$date), "%Y-%m-%d")))
+        )
+      ),
       layout_sidebar(
         fill = TRUE,
         gap = "1rem",

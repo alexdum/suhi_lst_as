@@ -11,10 +11,13 @@ ui_graphs <- tabPanel(
     tabPanel(
       value = "suhi",
       title = "SUHI & LST",
-      tags$h5(
-        class = "section-lead",
-        paste0("Surface Urban Heat Island (SUHI) and Land Surface Temperature 
-                     (LST) as detected from LST AS SEVIRI product (last processed date ",  max(dt.lst$date),").")
+      card(
+        class = "mb-3",
+        card_header("Cities coverage"),
+        card_body(
+          p("SUHI and LST time series from the LST AS SEVIRI product."),
+          span(class = "badge bg-secondary", paste("Updated", format(max(dt.lst$date), "%Y-%m-%d")))
+        )
       ),
       layout_sidebar(
         fill = TRUE,
