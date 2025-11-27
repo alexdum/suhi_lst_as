@@ -10,7 +10,7 @@ output:
 
 Built in [Shiny](https://shiny.rstudio.com/), this dashboard aims to provide relevant  statistics about Urban Climate for large cities located in WMO Region 6.
 
-The application is based on [LSA-SAF SEVIRI LST All Sky](https://landsaf.ipma.pt/en/products/land-surface-temperature/mlstas/) dataset.
+The application is based on [LSA-SAF SEVIRI LST All Sky](https://nextcloud.lsasvcs.ipma.pt/s/dYjdyiMXZTt8sP4) dataset.
 
 The administrative boundaries for all the cities used in this study were extracted from [OpenStreetMap.](https://wiki.openstreetmap.org/wiki/Tag:boundary%3Dadministrative#10_admin_level_values_for_specific_countries).
 
@@ -28,5 +28,4 @@ The Surface Urban Heat Island (SUHI) is computed as the difference between the L
 
 Daily statistics were calculated when at least 38 out of 48 possible values are available each pixel and day. The urban statistics were computed for the cities shown on the below map. 
 The buffers used as rural areas in the SUHI calculation are displayed on the interactive map with red lines.
-
 
