@@ -112,6 +112,18 @@ observe({
   plot_vars$city <- input$map_shape_click$id
 })
 
+output$city_time_series_title <- renderText({
+  city_id <- plot_vars$city
+  if (is.null(city_id) || is.na(city_id) || !nzchar(city_id)) {
+    city_id <- input$city
+  }
+  row <- select_input_cities[select_input_cities$choice == city_id, c("label", "country")]
+  if (nrow(row) == 0 || any(is.na(row))) {
+    return("City time series")
+  }
+  paste(row$label, row$country, sep = ", ")
+})
+
 output$plot_city <- renderHighchart({
   
   if (is.null(plot_vars$city)) plot_vars$city <- input$city # pentru pronire variabile default

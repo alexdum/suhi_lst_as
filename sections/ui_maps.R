@@ -44,7 +44,7 @@ ui_maps <- tabPanel(
           )
         ),
         card(
-          card_header("City time series"),
+          card_header(textOutput("city_time_series_title")),
           card_body(
             highchartOutput("plot_city") %>% withSpinner(size = 0.5)
           )
