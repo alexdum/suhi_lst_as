@@ -7,18 +7,22 @@ app_theme <- bs_theme(
   version = 5,
   bootswatch = "spacelab",
   primary = "#1f7a8c",
-  secondary = "#f18f01"
+  secondary = "#f18f01",
+  "body-bg" = "#f6f8fb",
+  "app-brand-font-weight" = "700",
+  "app-brand-letter-spacing" = "0.5px"
 )
 
 ui <- shinyUI(function(req) { 
   fluidPage(
     theme = app_theme,
     tags$head(
+      tags$meta(name = "viewport", content = "width=device-width, initial-scale=1"),
       tags$style(
         type = "text/css",
         "
-        body { padding-top: 72px; background-color: #f6f8fb; }
-        .app-brand { font-weight: 700; letter-spacing: 0.5px; }
+        body { padding-top: 72px; }
+        .app-brand { font-weight: var(--app-brand-font-weight); letter-spacing: var(--app-brand-letter-spacing); }
         .navbar, .navbar .container-fluid { align-items: center; min-height: 62px; }
         .navbar-brand { display: flex; align-items: center; padding: 12px 14px; margin-right: 1rem; }
         .navbar-nav > li > a, .navbar-nav .nav-link { padding: 12px 14px; display: flex; align-items: center; height: 100%; }
