@@ -13,7 +13,7 @@ app_theme <- bs_theme(
   "app-brand-letter-spacing" = "0.5px"
 )
 
-ui <- shinyUI(function(req) { 
+ui <- function(req) { 
   fluidPage(
     theme = app_theme,
     tags$head(
@@ -48,4 +48,4 @@ ui <- shinyUI(function(req) {
       ui_about
     )
   )
-})
+}
