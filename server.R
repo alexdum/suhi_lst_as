@@ -1,4 +1,4 @@
-server <- shinyServer(function(input, output, session) {
+function(input, output, session) {
   
   source(file = "utils/tabs_url.R", local = T)
   # add sections
@@ -15,6 +15,4 @@ server <- shinyServer(function(input, output, session) {
   outputOptions(output, "map", suspendWhenHidden = FALSE)
   #outputOptions(output, "map.europe", suspendWhenHidden = FALSE)
   
-})
-
-
+}
