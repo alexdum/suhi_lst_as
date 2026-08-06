@@ -309,16 +309,37 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .equal-height-card {
-  height: 100%;
-  min-height: 520px;
-  display: flex;
-  flex-direction: column;
+  height: 520px !important;
+  max-height: 520px !important;
+  min-height: 520px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
 }
 
 .equal-height-card .card-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: calc(100% - 54px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  padding: 1rem !important;
+}
+
+.equal-height-card .shiny-spinner-output-container,
+.equal-height-card .html-widget,
+.equal-height-card .leaflet-container,
+.equal-height-card .leaflet,
+.equal-height-card .highcharts-container,
+.equal-height-card .highcharts-root {
+  flex: 1 1 auto !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .bslib-card:hover, .glass-card:hover {

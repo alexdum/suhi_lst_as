@@ -8,13 +8,13 @@ output$text_map_europe_monthly <- renderText({
     name_indicator <- "LST monthly minimum",
     name_indicator <- "LST monthly average",
     name_indicator <- "LST monthly maximum",
-    name_indicator <- "CW - cold waves defined as monthly maximum no of consecutive days when LST min ≤ 0 °C",
-    name_indicator <- "TR20 - number of consecutive days when daily minimum temperature ≥ 20 °C",
-    name_indicator <- "HW35 - heat waves defined as monthky maximum no of consecutive days whenLST max  ≥ 35 °C",
-    name_indicator <- "HWDI - the number of days per time period where in intervals of at least 6 consecutive days the daily maximum temperature is more than 5 degrees above a reference value. The reference value is calculated as the mean of maximum temperatures of a five day",
-    name_indicator <- "CWDI - the number of days per time period where in intervals of at least 6 consecutive days the daily minimum temperature is more than 5 degrees below a reference value. The reference value is calculated  as the mean of minimum temperatures of a five day")
+    name_indicator <- "CW - Cold Waves (consecutive days LST min ≤ 0 °C)",
+    name_indicator <- "TR20 - Tropical Nights (consecutive days LST min ≥ 20 °C)",
+    name_indicator <- "HW35 - Heat Waves (consecutive days LST max ≥ 35 °C)",
+    name_indicator <- "HWDI - Heat Wave Duration Index",
+    name_indicator <- "CWDI - Cold Wave Duration Index")
   
-  paste0(input$month_indicator," : ",name_indicator," (click on map to see or plot the grid value)")
+  paste0(input$month_indicator,": ",name_indicator," (click on map to view or plot grid values)")
   
 })
 
