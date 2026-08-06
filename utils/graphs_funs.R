@@ -2,6 +2,7 @@
 hc_plot <- function(input, xaxis_series, filename_save, cols, names, ytitle, title = NULL) {
   library(dplyr)
   hh <- highchart(type = "stock")  |>
+    hc_chart(marginRight = 35) |>
     hc_xAxis(type = "date") |>
     hc_add_series(input,type = "line", hcaes_string("date", xaxis_series[1]), color = cols[1], name = names[1])
   if (length(xaxis_series) == 2) {
