@@ -41,6 +41,7 @@ ui_maps <- tabPanel(
         ),
         layout_columns(
           col_widths = c(6, 6),
+          gap = "1rem",
           card(
             full_screen = TRUE,
             class = "equal-height-card glass-card",
@@ -110,6 +111,7 @@ ui_maps <- tabPanel(
         ),
         layout_columns(
           col_widths = c(6, 6),
+          gap = "1rem",
           card(
             full_screen = TRUE,
             class = "equal-height-card glass-card",
@@ -123,7 +125,7 @@ ui_maps <- tabPanel(
             class = "equal-height-card glass-card",
             card_header(div(class = "card-header-title", icon("chart-area"), " Timeseries")),
             card_body(
-              class = "d-flex flex-column h-100 p-3",
+              class = "d-flex flex-column h-100",
               conditionalPanel(
                 condition = "input.radio == 2 && output.condpan != 'nas'",
                 style = "height: 100%; display: flex; flex-direction: column;",
@@ -205,6 +207,7 @@ ui_maps <- tabPanel(
         ),
         layout_columns(
           col_widths = c(6, 6),
+          gap = "1rem",
           card(
             full_screen = TRUE,
             class = "equal-height-card glass-card",
@@ -218,7 +221,7 @@ ui_maps <- tabPanel(
             class = "equal-height-card glass-card",
             card_header(div(class = "card-header-title", icon("chart-area"), " Timeseries")),
             card_body(
-              class = "d-flex flex-column h-100 p-3",
+              class = "d-flex flex-column h-100",
               conditionalPanel(
                 condition = "input.radio_mon == 2 && output.condpan_monthly != 'nas'",
                 style = "height: 100%; display: flex; flex-direction: column;",
