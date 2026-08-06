@@ -44,7 +44,7 @@ ui_graphs <- tabPanel(
             card_header(div(class = "card-header-title", icon("temperature-high"), " Surface Urban Heat Island")),
             card_body(
               textOutput("text_uhi"),
-              highchartOutput("suhi") %>% withSpinner(size = 0.5)
+              highchartOutput("suhi", height = "100%") %>% withSpinner(size = 0.5)
             )
           ),
           card(
@@ -53,7 +53,7 @@ ui_graphs <- tabPanel(
             card_header(div(class = "card-header-title", icon("thermometer-half"), " Land Surface Temperature")),
             card_body(
               textOutput("text_lst"),
-              highchartOutput("lst") %>% withSpinner(size = 0.5)
+              highchartOutput("lst", height = "100%") %>% withSpinner(size = 0.5)
             )
           )
         )

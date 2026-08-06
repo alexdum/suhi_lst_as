@@ -46,7 +46,7 @@ ui_maps <- tabPanel(
             class = "equal-height-card glass-card",
             card_header(div(class = "card-header-title", icon("map-marked-alt"), textOutput("text_map", inline = TRUE))),
             card_body(
-              leafletOutput("map", height = 500) %>% withSpinner(size = 0.5)
+              leafletOutput("map", height = "100%") %>% withSpinner(size = 0.5)
             )
           ),
           card(
@@ -54,7 +54,7 @@ ui_maps <- tabPanel(
             class = "equal-height-card glass-card",
             card_header(div(class = "card-header-title", icon("chart-line"), textOutput("city_time_series_title", inline = TRUE))),
             card_body(
-              highchartOutput("plot_city", height = 500) %>% withSpinner(size = 0.5)
+              highchartOutput("plot_city", height = "100%") %>% withSpinner(size = 0.5)
             )
           )
         )
@@ -115,24 +115,26 @@ ui_maps <- tabPanel(
             class = "equal-height-card glass-card",
             card_header(div(class = "card-header-title", icon("map-marked-alt"), textOutput("text_map_europe", inline = TRUE))),
             card_body(
-              leafletOutput("map.europe", height = 500) %>% withSpinner(size = 0.5)
+              leafletOutput("map.europe", height = "100%") %>% withSpinner(size = 0.5)
             )
           ),
           div(
             class = "h-100 d-flex flex-column",
             conditionalPanel(
               condition = "input.radio == 2 && output.condpan != 'nas'",
+              style = "height: 100%; display: flex; flex-direction: column;",
               card(
                 full_screen = TRUE,
                 class = "equal-height-card glass-card",
                 card_header(div(class = "card-header-title", icon("chart-area"), " Timeseries")),
                 card_body(
-                  highchartOutput("lst_rast", height = 500) %>% withSpinner(size = 0.5)
+                  highchartOutput("lst_rast", height = "100%") %>% withSpinner(size = 0.5)
                 )
               )
             ),
             conditionalPanel(
               condition = "input.radio == 2 && output.condpan == 'nas'",
+              style = "height: 100%; display: flex; flex-direction: column;",
               card(
                 class = "equal-height-card glass-card",
                 card_header(div(class = "card-header-title", icon("info-circle"), " Timeseries")),
@@ -204,24 +206,26 @@ ui_maps <- tabPanel(
             class = "equal-height-card glass-card",
             card_header(div(class = "card-header-title", icon("map-marked-alt"), textOutput("text_map_europe_monthly", inline = TRUE))),
             card_body(
-              leafletOutput("map_europe_indicator", height = 500) %>% withSpinner(size = 0.5)
+              leafletOutput("map_europe_indicator", height = "100%") %>% withSpinner(size = 0.5)
             )
           ),
           div(
             class = "h-100 d-flex flex-column",
             conditionalPanel(
               condition = "input.radio_mon == 2 && output.condpan_monthly != 'nas'",
+              style = "height: 100%; display: flex; flex-direction: column;",
               card(
                 full_screen = TRUE,
                 class = "equal-height-card glass-card",
                 card_header(div(class = "card-header-title", icon("chart-area"), " Timeseries")),
                 card_body(
-                  highchartOutput("lst_rast_mon", height = 500) %>% withSpinner(size = 0.5)
+                  highchartOutput("lst_rast_mon", height = "100%") %>% withSpinner(size = 0.5)
                 )
               )
             ),
             conditionalPanel(
               condition = "input.radio_mon == 2 && output.condpan_monthly == 'nas'",
+              style = "height: 100%; display: flex; flex-direction: column;",
               card(
                 class = "equal-height-card glass-card",
                 card_header(div(class = "card-header-title", icon("info-circle"), " Timeseries")),
