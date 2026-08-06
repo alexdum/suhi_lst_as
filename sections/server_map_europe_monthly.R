@@ -95,7 +95,16 @@ observe({
   # afiseaza popup sau grafic time series
   if (input$radio_mon == 1) {
     if (!is.null(click)) {
-      show_pop(x = click$lng, y = click$lat, rdat = lst, proxy = proxy)
+      if (input$parameter_europe_monthly %in% c("cwmn00", "trmn20","hwmx35","hwdi", "cwdi")) {
+        fil.nc <- paste0("www/data/ncs/wmo_6_msg_lst_as_", input$parameter_europe_monthly,".nc")
+        variable_sel = input$parameter_europe_monthly
+      } else {
+        fil.nc <- paste0("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_t", input$parameter_europe_monthly,".nc")
+        variable_sel = 'MLST-AS'
+      }
+      idx <- reac_lst_indicator()$index
+      val <- extract_single_value(fil.nc, click$lng, click$lat, variable_sel, idx)
+      show_pop(x = click$lng, y = click$lat, val = val, proxy = proxy)
     }
   } else {
     proxy %>% clearPopups()

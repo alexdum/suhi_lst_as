@@ -103,7 +103,10 @@ observe({
   # afiseaza popup sau grafic time series
   if (input$radio == 1) {
     if (!is.null(click)) {
-      show_pop(x = click$lng, y = click$lat, rdat = lst, proxy = proxy)
+      fname <- paste0("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_", input$param_europe_daily,".nc")
+      idx <- reactiveAct()$index
+      val <- extract_single_value(fname, click$lng, click$lat, 'MLST-AS', idx)
+      show_pop(x = click$lng, y = click$lat, val = val, proxy = proxy)
     }
   } else {
     proxy %>% clearPopups()
