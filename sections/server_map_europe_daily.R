@@ -33,7 +33,7 @@ reactiveAct <- reactive({
 output$map.europe <- renderLeaflet({
   leaflet( 
     data = cities_map,
-    options = leafletOptions(minZoom = 3, maxZoom = 12)) %>%
+    options = leafletOptions(minZoom = 3, maxZoom = 12, doubleClickZoom = FALSE)) %>%
     setView(25, 46, zoom = 3) %>%
     setMaxBounds(-12, 27.58, 56, 71.5) %>%
     #addMapPane(name = "raster", zIndex = 410) %>%
@@ -114,7 +114,7 @@ observe({
     
     # grafic timeseries
     if (!is.null(click)) {
-      withProgress(message = 'Extracting time series (takes ~6s)...', value = 0.8, {
+      withProgress(message = 'Extracting time series...', value = 0.8, {
         cell <- terra::cellFromXY(lst, cbind(click$lng, click$lat))
         xy <- terra::xyFromCell(lst, cell)
         dd <- extract_point(fname = paste0("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_", input$param_europe_daily,".nc"), lon = xy[1], lat = xy[2], variable = 'MLST-AS') 

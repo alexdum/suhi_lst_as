@@ -647,6 +647,25 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   flex: 1 1 auto !important;
 }
 
+/* 11. Intuitive Map Cursors & Click Interactivity */
+.leaflet-container,
+.leaflet-grab,
+.leaflet-drag-target {
+  cursor: crosshair !important;
+}
+
+.leaflet-container.leaflet-clickable,
+.leaflet-container .leaflet-interactive,
+.leaflet-image-layer {
+  cursor: crosshair !important;
+}
+
+.leaflet-dragging .leaflet-container,
+.leaflet-dragging .leaflet-grab,
+.leaflet-dragging .leaflet-drag-target {
+  cursor: grabbing !important;
+}
+
 .equal-height-card .card-body > .shiny-text-output {
   flex: 0 0 auto;
   margin-bottom: 0.5rem;

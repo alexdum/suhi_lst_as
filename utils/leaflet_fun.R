@@ -4,7 +4,7 @@ leaflet_fun <- function(data, raster, domain, cols, cols_rev, title) {
   
   map <- leaflet(
     data = data,
-    options = leafletOptions(minZoom = 3, maxZoom = 12)) %>%
+    options = leafletOptions(minZoom = 3, maxZoom = 12, doubleClickZoom = FALSE)) %>%
     setView(25, 46, zoom = 3) %>%
     setMaxBounds(-12, 27.58, 56, 71.5) %>%
     #addMapPane(name = "raster", zIndex = 410) %>%

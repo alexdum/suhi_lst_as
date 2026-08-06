@@ -106,7 +106,7 @@ observe({
     
     # grafic timeseries
     if (!is.null(click)) {
-      withProgress(message = 'Extracting time series (takes ~6s)...', value = 0.8, {
+      withProgress(message = 'Extracting time series...', value = 0.8, {
         cell <- terra::cellFromXY(lst, cbind(click$lng, click$lat))
         xy <- terra::xyFromCell(lst, cell)
         

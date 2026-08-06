@@ -15,7 +15,7 @@ output$map <- renderLeaflet ({
   leaflet(
     data = cities_map,
     options = leafletOptions(
-      minZoom = 3, maxZoom = 12
+      minZoom = 3, maxZoom = 12, doubleClickZoom = FALSE
     ) 
   ) %>%
     leaflet.extras::addBootstrapDependency() %>%
