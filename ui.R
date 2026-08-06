@@ -4,11 +4,11 @@ source("sections/ui_about.R", local = T)
 
 app_theme <- bs_theme(
   version = 5,
-  primary = "#d90429",
-  secondary = "#ff6b35",
-  bg = "#fdf8f5",
+  primary = "#e76f51",
+  secondary = "#f4a261",
+  bg = "#faf6f5",
   fg = "#2b2d42",
-  "link-color" = "#d90429"
+  "link-color" = "#bd3a1d"
 )
 
 hero_banner <- div(

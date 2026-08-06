@@ -39,7 +39,8 @@ ui_graphs <- tabPanel(
         layout_columns(
           gap = "1rem",
           card(
-            class = "glass-card",
+            full_screen = TRUE,
+            class = "equal-height-card glass-card",
             card_header(div(class = "card-header-title", icon("temperature-high"), " Surface Urban Heat Island")),
             card_body(
               textOutput("text_uhi"),
@@ -47,7 +48,8 @@ ui_graphs <- tabPanel(
             )
           ),
           card(
-            class = "glass-card",
+            full_screen = TRUE,
+            class = "equal-height-card glass-card",
             card_header(div(class = "card-header-title", icon("thermometer-half"), " Land Surface Temperature")),
             card_body(
               textOutput("text_lst"),

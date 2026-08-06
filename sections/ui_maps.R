@@ -42,14 +42,16 @@ ui_maps <- tabPanel(
         layout_columns(
           col_widths = c(6, 6),
           card(
-            class = "glass-card",
+            full_screen = TRUE,
+            class = "equal-height-card glass-card",
             card_header(div(class = "card-header-title", icon("map-marked-alt"), textOutput("text_map", inline = TRUE))),
             card_body(
               leafletOutput("map", height = 500) %>% withSpinner(size = 0.5)
             )
           ),
           card(
-            class = "glass-card",
+            full_screen = TRUE,
+            class = "equal-height-card glass-card",
             card_header(div(class = "card-header-title", icon("chart-line"), textOutput("city_time_series_title", inline = TRUE))),
             card_body(
               highchartOutput("plot_city", height = 500) %>% withSpinner(size = 0.5)
@@ -109,17 +111,20 @@ ui_maps <- tabPanel(
         layout_columns(
           col_widths = c(6, 6),
           card(
-            class = "glass-card",
+            full_screen = TRUE,
+            class = "equal-height-card glass-card",
             card_header(div(class = "card-header-title", icon("map-marked-alt"), textOutput("text_map_europe", inline = TRUE))),
             card_body(
               leafletOutput("map.europe", height = 500) %>% withSpinner(size = 0.5)
             )
           ),
           div(
+            class = "h-100 d-flex flex-column",
             conditionalPanel(
               condition = "input.radio == 2 && output.condpan != 'nas'",
               card(
-                class = "glass-card",
+                full_screen = TRUE,
+                class = "equal-height-card glass-card",
                 card_header(div(class = "card-header-title", icon("chart-area"), " Timeseries")),
                 card_body(
                   highchartOutput("lst_rast", height = 500) %>% withSpinner(size = 0.5)
@@ -129,10 +134,15 @@ ui_maps <- tabPanel(
             conditionalPanel(
               condition = "input.radio == 2 && output.condpan == 'nas'",
               card(
-                class = "glass-card",
+                class = "equal-height-card glass-card",
                 card_header(div(class = "card-header-title", icon("info-circle"), " Timeseries")),
                 card_body(
-                  p(class = "text-muted", "Click on an area on the map with available LST values to generate a timeseries.")
+                  class = "d-flex flex-column align-items-center justify-content-center text-center p-4",
+                  div(
+                    class = "py-4 text-center",
+                    icon("hand-pointer", class = "fa-3x mb-3 text-muted"),
+                    p(class = "text-muted fs-6 mb-0", "Click anywhere on the map to extract local LST time series.")
+                  )
                 )
               )
             )
@@ -190,17 +200,20 @@ ui_maps <- tabPanel(
         layout_columns(
           col_widths = c(6, 6),
           card(
-            class = "glass-card",
+            full_screen = TRUE,
+            class = "equal-height-card glass-card",
             card_header(div(class = "card-header-title", icon("map-marked-alt"), textOutput("text_map_europe_monthly", inline = TRUE))),
             card_body(
               leafletOutput("map_europe_indicator", height = 500) %>% withSpinner(size = 0.5)
             )
           ),
           div(
+            class = "h-100 d-flex flex-column",
             conditionalPanel(
               condition = "input.radio_mon == 2 && output.condpan_monthly != 'nas'",
               card(
-                class = "glass-card",
+                full_screen = TRUE,
+                class = "equal-height-card glass-card",
                 card_header(div(class = "card-header-title", icon("chart-area"), " Timeseries")),
                 card_body(
                   highchartOutput("lst_rast_mon", height = 500) %>% withSpinner(size = 0.5)
@@ -210,10 +223,15 @@ ui_maps <- tabPanel(
             conditionalPanel(
               condition = "input.radio_mon == 2 && output.condpan_monthly == 'nas'",
               card(
-                class = "glass-card",
+                class = "equal-height-card glass-card",
                 card_header(div(class = "card-header-title", icon("info-circle"), " Timeseries")),
                 card_body(
-                  p(class = "text-muted", "Click on an area on the map with available indicator values to generate a timeseries.")
+                  class = "d-flex flex-column align-items-center justify-content-center text-center p-4",
+                  div(
+                    class = "py-4 text-center",
+                    icon("hand-pointer", class = "fa-3x mb-3 text-muted"),
+                    p(class = "text-muted fs-6 mb-0", "Click anywhere on the map to extract local LST time series.")
+                  )
                 )
               )
             )
