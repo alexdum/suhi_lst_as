@@ -56,7 +56,7 @@ hero_banner <- div(
           div(class = "metric-icon", icon("calendar-check")),
           div(
             class = "metric-details",
-            span(class = "metric-value", if (exists("dt.lst") && !is.null(dt.lst$date)) format(max(dt.lst$date), "%b %Y") else "Latest"),
+            span(class = "metric-value", if (exists("dt.lst") && !is.null(dt.lst$date)) format(max(dt.lst$date), "%d %b %Y") else "Latest"),
             span(class = "metric-label", "Latest Update")
           )
         )
