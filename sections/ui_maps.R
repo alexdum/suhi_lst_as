@@ -104,7 +104,7 @@ ui_maps <- tabPanel(
             selected = 2
           ),
           conditionalPanel(
-            condition = "input.radio == 2 && output.lst_rast && output.condpan != 'nas'",
+            condition = "input.radio == 2 && output.condpan != 'nas'",
             downloadButton('downloadLST', 'Download Data', class = "btn-primary w-100")
           )
         ),
@@ -118,33 +118,37 @@ ui_maps <- tabPanel(
               leafletOutput("map.europe", height = "100%") %>% withSpinner(size = 0.5)
             )
           ),
-          div(
-            class = "h-100 d-flex flex-column",
-            conditionalPanel(
-              condition = "input.radio == 2 && output.condpan != 'nas'",
-              style = "height: 100%; display: flex; flex-direction: column;",
-              card(
-                full_screen = TRUE,
-                class = "equal-height-card glass-card",
-                card_header(div(class = "card-header-title", icon("chart-area"), " Timeseries")),
-                card_body(
-                  highchartOutput("lst_rast", height = "100%") %>% withSpinner(size = 0.5)
+          card(
+            full_screen = TRUE,
+            class = "equal-height-card glass-card",
+            card_header(div(class = "card-header-title", icon("chart-area"), " Timeseries")),
+            card_body(
+              class = "d-flex flex-column h-100 p-3",
+              conditionalPanel(
+                condition = "input.radio == 2 && output.condpan != 'nas'",
+                style = "height: 100%; display: flex; flex-direction: column;",
+                highchartOutput("lst_rast", height = "100%") %>% withSpinner(size = 0.5)
+              ),
+              conditionalPanel(
+                condition = "input.radio == 2 && output.condpan == 'nas'",
+                style = "height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;",
+                div(
+                  class = "py-4 text-center text-muted",
+                  role = "status",
+                  "aria-live" = "polite",
+                  icon("hand-pointer", class = "fa-3x mb-3 text-primary opacity-75"),
+                  p(class = "fs-6 mb-0 text-dark fw-medium", "Click anywhere on the map to extract local LST time series.")
                 )
-              )
-            ),
-            conditionalPanel(
-              condition = "input.radio == 2 && output.condpan == 'nas'",
-              style = "height: 100%; display: flex; flex-direction: column;",
-              card(
-                class = "equal-height-card glass-card",
-                card_header(div(class = "card-header-title", icon("info-circle"), " Timeseries")),
-                card_body(
-                  class = "d-flex flex-column align-items-center justify-content-center text-center p-4",
-                  div(
-                    class = "py-4 text-center",
-                    icon("hand-pointer", class = "fa-3x mb-3 text-muted"),
-                    p(class = "text-muted fs-6 mb-0", "Click anywhere on the map to extract local LST time series.")
-                  )
+              ),
+              conditionalPanel(
+                condition = "input.radio == 1",
+                style = "height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;",
+                div(
+                  class = "py-4 text-center text-muted",
+                  role = "status",
+                  "aria-live" = "polite",
+                  icon("info-circle", class = "fa-3x mb-3 text-primary opacity-75"),
+                  p(class = "fs-6 mb-0 text-dark fw-medium", "Popup mode active. Click any location on the map to view values in a popup window.")
                 )
               )
             )
@@ -195,7 +199,7 @@ ui_maps <- tabPanel(
             selected = 2
           ),
           conditionalPanel(
-            condition = "input.radio_mon == 2 && output.lst_rast && output.condpan_monthly != 'nas'",
+            condition = "input.radio_mon == 2 && output.condpan_monthly != 'nas'",
             downloadButton('downloadLST_mon', 'Download Data', class = "btn-primary w-100")
           )
         ),
@@ -209,33 +213,37 @@ ui_maps <- tabPanel(
               leafletOutput("map_europe_indicator", height = "100%") %>% withSpinner(size = 0.5)
             )
           ),
-          div(
-            class = "h-100 d-flex flex-column",
-            conditionalPanel(
-              condition = "input.radio_mon == 2 && output.condpan_monthly != 'nas'",
-              style = "height: 100%; display: flex; flex-direction: column;",
-              card(
-                full_screen = TRUE,
-                class = "equal-height-card glass-card",
-                card_header(div(class = "card-header-title", icon("chart-area"), " Timeseries")),
-                card_body(
-                  highchartOutput("lst_rast_mon", height = "100%") %>% withSpinner(size = 0.5)
+          card(
+            full_screen = TRUE,
+            class = "equal-height-card glass-card",
+            card_header(div(class = "card-header-title", icon("chart-area"), " Timeseries")),
+            card_body(
+              class = "d-flex flex-column h-100 p-3",
+              conditionalPanel(
+                condition = "input.radio_mon == 2 && output.condpan_monthly != 'nas'",
+                style = "height: 100%; display: flex; flex-direction: column;",
+                highchartOutput("lst_rast_mon", height = "100%") %>% withSpinner(size = 0.5)
+              ),
+              conditionalPanel(
+                condition = "input.radio_mon == 2 && output.condpan_monthly == 'nas'",
+                style = "height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;",
+                div(
+                  class = "py-4 text-center text-muted",
+                  role = "status",
+                  "aria-live" = "polite",
+                  icon("hand-pointer", class = "fa-3x mb-3 text-primary opacity-75"),
+                  p(class = "fs-6 mb-0 text-dark fw-medium", "Click anywhere on the map to extract local LST time series.")
                 )
-              )
-            ),
-            conditionalPanel(
-              condition = "input.radio_mon == 2 && output.condpan_monthly == 'nas'",
-              style = "height: 100%; display: flex; flex-direction: column;",
-              card(
-                class = "equal-height-card glass-card",
-                card_header(div(class = "card-header-title", icon("info-circle"), " Timeseries")),
-                card_body(
-                  class = "d-flex flex-column align-items-center justify-content-center text-center p-4",
-                  div(
-                    class = "py-4 text-center",
-                    icon("hand-pointer", class = "fa-3x mb-3 text-muted"),
-                    p(class = "text-muted fs-6 mb-0", "Click anywhere on the map to extract local LST time series.")
-                  )
+              ),
+              conditionalPanel(
+                condition = "input.radio_mon == 1",
+                style = "height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;",
+                div(
+                  class = "py-4 text-center text-muted",
+                  role = "status",
+                  "aria-live" = "polite",
+                  icon("info-circle", class = "fa-3x mb-3 text-primary opacity-75"),
+                  p(class = "fs-6 mb-0 text-dark fw-medium", "Popup mode active. Click any location on the map to view values in a popup window.")
                 )
               )
             )

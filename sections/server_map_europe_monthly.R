@@ -123,7 +123,7 @@ observe({
       condpan_monthly.txt <- ifelse(
         is.na(mean(dd, na.rm = T)) | is.na(cell), 
         "nas", 
-        paste0("Extracted value ",input$param_europe_monthly," values for point lon = ",round(click$lng, 5)," lat = "  , round(click$lat, 5))
+        paste0("Extracted value ",input$parameter_europe_monthly," values for point lon = ",round(click$lng, 5)," lat = "  , round(click$lat, 5))
       )
       output$condpan_monthly <- renderText({
         condpan_monthly.txt 

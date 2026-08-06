@@ -6,7 +6,7 @@ pal_rev_daily <- colorNumeric("RdYlBu", domain = domain_daily, reverse = F, na.c
 pal_daily <- colorNumeric("RdYlBu", domain = domain_daily, reverse = T, na.color = "transparent")
 
 output$text_map_europe <- renderText({
-  paste0("Daily LST ",input$param_europe," values: ", format(input$days_europe, "%B %d, %Y") ," (click on map to see or plot the LST value)")
+  paste0("Daily LST ",input$param_europe_daily," values: ", format(input$days_europe, "%B %d, %Y") ," (click on map to see or plot the LST value)")
 })
 
 
