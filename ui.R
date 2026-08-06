@@ -29,7 +29,7 @@ hero_banner <- div(
           div(class = "metric-icon", icon("city")),
           div(
             class = "metric-details",
-            span(class = "metric-value", "80+"),
+            span(class = "metric-value", if (exists("select_input_cities")) paste(nrow(select_input_cities)) else "43"),
             span(class = "metric-label", "Cities Monitored")
           )
         ),
