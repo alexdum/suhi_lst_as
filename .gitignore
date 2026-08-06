@@ -1,16 +1,40 @@
+# R & RStudio files
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+*.RData
+*.Rds
+suhi_lst_as.Rproj
+
+# Large Data & Satellite Files (managed via S3 / sync.sh)
 misc/*
 www/data/tabs/suhi/*
-# exception to the rule
 !www/data/tabs/suhi/.gitkeep 
 www/data/ncs/*
-www/data/pq/*
 !www/data/ncs/.gitkeep 
-../../../../.DS_Store
-../../../.DS_Store
-../../.DS_Store
+www/data/pq/*
+!www/data/pq/.gitkeep
+
+# Python Virtual Environments & Caches
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs & Temporary Server Files
+sync.log
+*.log
+restart.txt
+scratch/
+
+# Operating System & IDE Files
 .DS_Store
-suhi_lst_as.Rproj
+.DS_Store?
+._*
+Thumbs.db
+.vscode/
+.idea/
+

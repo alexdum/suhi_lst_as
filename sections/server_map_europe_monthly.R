@@ -66,21 +66,23 @@ output$map_europe_indicator <- renderLeaflet({
 })
 
 observe({
-  lst <- reac_lst_indicator()$lst
-  leafletProxy("map_europe_indicator") %>%
-    clearImages() %>%
-    addRasterImage(
-      lst, 
-      colors = reac_lst_indicator()$pal,  
-      opacity = .8 ) %>%
-    clearControls() %>%
-    leaflet::addLegend(
-      title = reac_lst_indicator()$tit_leg,
-      position = "bottomright",
-      pal = reac_lst_indicator()$pal_rev, values =  reac_lst_indicator()$domain,
-      opacity = 1,
-      labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
-    )
+  withProgress(message = 'Plotting indicator data...', value = 0.5, {
+    lst <- reac_lst_indicator()$lst
+    leafletProxy("map_europe_indicator") %>%
+      clearImages() %>%
+      addRasterImage(
+        lst, 
+        colors = reac_lst_indicator()$pal,  
+        opacity = .8 ) %>%
+      clearControls() %>%
+      leaflet::addLegend(
+        title = reac_lst_indicator()$tit_leg,
+        position = "bottomright",
+        pal = reac_lst_indicator()$pal_rev, values =  reac_lst_indicator()$domain,
+        opacity = 1,
+        labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
+      )
+  })
 })
 
 # reactive values pentru plot lst time series din raster
@@ -91,23 +93,32 @@ observe({
   click <- input$map_europe_indicator_click
   lst <- reac_lst_indicator()$lst
   # afiseaza popup sau grafic time series
-  if (input$radio_mon == 1 & !is.null(click)) {
-    show_pop(x = click$lng, y = click$lat, rdat = lst, proxy = proxy)
+  if (input$radio_mon == 1) {
+    if (!is.null(click)) {
+      show_pop(x = click$lng, y = click$lat, rdat = lst, proxy = proxy)
+    }
   } else {
     proxy %>% clearPopups()
+    
+    if (is.null(click)) {
+      click <- list(lat = 47.4979, lng = 19.0402)
+    }
+    
     # grafic timeseries
     if (!is.null(click)) {
-      cell <- terra::cellFromXY(lst, cbind(click$lng, click$lat))
-      xy <- terra::xyFromCell(lst, cell)
-      
-      if (input$parameter_europe_monthly %in% c("cwmn00", "trmn20","hwmx35","hwdi", "cwdi")) {
-        fil.nc <- paste0("www/data/ncs/wmo_6_msg_lst_as_", input$parameter_europe_monthly,".nc")
-        variable_sel = input$parameter_europe_monthly
-      } else {
-        fil.nc <- paste0("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_t", input$parameter_europe_monthly,".nc")
-        variable_sel = 'MLST-AS'
-      }
-      dd <- extract_point(fname = fil.nc , lon = xy[1], lat = xy[2], variable = variable_sel) 
+      withProgress(message = 'Extracting time series (takes ~6s)...', value = 0.8, {
+        cell <- terra::cellFromXY(lst, cbind(click$lng, click$lat))
+        xy <- terra::xyFromCell(lst, cell)
+        
+        if (input$parameter_europe_monthly %in% c("cwmn00", "trmn20","hwmx35","hwdi", "cwdi")) {
+          fil.nc <- paste0("www/data/ncs/wmo_6_msg_lst_as_", input$parameter_europe_monthly,".nc")
+          variable_sel = input$parameter_europe_monthly
+        } else {
+          fil.nc <- paste0("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_t", input$parameter_europe_monthly,".nc")
+          variable_sel = 'MLST-AS'
+        }
+        dd <- extract_point(fname = fil.nc , lon = xy[1], lat = xy[2], variable = variable_sel) 
+      })
       # pentru afisare conditional panel si titlu grafic coordonates
       condpan_monthly.txt <- ifelse(
         is.na(mean(dd, na.rm = T)) | is.na(cell), 
@@ -119,7 +130,7 @@ observe({
       })
       outputOptions(output, "condpan_monthly", suspendWhenHidden = FALSE)
       # subseteaza in dunctie de data selectata
-      ddf <- data.frame(date = as.Date(names(dd)), lst = round(dd, 1)) %>% slice(1:reac_lst_indicator()$index)
+      ddf <- data.frame(date = as.Date(names(dd)), lst = round(as.numeric(dd), 1)) %>% slice(1:reac_lst_indicator()$index)
       
       # valori pentru plot la reactive values
       values_plot_lst_mon$title <- condpan_monthly.txt
@@ -131,7 +142,7 @@ observe({
 
 # plot actualizat daca schimb si coordonatee
 output$lst_rast_mon <- renderHighchart({
-  req(!is.na(values_plot_lst_mon$input))
+  req(is.data.frame(values_plot_lst_mon$input))
   indicator <- reac_lst_indicator()$indicator
   
   ytitle <- ifelse(indicator %in% c("cwmn00", "trmn20","hwmx35","hwdi", "cwdi"),"No of consecutive days","LST [°C]")

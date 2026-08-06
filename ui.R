@@ -1,4 +1,3 @@
-
 source("sections/ui_graphs.R", local = T)
 source("sections/ui_maps.R", local = T)
 source("sections/ui_about.R", local = T)
@@ -9,40 +8,88 @@ app_theme <- bs_theme(
   primary = "#1f7a8c",
   secondary = "#f18f01",
   "body-bg" = "#f6f8fb",
-  "app-brand-font-weight" = "700",
-  "app-brand-letter-spacing" = "0.5px"
+  "app-brand-font-weight" = "800",
+  "app-brand-letter-spacing" = "-0.02em"
+)
+
+hero_banner <- div(
+  class = "container-fluid px-4",
+  div(
+    class = "hero-banner",
+    div(
+      class = "hero-banner-content",
+      div(
+        class = "hero-title-group",
+        h1(class = "hero-title", "Urban Climate Explorer"),
+        p(class = "hero-subtitle", "Monitoring Surface Urban Heat Island (SUHI) & Land Surface Temperature (LST) dynamics across European cities.")
+      ),
+      div(
+        class = "hero-metrics-grid",
+        div(
+          class = "metric-card",
+          div(class = "metric-icon", icon("city")),
+          div(
+            class = "metric-details",
+            span(class = "metric-value", "80+"),
+            span(class = "metric-label", "Cities Monitored")
+          )
+        ),
+        div(
+          class = "metric-card",
+          div(class = "metric-icon", icon("globe-europe")),
+          div(
+            class = "metric-details",
+            span(class = "metric-value", "WMO Region 6"),
+            span(class = "metric-label", "Coverage Area")
+          )
+        ),
+        div(
+          class = "metric-card",
+          div(class = "metric-icon", icon("satellite")),
+          div(
+            class = "metric-details",
+            span(class = "metric-value", "LSA-SAF SEVIRI"),
+            span(class = "metric-label", "Dataset")
+          )
+        ),
+        div(
+          class = "metric-card",
+          div(class = "metric-icon", icon("calendar-check")),
+          div(
+            class = "metric-details",
+            span(class = "metric-value", if (exists("dt.lst") && !is.null(dt.lst$date)) format(max(dt.lst$date), "%b %Y") else "Latest"),
+            span(class = "metric-label", "Latest Update")
+          )
+        )
+      )
+    )
+  )
 )
 
 ui <- function(req) { 
   fluidPage(
     theme = app_theme,
     tags$head(
-      tags$meta(name = "viewport", content = "width=device-width, initial-scale=1"),
-      tags$style(
-        type = "text/css",
-        "
-        body { padding-top: 72px; }
-        .app-brand { font-weight: var(--app-brand-font-weight); letter-spacing: var(--app-brand-letter-spacing); }
-        .navbar, .navbar .container-fluid { align-items: center; min-height: 62px; }
-        .navbar-brand { display: flex; align-items: center; padding: 12px 14px; margin-right: 1rem; }
-        .navbar-nav > li > a, .navbar-nav .nav-link { padding: 12px 14px; display: flex; align-items: center; height: 100%; }
-        .bslib-card { box-shadow: 0 6px 24px rgba(9, 30, 66, 0.08); border: none; }
-        .sidebar-card .btn { width: 100%; }
-        #city + .selectize-control .selectize-input { min-height: 48px; padding: 10px 12px; }
-        #city + .selectize-control .selectize-dropdown-content { max-height: 70vh !important; overflow-y: auto; }
-        .selectize-dropdown { z-index: 2000; }
-        .section-lead { padding: 12px 0 16px 0; }
-        "
-      )
+      tags$meta(charset = "utf-8"),
+      tags$meta(name = "viewport", content = "width=device-width, initial-scale=1, shrink-to-fit=no"),
+      tags$meta(name = "description", content = "Urban Climate Explorer - Interactive monitoring of Surface Urban Heat Island (SUHI) dynamics and Land Surface Temperature (LST) across European cities using LSA-SAF SEVIRI satellite data."),
+      tags$meta(name = "keywords", content = "Urban Heat Island, SUHI, LST, Land Surface Temperature, Climate Indicators, Remote Sensing, SEVIRI, WMO Region 6"),
+      tags$meta(name = "author", content = "Urban Climate Research Team"),
+      tags$title("Urban Climate Explorer | SUHI & LST Monitoring"),
+      tags$link(rel = "preconnect", href = "https://fonts.googleapis.com"),
+      tags$link(rel = "preconnect", href = "https://fonts.gstatic.com", crossorigin = "anonymous"),
+      tags$link(rel = "stylesheet", href = "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"),
+      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
     ),
     useShinyjs(),
     navbarPage(
-      title = div(class = "app-brand", "Urban Clim explorer"),
-      selected = "#about",
+      title = div(class = "app-brand", "Urban Climate Explorer"),
+      selected = "#maps",
+      header = hero_banner,
       collapsible = TRUE,
       fluid = TRUE,
       id = "tabs",
-      position =  "fixed-top",
+      position = "fixed-top",
       ui_graphs,
       ui_maps,
       ui_about

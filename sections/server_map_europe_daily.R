@@ -84,18 +84,12 @@ output$map.europe <- renderLeaflet({
 
 
 observe({
-  
-  #withProgress(message = 'Plot LST data', value = 0, {
-  lst <- reactiveAct()$lst
-  leafletProxy("map.europe") %>%
-    clearImages() %>%
-    #addProviderTiles("CartoDB.PositronNoLabels") %>%
-    #addProviderTiles("Stamen.TonerLines") %>%
-    addRasterImage(lst, colors = pal_daily, opacity = .8)  
-  #addProviderTiles("CartoDB.PositronOnlyLabels") %>%
-  # Pause for 0.1 seconds to simulate a long computation.
-  #Sys.sleep(0.1)
-  #  })
+  withProgress(message = 'Plotting LST data...', value = 0.5, {
+    lst <- reactiveAct()$lst
+    leafletProxy("map.europe") %>%
+      clearImages() %>%
+      addRasterImage(lst, colors = pal_daily, opacity = .8)  
+  })
 })
 
 # reactive values pentru plot lst time series din raster
@@ -107,15 +101,24 @@ observe({
   click <- input$map.europe_click
   lst <- reactiveAct()$lst
   # afiseaza popup sau grafic time series
-  if (input$radio == 1 & !is.null(click)) {
-    show_pop(x = click$lng, y = click$lat, rdat = lst, proxy = proxy)
+  if (input$radio == 1) {
+    if (!is.null(click)) {
+      show_pop(x = click$lng, y = click$lat, rdat = lst, proxy = proxy)
+    }
   } else {
     proxy %>% clearPopups()
+    
+    if (is.null(click)) {
+      click <- list(lat = 47.4979, lng = 19.0402)
+    }
+    
     # grafic timeseries
     if (!is.null(click)) {
-      cell <- terra::cellFromXY(lst, cbind(click$lng, click$lat))
-      xy <- terra::xyFromCell(lst, cell)
-      dd <- extract_point(fname = paste0("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_", input$param_europe_daily,".nc"), lon = xy[1], lat = xy[2], variable = 'MLST-AS') 
+      withProgress(message = 'Extracting time series (takes ~6s)...', value = 0.8, {
+        cell <- terra::cellFromXY(lst, cbind(click$lng, click$lat))
+        xy <- terra::xyFromCell(lst, cell)
+        dd <- extract_point(fname = paste0("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_", input$param_europe_daily,".nc"), lon = xy[1], lat = xy[2], variable = 'MLST-AS') 
+      })
       # pentru afisare conditional panel si titlu grafic coordonates
       condpan.txt <- ifelse(
         is.na(mean(dd, na.rm = T)) | is.na(cell), 
@@ -127,7 +130,7 @@ observe({
       })
       outputOptions(output, "condpan", suspendWhenHidden = FALSE)
       # subseteaza in dunctie de data selectata
-      ddf <- data.frame(date = as.Date(names(dd)), lst = round(dd, 1)) %>% slice(1:reactiveAct()$index)
+      ddf <- data.frame(date = as.Date(names(dd)), lst = round(as.numeric(dd), 1)) %>% slice(1:reactiveAct()$index)
       
       # valori pentru plot la reactive values
       values_plot_lst$title <- condpan.txt
@@ -140,15 +143,13 @@ observe({
 
 # plot actualizat daca schimb si coordonatee
 output$lst_rast <- renderHighchart({
-  req(!is.na(values_plot_lst$input))
+  req(is.data.frame(values_plot_lst$input))
   hc_plot(
     input =  values_plot_lst$input , xaxis_series = c("lst"), filename_save = "lst",
     cols = c("#800026"), names = c("LST"), ytitle = "LST [°C]",
     title =   values_plot_lst$title
   )
-}) |>
-  bindCache(input$param_europe_daily,input$days_europe, values_plot_lst,reactiveAct()) |>
-  bindEvent(input$map.europe_click)
+})
 
 
 output$downloadLST <- downloadHandler(

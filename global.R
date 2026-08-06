@@ -27,7 +27,7 @@ width_panels <- c(2,7)
 
 # listă orașe din tabel selectInput care au date cities
 cities <- list.files("www/data/tabs/suhi", pattern = "^suhi", full.names = T) %>%
-  strsplit(., "suhi_|_v02.csv") %>% do.call(rbind, .) %>% as_tibble() 
+  strsplit(., "suhi_|_v02.csv") %>% do.call(rbind, .) %>% as.data.frame() %>% setNames(paste0("V", seq_len(ncol(.)))) %>% as_tibble() 
 
 select_input_cities <- read.csv("www/data/tabs/select_input_cities.csv") %>%
   arrange(label) %>% 
@@ -37,7 +37,7 @@ select_input_cities <- read.csv("www/data/tabs/select_input_cities.csv") %>%
 choices <- setNames(select_input_cities$choice, paste0(select_input_cities$label, " (", select_input_cities$country,")"))
 
 cities_map <- st_read("www/data/shp/cities_one_file.shp", quiet = T) %>% 
-  mutate(city =  strsplit(name, "-") %>% do.call(rbind, .) %>% as_tibble() %>% dplyr::select(V2) %>% unlist() %>% as.vector()) %>%
+  mutate(city =  strsplit(name, "-") %>% do.call(rbind, .) %>% as.data.frame() %>% setNames(paste0("V", seq_len(ncol(.)))) %>% as_tibble() %>% dplyr::select(V2) %>% unlist() %>% as.vector()) %>%
   filter(city %in% select_input_cities$choice)
 
 cities_map.buff <- st_read("www/data/shp/cities_buff_one_file.shp", quiet = T) %>% 
@@ -68,7 +68,7 @@ uhi.med = "numeric"
 
 files.suhi <- paste0(select_input_cities$V1,"suhi_",select_input_cities$choice, "_v02.csv")
 dt.suhi <- lapply(files.suhi, function(file) fread(file, colClasses = column_classes))
-names(dt.suhi) <- strsplit(files.suhi, "suhi_|_v") %>% do.call(rbind,.) %>% as_tibble() %>% dplyr::select(V2) %>% unlist()
+names(dt.suhi) <- strsplit(files.suhi, "suhi_|_v") %>% do.call(rbind,.) %>% as.data.frame() %>% setNames(paste0("V", seq_len(ncol(.)))) %>% as_tibble() %>% dplyr::select(V2) %>% unlist()
 dt.suhi <- rbindlist(dt.suhi, idcol = "id" )
 
 dt.suhi$time.uhi.min <- as.POSIXct(dt.suhi$time.uhi.min,format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
@@ -93,47 +93,47 @@ med.rur = "numeric"
 # read all lst files
 files.lst <- gsub("/suhi_","/stats_",files.suhi)
 dt.lst <- lapply(files.lst, fread,  colClasses = column_classes)
-names(dt.lst) <- strsplit(files.lst, "stats_|_v") %>% do.call(rbind,.) %>% as_tibble() %>% dplyr::select(V2) %>% unlist()
+names(dt.lst) <- strsplit(files.lst, "stats_|_v") %>% do.call(rbind,.) %>% as.data.frame() %>% setNames(paste0("V", seq_len(ncol(.)))) %>% as_tibble() %>% dplyr::select(V2) %>% unlist()
 dt.lst <- rbindlist(dt.lst, idcol = "id" )
 dt.lst$time.uhi.max <- as.POSIXct(dt.lst$time.uhi.max, format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
 dt.lst$time.uhi.min <-  as.POSIXct(dt.lst$time.uhi.min, format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
 
 
 # read ncs
-lst.max <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_max.nc")
+lst.max <- suppressWarnings(terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_max.nc"))
 dats.lst.max  <- as.Date(names(lst.max) %>% gsub("MLST-AS_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
 dats.lst.max <- dats.lst.max[dats.lst.max <=  max(dt.lst$date)]
 
-lst.avg <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_avg.nc")
+lst.avg <- suppressWarnings(terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_avg.nc"))
 dats.lst.avg  <- as.Date(names(lst.avg) %>% gsub("MLST-AS_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
-dats.lst.avg <- dats.lst.max[dats.lst.avg <=  max(dt.lst$date)]
+dats.lst.avg <- dats.lst.avg[dats.lst.avg <=  max(dt.lst$date)]
 
-lst.min <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_min.nc")
+lst.min <- suppressWarnings(terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_min.nc"))
 dats.lst.min  <- as.Date(names(lst.min) %>% gsub("MLST-AS_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
-dats.lst.min <- dats.lst.max[dats.lst.min <=  max(dt.lst$date)]
+dats.lst.min <- dats.lst.min[dats.lst.min <=  max(dt.lst$date)]
 
-lst.mm <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_tmm.nc")
-dats.lst.mm <- as.Date(names(lst.mm) %>% gsub("MLST-AS_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+lst.mm <- suppressWarnings(terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_tmm.nc"))
+dats.lst.mm <- as.Date(time(lst.mm))
 
-lst.mn <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_tmn.nc")
-dats.lst.mn <- as.Date(names(lst.mn) %>% gsub("MLST-AS_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+lst.mn <- suppressWarnings(terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_tmn.nc"))
+dats.lst.mn <- as.Date(time(lst.mn))
 
-lst.mx <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_tmx.nc")
-dats.lst.mx <- as.Date(names(lst.mx) %>% gsub("MLST-AS_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+lst.mx <- suppressWarnings(terra::rast("www/data/ncs/wmo_6_msg_lst_as_daily_dineof_tmx.nc"))
+dats.lst.mx <- as.Date(time(lst.mx))
 
-lst.cwmn00 <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_cwmn00.nc")
-dats.lst.cwmn00 <- as.Date(names(lst.cwmn00) %>% gsub("cwmn00_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+lst.cwmn00 <- suppressWarnings(terra::rast("www/data/ncs/wmo_6_msg_lst_as_cwmn00.nc"))
+dats.lst.cwmn00 <- as.Date(time(lst.cwmn00))
 
-lst.trmn20 <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_trmn20.nc")
-dats.lst.trmn20 <- as.Date(names(lst.trmn20) %>% gsub("trmn20_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+lst.trmn20 <- suppressWarnings(terra::rast("www/data/ncs/wmo_6_msg_lst_as_trmn20.nc"))
+dats.lst.trmn20 <- as.Date(time(lst.trmn20))
 
-lst.hwmx35 <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_hwmx35.nc")
-dats.lst.hwmx35 <- as.Date(names(lst.hwmx35) %>% gsub("hwmx35_days=", "",.) %>% as.integer(), origin = "1970-1-1 00:00:00") 
+lst.hwmx35 <- suppressWarnings(terra::rast("www/data/ncs/wmo_6_msg_lst_as_hwmx35.nc"))
+dats.lst.hwmx35 <- as.Date(time(lst.hwmx35)) 
 
-lst.hwdi <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_hwdi.nc", subd = "hwdi")
+lst.hwdi <- suppressWarnings(terra::rast("www/data/ncs/wmo_6_msg_lst_as_hwdi.nc", subd = "hwdi"))
 dats.lst.hwdi <- time(lst.hwdi)
 
-lst.cwdi <- terra::rast("www/data/ncs/wmo_6_msg_lst_as_cwdi.nc", subd = "cwdi")
+lst.cwdi <- suppressWarnings(terra::rast("www/data/ncs/wmo_6_msg_lst_as_cwdi.nc", subd = "cwdi"))
 dats.lst.cwdi <- time(lst.cwdi)
 
 # # for mac
