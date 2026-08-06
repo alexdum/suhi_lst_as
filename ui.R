@@ -4,12 +4,11 @@ source("sections/ui_about.R", local = T)
 
 app_theme <- bs_theme(
   version = 5,
-  bootswatch = "spacelab",
-  primary = "#1f7a8c",
-  secondary = "#f18f01",
-  "body-bg" = "#f6f8fb",
-  "app-brand-font-weight" = "800",
-  "app-brand-letter-spacing" = "-0.02em"
+  primary = "#d90429",
+  secondary = "#ff6b35",
+  bg = "#fdf8f5",
+  fg = "#2b2d42",
+  "link-color" = "#d90429"
 )
 
 hero_banner <- div(
