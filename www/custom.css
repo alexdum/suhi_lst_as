@@ -678,3 +678,206 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-bottom: 0.5rem;
 }
 
+/* ==========================================================================
+   12. Tooltip & Info Icon Design System
+   ========================================================================== */
+.info-tooltip-icon {
+  cursor: help !important;
+  color: var(--primary-color) !important;
+  opacity: 0.75;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-tooltip-icon:hover,
+.info-tooltip-icon:focus {
+  opacity: 1;
+  transform: scale(1.22);
+  color: var(--primary-hover) !important;
+}
+
+/* Bootstrap 5 Glassmorphism Dark Theme Tooltip Override */
+.tooltip {
+  font-family: var(--font-sans);
+  z-index: 1090 !important;
+  opacity: 0;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tooltip.show {
+  opacity: 1 !important;
+}
+
+.tooltip .tooltip-inner {
+  background: rgba(28, 32, 42, 0.94) !important;
+  color: #f8f9fa !important;
+  font-size: 0.8125rem !important;
+  font-weight: 450 !important;
+  line-height: 1.45 !important;
+  padding: 8px 14px !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28), 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  max-width: 260px !important;
+  text-align: center;
+}
+
+/* Tooltip Arrows */
+.bs-tooltip-top .tooltip-arrow::before {
+  border-top-color: rgba(28, 32, 42, 0.94) !important;
+}
+
+.bs-tooltip-bottom .tooltip-arrow::before {
+  border-bottom-color: rgba(28, 32, 42, 0.94) !important;
+}
+
+.bs-tooltip-start .tooltip-arrow::before {
+  border-start-color: rgba(28, 32, 42, 0.94) !important;
+}
+
+.bs-tooltip-end .tooltip-arrow::before {
+  border-end-color: rgba(28, 32, 42, 0.94) !important;
+}
+
+
+/* 12. Modern Tooltips & Info Icons Styling */
+
+/* Info icons styling */
+.info-tooltip-icon,
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--primary-color);
+  opacity: 0.85;
+  margin-left: 6px;
+  font-size: 0.95em;
+  transition: transform var(--transition-fast), opacity var(--transition-fast), color var(--transition-fast);
+  vertical-align: middle;
+}
+
+.info-tooltip-icon:hover,
+.info-icon:hover {
+  opacity: 1;
+  color: var(--primary-dark);
+  transform: scale(1.15);
+}
+
+/* Bootstrap 5 Tooltip Custom Styling (Glassmorphism Dark Theme) */
+.tooltip,
+.bs-tooltip-auto,
+.bs-tooltip-top,
+.bs-tooltip-bottom,
+.bs-tooltip-start,
+.bs-tooltip-end {
+  opacity: 1 !important;
+  font-family: var(--font-sans);
+  z-index: 10050;
+}
+
+.bs-tooltip-auto .tooltip-inner,
+.bs-tooltip-top .tooltip-inner,
+.bs-tooltip-bottom .tooltip-inner,
+.bs-tooltip-start .tooltip-inner,
+.bs-tooltip-end .tooltip-inner,
+.tooltip .tooltip-inner {
+  background-color: rgba(35, 39, 47, 0.95) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #f8fafc;
+  font-size: 0.825rem;
+  font-weight: 500;
+  line-height: 1.4;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 260px;
+}
+
+/* Tooltip arrows */
+.bs-tooltip-top .tooltip-arrow::before,
+.bs-tooltip-auto[data-popper-placement^="top"] .tooltip-arrow::before {
+  border-top-color: rgba(35, 39, 47, 0.95) !important;
+}
+
+.bs-tooltip-bottom .tooltip-arrow::before,
+.bs-tooltip-auto[data-popper-placement^="bottom"] .tooltip-arrow::before {
+  border-bottom-color: rgba(35, 39, 47, 0.95) !important;
+}
+
+.bs-tooltip-start .tooltip-arrow::before,
+.bs-tooltip-auto[data-popper-placement^="left"] .tooltip-arrow::before {
+  border-left-color: rgba(35, 39, 47, 0.95) !important;
+}
+
+.bs-tooltip-end .tooltip-arrow::before,
+.bs-tooltip-auto[data-popper-placement^="right"] .tooltip-arrow::before {
+  border-right-color: rgba(35, 39, 47, 0.95) !important;
+}
+
+/* Custom CSS tooltips fallback using [data-tooltip] attribute */
+[data-tooltip] {
+  position: relative;
+  cursor: pointer;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background-color: rgba(35, 39, 47, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #f8fafc;
+  font-size: 0.825rem;
+  font-weight: 500;
+  line-height: 1.4;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  z-index: 10050;
+}
+
+[data-tooltip]::before {
+  content: '';
+  position: absolute;
+  bottom: 115%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px 5px 0 5px;
+  border-style: solid;
+  border-color: rgba(35, 39, 47, 0.95) transparent transparent transparent;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  z-index: 10050;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+[data-tooltip]:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+

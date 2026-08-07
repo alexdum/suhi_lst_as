@@ -25,11 +25,27 @@ ui_graphs <- tabPanel(
       title = "City & data",
       open = list(desktop = "open", mobile = "closed"),
       selectizeInput(
-        "city", "City:", choices,
+        "city",
+        label = span(
+          "City:",
+          span(
+            class = "text-muted ms-1 info-tooltip-icon",
+            `data-bs-toggle` = "tooltip",
+            `data-bs-placement` = "top",
+            title = "Select a European city to view its Surface Urban Heat Island (SUHI) and Land Surface Temperature (LST) historical time series.",
+            icon("info-circle")
+          )
+        ),
+        choices,
         selected = choices[sample(1:length(choices), 1)],
         options = list(dropdownParent = "body")
       ),
-      downloadButton('downloadData', 'Download Data', class = "btn-primary w-100 mt-2")
+      div(
+        `data-bs-toggle` = "tooltip",
+        `data-bs-placement` = "top",
+        title = "Download the complete daily time series data for the selected city as a CSV file.",
+        downloadButton('downloadData', 'Download Data', class = "btn-primary w-100 mt-2")
+      )
     ),
     layout_columns(
       col_widths = c(6, 6),
@@ -37,7 +53,19 @@ ui_graphs <- tabPanel(
       card(
         full_screen = TRUE,
         class = "equal-height-card glass-card",
-        card_header(div(class = "card-header-title", icon("temperature-high"), textOutput("text_uhi", inline = TRUE))),
+        card_header(
+          div(
+            class = "d-flex justify-content-between align-items-center w-100",
+            div(class = "card-header-title", icon("temperature-high"), textOutput("text_uhi", inline = TRUE)),
+            span(
+              class = "text-muted ms-1 info-tooltip-icon",
+              `data-bs-toggle` = "tooltip",
+              `data-bs-placement` = "top",
+              title = "SUHI represents the Surface Urban Heat Island intensity (°C anomaly relative to rural reference).",
+              icon("info-circle")
+            )
+          )
+        ),
         card_body(
           highchartOutput("suhi", height = "100%") %>% withSpinner(size = 0.5)
         )
@@ -45,7 +73,19 @@ ui_graphs <- tabPanel(
       card(
         full_screen = TRUE,
         class = "equal-height-card glass-card",
-        card_header(div(class = "card-header-title", icon("thermometer-half"), textOutput("text_lst", inline = TRUE))),
+        card_header(
+          div(
+            class = "d-flex justify-content-between align-items-center w-100",
+            div(class = "card-header-title", icon("thermometer-half"), textOutput("text_lst", inline = TRUE)),
+            span(
+              class = "text-muted ms-1 info-tooltip-icon",
+              `data-bs-toggle` = "tooltip",
+              `data-bs-placement` = "top",
+              title = "LST represents the Land Surface Temperature (surface skin temperature in °C).",
+              icon("info-circle")
+            )
+          )
+        ),
         card_body(
           highchartOutput("lst", height = "100%") %>% withSpinner(size = 0.5)
         )

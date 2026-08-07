@@ -25,18 +25,44 @@ ui_maps <- tabPanel(
           title = "Display options",
           open = list(desktop = "open", mobile = "closed"),
           selectInput(
-            "parameter", "Parameter:", 
+            "parameter", 
+            label = tagList(
+              "Parameter:",
+              span(
+                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                `data-bs-toggle` = "tooltip",
+                `data-bs-placement` = "top",
+                title = "Choose between SUHI intensity (°C) or raw Land Surface Temperature (LST)."
+              )
+            ), 
             choices_map, 
             selected = choices_map[2]
           ),
           dateInput(
             'days_suhi',
-            label = 'Day:',
+            label = tagList(
+              "Day:",
+              span(
+                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                `data-bs-toggle` = "tooltip",
+                `data-bs-placement` = "top",
+                title = "Select date to display spatial temperature distribution across European cities."
+              )
+            ),
             min = min(dt.lst$date) |> as.Date(),
             max = max(dt.lst$date) |> as.Date(),
             value = max(dt.lst$date) |> as.Date()
           ),
-          downloadButton('downloadDataMap', 'Download Data', class = "btn-primary w-100"),
+          div(
+            class = "d-flex align-items-center gap-2",
+            downloadButton('downloadDataMap', 'Download Data', class = "btn-primary flex-grow-1"),
+            span(
+              icon("info-circle", class = "text-muted fs-6 info-tooltip-icon"),
+              `data-bs-toggle` = "tooltip",
+              `data-bs-placement` = "top",
+              title = "Download spatial city heat metrics for the selected date."
+            )
+          ),
           h6(textOutput("text_down_urb"), class = "text-muted mt-2")
         ),
         layout_columns(
@@ -84,19 +110,45 @@ ui_maps <- tabPanel(
           title = "Display options",
           open = list(desktop = "open", mobile = "closed"),
           selectInput(
-            "param_europe_daily", "Parameter:", 
+            "param_europe_daily", 
+            label = tagList(
+              "Parameter:",
+              span(
+                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                `data-bs-toggle` = "tooltip",
+                `data-bs-placement` = "top",
+                title = "Choose daily LST statistic: Day, Night, Average, Minimum, Maximum, or Diurnal Temperature Range (DTR)."
+              )
+            ), 
             choices_map_europe_daily, 
             selected = choices_map_europe_daily[1]
           ),
           dateInput(
             'days_europe',
-            label = 'Day:',
+            label = tagList(
+              "Day:",
+              span(
+                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                `data-bs-toggle` = "tooltip",
+                `data-bs-placement` = "top",
+                title = "Select date for continental WMO Region 6 spatial map."
+              )
+            ),
             min = min(dats.lst.avg),
             max = max(dats.lst.avg),
             value = max(dats.lst.avg)
           ),
           radioButtons(
-            "radio", label = "On map click:",
+            "radio", 
+            label = tagList(
+              "On map click:",
+              span(
+                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                `data-bs-toggle` = "tooltip",
+                `data-bs-placement` = "top",
+                title = "Choose interaction mode when clicking on the map: show instant popup value or generate point time series graph."
+              )
+            ),
             choices = 
               list(
                 "Display current values on popup" = 1, 
@@ -106,7 +158,16 @@ ui_maps <- tabPanel(
           ),
           conditionalPanel(
             condition = "input.radio == 2 && output.condpan != 'nas'",
-            downloadButton('downloadLST', 'Download Data', class = "btn-primary w-100")
+            div(
+              class = "d-flex align-items-center gap-2",
+              downloadButton('downloadLST', 'Download Data', class = "btn-primary flex-grow-1"),
+              span(
+                icon("info-circle", class = "text-muted fs-6 info-tooltip-icon"),
+                `data-bs-toggle` = "tooltip",
+                `data-bs-placement` = "top",
+                title = "Export extracted raster time series for the clicked coordinate."
+              )
+            )
           )
         ),
         layout_columns(
@@ -181,18 +242,44 @@ ui_maps <- tabPanel(
           title = "Display options",
           open = list(desktop = "open", mobile = "closed"),
           selectInput(
-            "parameter_europe_monthly", "Parameter:", 
+            "parameter_europe_monthly", 
+            label = tagList(
+              "Parameter:",
+              span(
+                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                `data-bs-toggle` = "tooltip",
+                `data-bs-placement` = "top",
+                title = "Monthly composite climate indicators derived from daily SEVIRI satellite observations."
+              )
+            ), 
             choices_map_europe_monthly, 
             selected = choices_map_europe_monthly[2]
           ),
           selectInput(
             'month_indicator',
-            label = 'Month:',
+            label = tagList(
+              "Month:",
+              span(
+                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                `data-bs-toggle` = "tooltip",
+                `data-bs-placement` = "top",
+                title = "Select target month and year for climate index visualization."
+              )
+            ),
             unique(format(dats.lst.mx, "%Y %b")),
             selected = max(dats.lst.mx) |> format("%Y %b")
           ),
           radioButtons(
-            "radio_mon", label = "On map click:",
+            "radio_mon", 
+            label = tagList(
+              "On map click:",
+              span(
+                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                `data-bs-toggle` = "tooltip",
+                `data-bs-placement` = "top",
+                title = "Choose interaction mode for monthly climate indicator maps."
+              )
+            ),
             choices = 
               list(
                 "Display current values on popup" = 1, 
@@ -202,7 +289,16 @@ ui_maps <- tabPanel(
           ),
           conditionalPanel(
             condition = "input.radio_mon == 2 && output.condpan_monthly != 'nas'",
-            downloadButton('downloadLST_mon', 'Download Data', class = "btn-primary w-100")
+            div(
+              class = "d-flex align-items-center gap-2",
+              downloadButton('downloadLST_mon', 'Download Data', class = "btn-primary flex-grow-1"),
+              span(
+                icon("info-circle", class = "text-muted fs-6 info-tooltip-icon"),
+                `data-bs-toggle` = "tooltip",
+                `data-bs-placement` = "top",
+                title = "Download monthly indicator time series for clicked coordinate."
+              )
+            )
           )
         ),
         layout_columns(

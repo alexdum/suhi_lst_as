@@ -78,7 +78,21 @@ ui <- function(req) {
       tags$link(rel = "preconnect", href = "https://fonts.googleapis.com"),
       tags$link(rel = "preconnect", href = "https://fonts.gstatic.com", crossorigin = "anonymous"),
       tags$link(rel = "stylesheet", href = "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"),
-      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
+      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
+      tags$script(HTML("
+        $(document).ready(function() {
+          function initTooltips() {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle=\"tooltip\"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+              return bootstrap.Tooltip.getOrCreateInstance(tooltipTriggerEl);
+            });
+          }
+          initTooltips();
+          $(document).on('shiny:value shiny:idle shiny:value-recalculating', function() {
+            setTimeout(initTooltips, 200);
+          });
+        });
+      "))
     ),
     useShinyjs(),
     navbarPage(
