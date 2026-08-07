@@ -83,7 +83,7 @@ ui <- function(req) {
     useShinyjs(),
     navbarPage(
       title = div(class = "app-brand", "Urban Climate Explorer"),
-      selected = "#maps",
+      selected = "#about",
       header = hero_banner,
       collapsible = TRUE,
       fluid = TRUE,
