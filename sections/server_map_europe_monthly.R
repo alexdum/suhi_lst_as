@@ -37,11 +37,17 @@ reac_lst_indicator <- reactive ({
     lst <- lst.cwdi
   )
   
+  if (index > terra::nlyr(lst)) {
+    # If indicator (e.g. cwdi) has fewer layers than the selected month index, return empty raster
+    lst <- lst[[1]]
+    terra::values(lst) <- NA
+  } else {
+    lst <- lst[[index]]
+  }
   
-  lst <- lst[[index]]
   lst[lst > 50] <- 50
   lst[lst  < -50] <- -50
-  #if (indicator %in% c("cwmn00", "trmn20","hwmx35")) lst[lst ==0] <- NA # na pentru cand nu ai zile cu indicator
+  terra::setMinMax(lst)
   domain <- terra::minmax(lst)
   
   map_leg <- mapa_fun_cols(indic = indicator, domain )

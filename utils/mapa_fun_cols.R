@@ -31,18 +31,24 @@ mapa_fun_cols <- function(indic = NA,  domain = NA) {
   
   
   
-  # print(head(df.col))
-  # print(domain)
-  ints <- findInterval(domain, df.col$vals, rightmost.closed = T, left.open = F)
+  if (any(is.na(domain)) || any(is.infinite(domain))) {
+    domain <- c(min(df.col$vals), max(df.col$vals))
+  }
   
-  bins <-  df.col$vals[ints[1]:(ints[2] + 1)]
-  cols <- df.col$cols[ints[1]:(ints[2])]
+  ints <- findInterval(domain, df.col$vals, rightmost.closed = TRUE, left.open = FALSE)
   
-  # print(bins)
-  # print(cols)
-  # 
+  if (ints[1] == 0) ints[1] <- 1
+  if (ints[2] == 0) ints[2] <- 1
+  if (ints[1] >= ints[2]) {
+    ints[1] <- 1
+    ints[2] <- nrow(df.col)
+  }
+  
+  bins <- df.col$vals[ints[1]:(ints[2] + 1)]
+  cols <- df.col$cols[ints[1]:ints[2]]
+  
   pal <- colorBin(cols, domain = domain, bins = bins, na.color = "transparent")
-  pal2 <- colorBin(cols, domain = domain, bins = bins, reverse = T, na.color = "transparent")
+  pal2 <- colorBin(cols, domain = domain, bins = bins, reverse = TRUE, na.color = "transparent")
   
   return(list(pal = pal, pal_rev = pal2, tit_leg = leaflet_titleg))
   
