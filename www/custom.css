@@ -51,6 +51,7 @@ body {
   color: var(--text-main);
   padding-top: 80px;
   min-height: 100vh;
+  transition: padding-top 0.35s ease;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -535,14 +536,18 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 /* 10. Floating Glass Notifications & Progress Bars */
 #shiny-notification-panel {
   position: fixed !important;
-  top: 85px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  bottom: auto !important;
-  right: auto !important;
-  width: 90% !important;
-  max-width: 440px !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: 320px !important;
+  max-width: 90% !important;
   z-index: 10000 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  align-items: flex-end !important;
 }
 
 .shiny-notification {
@@ -557,6 +562,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: var(--font-sans) !important;
   font-size: 0.95rem !important;
   font-weight: 600 !important;
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 .shiny-notification-warning {
@@ -879,5 +891,156 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   opacity: 1;
   visibility: visible;
 }
+
+/* ==========================================================================
+   13. Collapsible Hero Banner & Toggle Button System
+   ========================================================================== */
+.hero-banner-wrapper {
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.35s ease, padding 0.35s ease;
+  max-height: 500px;
+  overflow: hidden;
+}
+
+.btn-hero-toggle {
+  position: absolute;
+  top: 6px;
+  right: 18px;
+  z-index: 10;
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.65);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: none;
+}
+
+.btn-hero-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.hero-banner-wrapper.hero-collapsed {
+  max-height: 65px !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.hero-banner-wrapper.hero-collapsed .hero-banner {
+  padding: 10px 65px 10px 18px !important;
+  min-height: unset !important;
+}
+
+.hero-banner-wrapper.hero-collapsed .hero-subtitle,
+.hero-banner-wrapper.hero-collapsed .hero-metrics-grid {
+  display: none !important;
+  opacity: 0;
+}
+
+.hero-banner-wrapper.hero-collapsed .hero-title {
+  font-size: 1.15rem !important;
+  margin-bottom: 0 !important;
+  line-height: 1.2 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tab-Specific Compact Metric Header Strip (Maps & Graphs) */
+.hero-banner-wrapper.hero-compact-mode {
+  max-height: 85px !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.hero-banner-wrapper.hero-compact-mode .hero-banner {
+  padding: 8px 65px 8px 18px !important;
+  min-height: unset !important;
+  border-radius: var(--radius-sm);
+}
+
+.hero-banner-wrapper.hero-compact-mode .hero-title-group,
+.hero-banner-wrapper.hero-compact-mode .hero-subtitle {
+  display: none !important;
+}
+
+.hero-banner-wrapper.hero-compact-mode .hero-metrics-grid {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 12px !important;
+  grid-template-columns: none !important;
+  margin-top: 0 !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hero-banner-wrapper.hero-compact-mode .hero-metrics-grid::-webkit-scrollbar {
+  display: none;
+}
+
+/* Minimize Toggle Button in Compact/Collapsed Modes to reduce visual aspect */
+.hero-banner-wrapper.hero-compact-mode .btn-hero-toggle span,
+.hero-banner-wrapper.hero-collapsed .btn-hero-toggle span {
+  display: none !important;
+}
+
+.hero-banner-wrapper.hero-compact-mode .btn-hero-toggle,
+.hero-banner-wrapper.hero-collapsed .btn-hero-toggle {
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  justify-content: center !important;
+}
+
+.hero-banner-wrapper.hero-compact-mode .metric-card {
+  padding: 4px 12px !important;
+  background: rgba(255, 255, 255, 0.22) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  box-shadow: none !important;
+  border-radius: 20px !important;
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 6px !important;
+  color: #ffffff !important;
+}
+
+.hero-banner-wrapper.hero-compact-mode .metric-icon {
+  font-size: 0.85rem !important;
+  color: #ffffff !important;
+  margin-bottom: 0 !important;
+  opacity: 0.9;
+}
+
+.hero-banner-wrapper.hero-compact-mode .metric-details {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+.hero-banner-wrapper.hero-compact-mode .metric-value {
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+}
+
+.hero-banner-wrapper.hero-compact-mode .metric-label {
+  font-size: 0.75rem !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  white-space: nowrap !important;
+}
+
+
 
 

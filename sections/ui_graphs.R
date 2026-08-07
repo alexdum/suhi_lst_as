@@ -9,9 +9,19 @@ ui_graphs <- tabPanel(
     class = "mb-3 glass-card",
     card_header(
       div(
-        class = "d-flex justify-content-between align-items-center flex-wrap gap-2",
-        span(class = "card-header-title", icon("city"), " Cities Analytics & Time Series"),
-        span(class = "stat-badge", icon("clock"), paste("Updated", format(max(dt.lst$date), "%Y-%m-%d")))
+        class = "d-flex justify-content-between align-items-center flex-wrap gap-2 w-100",
+        span(class = "card-header-title", icon("city", class = "me-2"), "Cities Analytics & Time Series"),
+        div(
+          class = "d-flex align-items-center gap-2",
+          span(class = "stat-badge", icon("clock"), paste("Updated", format(max(dt.lst$date), "%Y-%m-%d"))),
+          span(
+            class = "info-tooltip-icon text-info", 
+            `data-bs-toggle` = "tooltip", 
+            `data-bs-placement` = "left", 
+            title = "Surface Urban Heat Island (SUHI) and Land Surface Temperature (LST) time series from the LST AS SEVIRI satellite product.", 
+            icon("info-circle")
+          )
+        )
       )
     ),
     card_body(

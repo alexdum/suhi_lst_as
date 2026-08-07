@@ -9,9 +9,19 @@ ui_maps <- tabPanel(
         class = "mb-3 glass-card",
         card_header(
           div(
-            class = "d-flex justify-content-between align-items-center flex-wrap gap-2",
-            span(class = "card-header-title", icon("city"), " Cities Coverage"),
-            span(class = "stat-badge", icon("clock"), paste("Updated", format(max(dt.lst$date), "%Y-%m-%d")))
+            class = "d-flex justify-content-between align-items-center flex-wrap gap-2 w-100",
+            span(class = "card-header-title", icon("city", class = "me-2"), "Cities Coverage"),
+            div(
+              class = "d-flex align-items-center gap-2",
+              span(class = "stat-badge", icon("clock"), paste("Updated", format(max(dt.lst$date), "%Y-%m-%d"))),
+              span(
+                class = "info-tooltip-icon text-info", 
+                `data-bs-toggle` = "tooltip", 
+                `data-bs-placement` = "left", 
+                title = "Surface Urban Heat Island (SUHI) and Land Surface Temperature (LST) coverage for all monitored cities from the LST AS SEVIRI product.", 
+                icon("info-circle")
+              )
+            )
           )
         ),
         card_body(
@@ -94,9 +104,19 @@ ui_maps <- tabPanel(
         class = "mb-3 glass-card",
         card_header(
           div(
-            class = "d-flex justify-content-between align-items-center flex-wrap gap-2",
-            span(class = "card-header-title", icon("globe-europe"), " Continental Coverage"),
-            span(class = "stat-badge", icon("clock"), paste("Updated", format(max(dats.lst.avg), "%Y-%m-%d")))
+            class = "d-flex justify-content-between align-items-center flex-wrap gap-2 w-100",
+            span(class = "card-header-title", icon("globe-europe", class = "me-2"), "Continental Coverage"),
+            div(
+              class = "d-flex align-items-center gap-2",
+              span(class = "stat-badge", icon("clock"), paste("Updated", format(max(dats.lst.avg), "%Y-%m-%d"))),
+              span(
+                class = "info-tooltip-icon text-info", 
+                `data-bs-toggle` = "tooltip", 
+                `data-bs-placement` = "left", 
+                title = "Spatial distribution of Land Surface Temperature (LST) at continental scale across WMO Region 6.", 
+                icon("info-circle")
+              )
+            )
           )
         ),
         card_body(
@@ -226,9 +246,19 @@ ui_maps <- tabPanel(
         class = "mb-3 glass-card",
         card_header(
           div(
-            class = "d-flex justify-content-between align-items-center flex-wrap gap-2",
-            span(class = "card-header-title", icon("sliders-h"), " Continental Climate Indicators"),
-            span(class = "stat-badge", icon("clock"), paste("Updated", format(max(dt.lst$date), "%Y-%m-%d")))
+            class = "d-flex justify-content-between align-items-center flex-wrap gap-2 w-100",
+            span(class = "card-header-title", icon("sliders-h", class = "me-2"), "Continental Climate Indicators"),
+            div(
+              class = "d-flex align-items-center gap-2",
+              span(class = "stat-badge", icon("clock"), paste("Updated", format(max(dt.lst$date), "%Y-%m-%d"))),
+              span(
+                class = "info-tooltip-icon text-info", 
+                `data-bs-toggle` = "tooltip", 
+                `data-bs-placement` = "left", 
+                title = "Climate indicators computed from daily minimum, maximum, and average Land Surface Temperature.", 
+                icon("info-circle")
+              )
+            )
           )
         ),
         card_body(

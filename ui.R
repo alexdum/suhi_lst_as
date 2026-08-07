@@ -12,9 +12,17 @@ app_theme <- bs_theme(
 )
 
 hero_banner <- div(
-  class = "container-fluid px-4",
+  id = "hero_banner_container",
+  class = "container-fluid px-4 hero-banner-wrapper",
   div(
-    class = "hero-banner",
+    class = "hero-banner position-relative",
+    tags$button(
+      id = "btn_toggle_hero",
+      class = "btn-hero-toggle",
+      type = "button",
+      icon("chevron-up", id = "hero_toggle_icon"),
+      span(id = "hero_toggle_text", class = "ms-1 d-none d-md-inline", "Minimize Header")
+    ),
     div(
       class = "hero-banner-content",
       div(
@@ -90,6 +98,76 @@ ui <- function(req) {
           initTooltips();
           $(document).on('shiny:value shiny:idle shiny:value-recalculating', function() {
             setTimeout(initTooltips, 200);
+          });
+          
+          function adjustPagePaddingForHeader() {
+            var $nav = $('.navbar-fixed-top');
+            if ($nav.length) {
+              var h = $nav.outerHeight();
+              var css = 'body { padding-top: ' + (h + 16) + 'px !important; }';
+              var $style = $('#dynamic-padding-style');
+              if (!$style.length) {
+                $style = $('<style id=\"dynamic-padding-style\"></style>').appendTo('head');
+              }
+              $style.html(css);
+            }
+          }
+
+          function updateHeroStateForTab(tabVal) {
+            if (!tabVal) return;
+            var cleanTab = tabVal.replace('#', '');
+            if (cleanTab === 'about' || tabVal === '#about') {
+              $('#hero_banner_container').removeClass('hero-compact-mode hero-collapsed');
+              $('#hero_toggle_icon').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+              $('#hero_toggle_text').text('Minimize Header');
+            } else {
+              $('#hero_banner_container').addClass('hero-compact-mode').removeClass('hero-collapsed');
+              $('#hero_toggle_icon').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+              $('#hero_toggle_text').text('Expand Header');
+            }
+            setTimeout(function() {
+              adjustPagePaddingForHeader();
+              window.dispatchEvent(new Event('resize'));
+            }, 350);
+          }
+
+          $(document).on('click', '#btn_toggle_hero', function(e) {
+            e.preventDefault();
+            var $hero = $('#hero_banner_container');
+            if ($hero.hasClass('hero-compact-mode') || $hero.hasClass('hero-collapsed')) {
+              $hero.removeClass('hero-compact-mode hero-collapsed');
+              $('#hero_toggle_icon').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+              $('#hero_toggle_text').text('Minimize Header');
+            } else {
+              $hero.addClass('hero-compact-mode');
+              $('#hero_toggle_icon').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+              $('#hero_toggle_text').text('Expand Header');
+            }
+            setTimeout(function() {
+              adjustPagePaddingForHeader();
+              window.dispatchEvent(new Event('resize'));
+            }, 350);
+          });
+
+          $(document).on('click', '.navbar-nav a[data-toggle=\"tab\"], .navbar-nav a[data-bs-toggle=\"tab\"], .navbar-nav a[data-value]', function() {
+            var tabVal = $(this).attr('data-value') || $(this).attr('href');
+            updateHeroStateForTab(tabVal);
+          });
+
+          $(document).on('shiny:inputchanged', function(event) {
+            if (event.name === 'tabs') {
+              updateHeroStateForTab(event.value);
+            }
+          });
+
+          // Check active tab on load and window resize
+          setTimeout(function() {
+            var activeTab = $('.navbar-nav li.active a').attr('data-value') || '#about';
+            updateHeroStateForTab(activeTab);
+          }, 400);
+
+          $(window).on('resize', function() {
+            adjustPagePaddingForHeader();
           });
         });
       "))
