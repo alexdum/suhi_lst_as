@@ -64,14 +64,10 @@ ui_maps <- tabPanel(
             value = max(dt.lst$date) |> as.Date()
           ),
           div(
-            class = "d-flex align-items-center gap-2",
-            downloadButton('downloadDataMap', 'Download Data', class = "btn-primary flex-grow-1"),
-            span(
-              icon("info-circle", class = "text-muted fs-6 info-tooltip-icon"),
-              `data-bs-toggle` = "tooltip",
-              `data-bs-placement` = "top",
-              title = "Download spatial city heat metrics for the selected date."
-            )
+            `data-bs-toggle` = "tooltip",
+            `data-bs-placement` = "top",
+            title = "Download spatial city heat metrics for the selected date.",
+            downloadButton('downloadDataMap', 'Download Data', class = "btn-primary w-100")
           ),
           h6(textOutput("text_down_urb"), class = "text-muted mt-2")
         ),
@@ -179,14 +175,10 @@ ui_maps <- tabPanel(
           conditionalPanel(
             condition = "input.radio == 2 && output.condpan != 'nas'",
             div(
-              class = "d-flex align-items-center gap-2",
-              downloadButton('downloadLST', 'Download Data', class = "btn-primary flex-grow-1"),
-              span(
-                icon("info-circle", class = "text-muted fs-6 info-tooltip-icon"),
-                `data-bs-toggle` = "tooltip",
-                `data-bs-placement` = "top",
-                title = "Export extracted raster time series for the clicked coordinate."
-              )
+              `data-bs-toggle` = "tooltip",
+              `data-bs-placement` = "top",
+              title = "Export extracted raster time series for the clicked coordinate.",
+              downloadButton('downloadLST', 'Download Data', class = "btn-primary w-100")
             )
           )
         ),
@@ -320,14 +312,10 @@ ui_maps <- tabPanel(
           conditionalPanel(
             condition = "input.radio_mon == 2 && output.condpan_monthly != 'nas'",
             div(
-              class = "d-flex align-items-center gap-2",
-              downloadButton('downloadLST_mon', 'Download Data', class = "btn-primary flex-grow-1"),
-              span(
-                icon("info-circle", class = "text-muted fs-6 info-tooltip-icon"),
-                `data-bs-toggle` = "tooltip",
-                `data-bs-placement` = "top",
-                title = "Download monthly indicator time series for clicked coordinate."
-              )
+              `data-bs-toggle` = "tooltip",
+              `data-bs-placement` = "top",
+              title = "Download monthly indicator time series for clicked coordinate.",
+              downloadButton('downloadLST_mon', 'Download Data', class = "btn-primary w-100")
             )
           )
         ),
