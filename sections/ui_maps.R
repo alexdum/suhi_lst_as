@@ -39,10 +39,11 @@ ui_maps <- tabPanel(
             label = tagList(
               "Parameter:",
               span(
-                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                class = "text-muted ms-1 info-tooltip-icon",
                 `data-bs-toggle` = "tooltip",
                 `data-bs-placement` = "top",
-                title = "Choose between SUHI intensity (°C) or raw Land Surface Temperature (LST)."
+                title = "Choose between SUHI intensity (°C) or raw Land Surface Temperature (LST).",
+                icon("info-circle")
               )
             ), 
             choices_map, 
@@ -53,10 +54,11 @@ ui_maps <- tabPanel(
             label = tagList(
               "Day:",
               span(
-                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                class = "text-muted ms-1 info-tooltip-icon",
                 `data-bs-toggle` = "tooltip",
                 `data-bs-placement` = "top",
-                title = "Select date to display spatial temperature distribution across European cities."
+                title = "Select date to display spatial temperature distribution across European cities.",
+                icon("info-circle")
               )
             ),
             min = min(dt.lst$date) |> as.Date(),
@@ -130,10 +132,11 @@ ui_maps <- tabPanel(
             label = tagList(
               "Parameter:",
               span(
-                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                class = "text-muted ms-1 info-tooltip-icon",
                 `data-bs-toggle` = "tooltip",
                 `data-bs-placement` = "top",
-                title = "Choose daily LST statistic: Day, Night, Average, Minimum, Maximum, or Diurnal Temperature Range (DTR)."
+                title = "Choose daily LST statistic: Day, Night, Average, Minimum, Maximum, or Diurnal Temperature Range (DTR).",
+                icon("info-circle")
               )
             ), 
             choices_map_europe_daily, 
@@ -144,10 +147,11 @@ ui_maps <- tabPanel(
             label = tagList(
               "Day:",
               span(
-                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                class = "text-muted ms-1 info-tooltip-icon",
                 `data-bs-toggle` = "tooltip",
                 `data-bs-placement` = "top",
-                title = "Select date for continental WMO Region 6 spatial map."
+                title = "Select date for continental WMO Region 6 spatial map.",
+                icon("info-circle")
               )
             ),
             min = min(dats.lst.avg),
@@ -159,10 +163,11 @@ ui_maps <- tabPanel(
             label = tagList(
               "On map click:",
               span(
-                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                class = "text-muted ms-1 info-tooltip-icon",
                 `data-bs-toggle` = "tooltip",
                 `data-bs-placement` = "top",
-                title = "Choose interaction mode when clicking on the map: show instant popup value or generate point time series graph."
+                title = "Choose interaction mode when clicking on the map: show instant popup value or generate point time series graph.",
+                icon("info-circle")
               )
             ),
             choices = 
@@ -268,10 +273,11 @@ ui_maps <- tabPanel(
             label = tagList(
               "Parameter:",
               span(
-                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                class = "text-muted ms-1 info-tooltip-icon",
                 `data-bs-toggle` = "tooltip",
                 `data-bs-placement` = "top",
-                title = "Monthly composite climate indicators derived from daily SEVIRI satellite observations."
+                title = "Monthly composite climate indicators derived from daily SEVIRI satellite observations.",
+                icon("info-circle")
               )
             ), 
             choices_map_europe_monthly, 
@@ -282,10 +288,11 @@ ui_maps <- tabPanel(
             label = tagList(
               "Month:",
               span(
-                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                class = "text-muted ms-1 info-tooltip-icon",
                 `data-bs-toggle` = "tooltip",
                 `data-bs-placement` = "top",
-                title = "Select target month and year for climate index visualization."
+                title = "Select target month and year for climate index visualization.",
+                icon("info-circle")
               )
             ),
             unique(format(dats.lst.mx, "%Y %b")),
@@ -296,10 +303,11 @@ ui_maps <- tabPanel(
             label = tagList(
               "On map click:",
               span(
-                icon("info-circle", class = "text-muted ms-1 info-tooltip-icon"),
+                class = "text-muted ms-1 info-tooltip-icon",
                 `data-bs-toggle` = "tooltip",
                 `data-bs-placement` = "top",
-                title = "Choose interaction mode for monthly climate indicator maps."
+                title = "Choose interaction mode for monthly climate indicator maps.",
+                icon("info-circle")
               )
             ),
             choices = 
