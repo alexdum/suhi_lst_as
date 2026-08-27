@@ -3,7 +3,13 @@
 # colors continental urban scale
 domain_daily <- c(-30, 70)
 pal_rev_daily <- colorNumeric("RdYlBu", domain = domain_daily, reverse = F, na.color = "transparent")
-pal_daily <- colorNumeric("RdYlBu", domain = domain_daily, reverse = T, na.color = "transparent")
+pal_daily_base <- colorNumeric("RdYlBu", domain = domain_daily, reverse = T, na.color = "transparent")
+pal_daily <- function(x) {
+  if (is.null(x)) return(x)
+  pal_daily_base(pmax(pmin(x, domain_daily[2]), domain_daily[1]))
+}
+attr(pal_daily, "colorType") <- "numeric"
+attr(pal_daily, "colorArgs") <- attr(pal_daily_base, "colorArgs")
 
 output$text_map_europe <- renderText({
   paste0("Daily LST ",input$param_europe_daily," values: ", format(input$days_europe, "%B %d, %Y") ," (click on map to see or plot the LST value)")
@@ -36,13 +42,11 @@ output$map.europe <- renderLeaflet({
     options = leafletOptions(minZoom = 3, maxZoom = 12, doubleClickZoom = FALSE)) %>%
     setView(25, 46, zoom = 3) %>%
     setMaxBounds(-12, 27.58, 56, 71.5) %>%
-    #addMapPane(name = "raster", zIndex = 410) %>%
     addMapPane(name = "citie", zIndex = 415) %>% 
     addMapPane(name = "maplabels", zIndex = 420) %>% 
+    addOpenFreeMap() %>%
     addLayersControl(
-      baseGroups = "CartoDB.PositronNoLabels",
       overlayGroups = c("Labels", "City borders")) %>%
-    addProviderTiles("CartoDB.PositronNoLabels") %>%
     addRasterImage(
       lst.avg[[isolate(reactiveAct()$index)]], colors = pal_daily, opacity = .8
       # options = leafletOptions(pane = "raster")
@@ -54,11 +58,6 @@ output$map.europe <- renderLeaflet({
                                           bringToFront = TRUE),
       options = pathOptions(pane = "citie"),
       group = "City borders"
-    ) %>%
-    addProviderTiles(
-      "CartoDB.PositronOnlyLabels",
-      options = pathOptions(pane = "maplabels"),
-      group = "Labels"
     ) %>%
     addEasyButton(
       easyButton(

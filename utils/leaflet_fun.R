@@ -1,3 +1,34 @@
+# helper OpenFreeMap vector tiles (separated base and top labels)
+addOpenFreeMap <- function(map) {
+  htmlwidgets::onRender(
+    map,
+    "
+      function(el, x) {
+        var map = this;
+        if (typeof L.maplibreGL === 'function') {
+          // 1. Base map without labels in tilePane
+          L.maplibreGL({
+            style: 'styles/positron_nolabels.json',
+            interactive: false,
+            pane: 'tilePane'
+          }).addTo(map);
+
+          // 2. Transparent labels layer placed on top in maplabels pane (zIndex 420)
+          var labelsLayer = L.maplibreGL({
+            style: 'styles/positron_onlylabels.json',
+            interactive: false,
+            pane: 'maplabels'
+          }).addTo(map);
+
+          if (map.layerManager) {
+            map.layerManager.addLayer(labelsLayer, 'tile', null, 'Labels');
+          }
+        }
+      }
+    "
+  )
+}
+
 # functie harta
 leaflet_fun <- function(data, raster, domain, cols, cols_rev, title) {
   
@@ -10,10 +41,9 @@ leaflet_fun <- function(data, raster, domain, cols, cols_rev, title) {
     #addMapPane(name = "raster", zIndex = 410) %>%
     addMapPane(name = "citie", zIndex = 415) %>%
     addMapPane(name = "maplabels", zIndex = 420) %>%
+    addOpenFreeMap() %>%
     addLayersControl(
-      baseGroups = "CartoDB.PositronNoLabels",
       overlayGroups = c("Labels", "City borders")) %>%
-    addProviderTiles("CartoDB.PositronNoLabels") %>%
     addRasterImage(
       raster, colors = cols, opacity = .8
       # options = leafletOptions(pane = "raster")
@@ -25,11 +55,6 @@ leaflet_fun <- function(data, raster, domain, cols, cols_rev, title) {
                                           bringToFront = TRUE),
       options = pathOptions(pane = "citie"),
       group = "City borders"
-    ) %>%
-    addProviderTiles(
-      "CartoDB.PositronOnlyLabels",
-      options = pathOptions(pane = "maplabels"),
-      group = "Labels"
     ) %>%
     addEasyButton(
       easyButton(

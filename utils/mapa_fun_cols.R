@@ -47,8 +47,12 @@ mapa_fun_cols <- function(indic = NA,  domain = NA) {
   bins <- df.col$vals[ints[1]:(ints[2] + 1)]
   cols <- df.col$cols[ints[1]:ints[2]]
   
-  pal <- colorBin(cols, domain = domain, bins = bins, na.color = "transparent")
-  pal2 <- colorBin(cols, domain = domain, bins = bins, reverse = TRUE, na.color = "transparent")
+  bins_calc <- bins
+  bins_calc[1] <- -Inf
+  bins_calc[length(bins_calc)] <- Inf
+  
+  pal <- colorBin(cols, domain = domain, bins = bins_calc, na.color = "transparent")
+  pal2 <- colorBin(cols, domain = domain, bins = bins_calc, reverse = TRUE, na.color = "transparent")
   
   return(list(pal = pal, pal_rev = pal2, tit_leg = leaflet_titleg))
   

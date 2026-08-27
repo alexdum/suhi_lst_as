@@ -8,10 +8,9 @@ base_map <- leaflet(
   addMapPane(name = "citieb", zIndex = 415) %>%
   addMapPane(name = "citie", zIndex = 417) %>% 
   addMapPane(name = "maplabels", zIndex = 420) %>% 
+  addOpenFreeMap() %>%
   addLayersControl(
-    baseGroups = "CartoDB.PositronNoLabels",
     overlayGroups = c("Labels", "City borders", "City borders buffer")) %>%
-  addProviderTiles("CartoDB.PositronNoLabels") %>%
   addPolygons(
     color = "#444444", weight = 1, smoothFactor = 0.5,
     opacity = 0.9, fillOpacity = 0.1,
@@ -27,11 +26,6 @@ base_map <- leaflet(
     opacity = 0.9, fillOpacity = 0,
     options = pathOptions(pane = "citieb"),
     group = "City borders buffer"
-  ) %>%
-  addProviderTiles(
-    "CartoDB.PositronOnlyLabels",
-    options = pathOptions(pane = "maplabels"),
-    group = "Labels"
   ) %>%
   addEasyButton(
     easyButton(

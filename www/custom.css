@@ -667,6 +667,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /* 11. Intuitive Map Cursors & Click Interactivity */
+.maplibregl-map,
+.maplibregl-canvas,
+.maplibregl-canvas-container {
+  pointer-events: none !important;
+}
+
 .leaflet-container,
 .leaflet-grab,
 .leaflet-drag-target {

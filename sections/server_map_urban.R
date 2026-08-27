@@ -23,7 +23,7 @@ output$map <- renderLeaflet ({
     setMaxBounds(-12, 27.58, 56, 71.5) %>% 
     addMapPane(name = "pol", zIndex = 410) %>%
     addMapPane(name = "maplabels", zIndex = 420) %>%
-    addProviderTiles( "CartoDB.PositronNoLabels")   %>% 
+    addOpenFreeMap() %>% 
     addEasyButton(
       easyButton (
         icon    = "glyphicon glyphicon-home", title = "Reset zoom",
@@ -31,13 +31,7 @@ output$map <- renderLeaflet ({
       )
     )   %>%
     addLayersControl(
-      baseGroups = "CartoDB.PositronNoLabels",
       overlayGroups = c("Labels", "City borders"))  %>% 
-    addProviderTiles(
-      "CartoDB.PositronOnlyLabels",
-      options = pathOptions(pane = "maplabels"),
-      group = "Labels"
-    ) %>%
     addScaleBar(
       position = c("bottomleft"),
       options = scaleBarOptions(metric = TRUE)

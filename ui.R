@@ -87,6 +87,9 @@ ui <- function(req) {
       tags$link(rel = "preconnect", href = "https://fonts.gstatic.com", crossorigin = "anonymous"),
       tags$link(rel = "stylesheet", href = "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"),
       tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
+      tags$link(rel = "stylesheet", href = "https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css"),
+      tags$script(src = "https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"),
+      tags$script(src = "https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.21/leaflet-maplibre-gl.js"),
       tags$script(HTML("
         $(document).ready(function() {
           function initTooltips() {
